@@ -1,0 +1,44 @@
+{
+  "root": true,
+  "plugins": ["prettier"],
+  "extends": ["next", "prettier", "standard-with-typescript"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "space-before-function-paren": 0,
+    "@typescript-eslint/space-before-function-paren": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "multiline-ternary": 0,
+    "import/newline-after-import": 2,
+    "import/order": [
+      "error",
+      {
+        "alphabetize": { "order": "asc", "caseInsensitive": true },
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ],
+        "newlines-between": "always",
+        "pathGroups": [
+          { "pattern": "@/**", "group": "internal", "position": "after" }
+        ]
+      }
+    ],
+    "no-multiple-empty-lines": 2,
+    "prettier/prettier": ["error"]
+  },
+  "env": {
+    "jest": true,
+    "node": true,
+    "browser": true,
+    "amd": true,
+    "es6": true
+  }
+}
