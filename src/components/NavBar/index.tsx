@@ -10,7 +10,7 @@ import { Button, ButtonHeading5, LinkHeading5 } from './styles'
 
 const NavBar = () => {
   return (
-    <Container fluid css={{ paddingTop: '40px' }}>
+    <Container fluid css={{ padding: '40px 140px' }}>
       <Row justify='space-between' align='center'>
         <Link href='/'>
           <Row align='center' css={{ cursor: 'pointer' }}>
