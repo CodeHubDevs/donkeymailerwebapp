@@ -6,7 +6,13 @@ import Logo from '@/assets/logo/donkeylogo.png'
 import LogoText from '@/assets/logo/donkeylogotext.png'
 
 import Dot from './Dot'
-import { Button, ButtonHeading5, LinkHeading5 } from './styles'
+import {
+  Button,
+  ButtonHeading5,
+  LinkHeading5,
+  LogoContainer,
+  LogoWrapper
+} from './styles'
 
 interface NavItemProps {
   href: string
@@ -17,12 +23,14 @@ const NavBar = () => {
   return (
     <Container fluid css={{ padding: '40px 140px' }}>
       <Row justify='space-between' align='center'>
-        <Link href='/'>
-          <Row align='center' css={{ cursor: 'pointer' }}>
-            <Image src={Logo} alt='logo' />
-            <Image src={LogoText} alt='logo-text' />
-          </Row>
-        </Link>
+        <LogoContainer>
+          <Link href='/'>
+            <LogoWrapper>
+              <Image src={Logo} alt='logo' />
+              <Image src={LogoText} alt='logo-text' />
+            </LogoWrapper>
+          </Link>
+        </LogoContainer>
         <Row align='center'>
           <NavItem href='/about'>About</NavItem>
           <Dot />
