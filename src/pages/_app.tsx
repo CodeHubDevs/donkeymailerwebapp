@@ -1,5 +1,6 @@
 import { NextUIProvider, globalCss } from '@nextui-org/react'
 
+import Footer from '@/components/Footer'
 import NavBar from '@/components/NavBar'
 import theme from '@/styles/theme'
 
@@ -20,6 +21,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <NextUIProvider theme={theme}>
       <NavBar />
       <Component {...pageProps} />
+      <Footer />
     </NextUIProvider>
   )
 }
