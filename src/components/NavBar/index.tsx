@@ -8,6 +8,11 @@ import LogoText from '@/assets/donkeylogotext.png'
 import Dot from './Dot'
 import { Button, ButtonHeading5, LinkHeading5 } from './styles'
 
+interface NavItemProps {
+  href: string
+  children: string
+}
+
 const NavBar = () => {
   return (
     <Container fluid css={{ padding: '40px 140px' }}>
@@ -19,21 +24,27 @@ const NavBar = () => {
           </Row>
         </Link>
         <Row align='center'>
-          <Link href='/about'>
-            <LinkHeading5>About</LinkHeading5>
-          </Link>
+          <NavItem href='/about'>About</NavItem>
           <Dot />
-          <LinkHeading5>Inspection Service</LinkHeading5>
+          <NavItem href='/inspection'>Inspection Service</NavItem>
           <Dot />
-          <LinkHeading5>Service</LinkHeading5>
+          <NavItem href='/service'>Service</NavItem>
           <Dot />
-          <LinkHeading5>Contact</LinkHeading5>
+          <NavItem href='/contact'>Contact</NavItem>
         </Row>
         <Button>
           <ButtonHeading5>Get Started</ButtonHeading5>
         </Button>
       </Row>
     </Container>
+  )
+}
+
+const NavItem: React.FC<NavItemProps> = ({ href, children }) => {
+  return (
+    <Link href={href}>
+      <LinkHeading5>{children}</LinkHeading5>
+    </Link>
   )
 }
 
