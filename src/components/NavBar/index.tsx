@@ -2,8 +2,8 @@ import { Container, Row } from '@nextui-org/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import Logo from '@/assets/donkeylogo.png'
-import LogoText from '@/assets/donkeylogotext.png'
+import Logo from '@/assets/logo/donkeylogo.png'
+import LogoText from '@/assets/logo/donkeylogotext.png'
 
 import Dot from './Dot'
 import { Button, ButtonHeading5, LinkHeading5 } from './styles'

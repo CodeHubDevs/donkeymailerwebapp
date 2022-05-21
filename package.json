@@ -16,6 +16,9 @@
   },
   "dependencies": {
     "@fontsource/manrope": "^4.5.9",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@nextui-org/react": "^1.0.0-beta.7",
     "next": "12.1.6",
     "react": "18.1.0",
