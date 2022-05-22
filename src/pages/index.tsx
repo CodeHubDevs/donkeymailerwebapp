@@ -1,12 +1,8 @@
-import Hero from '@/containers/Landing/Hero'
-import Main from '@/containers/Landing/Main'
-
 import type { NextPage } from 'next'
 
 const Landing: NextPage = () => (
   <>
-    <Hero />
-    <Main />
+    <div className='text-4xl font-extrabold'>Hello World</div>
   </>
 )
 
