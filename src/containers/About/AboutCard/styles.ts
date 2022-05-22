@@ -17,5 +17,7 @@ export const CardTitle = styled(Heading5, {
 
 export const CardDescription = styled(Paragraph, {
   marginTop: '64px !important',
-  textAlign: 'center'
+  textAlign: 'center',
+  lineHeight: '2',
+  letterSpacing: '0.3px'
 })
