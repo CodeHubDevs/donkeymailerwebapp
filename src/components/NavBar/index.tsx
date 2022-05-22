@@ -1,6 +1,7 @@
 import { Container, Row } from '@nextui-org/react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import Logo from '@/assets/logo/donkeylogo.png'
 import LogoText from '@/assets/logo/donkeylogotext.png'
@@ -9,7 +10,7 @@ import Dot from './Dot'
 import {
   Button,
   ButtonHeading5,
-  LinkHeading5,
+  LinkHeading6,
   LogoContainer,
   LogoWrapper
 } from './styles'
@@ -49,9 +50,18 @@ const NavBar = () => {
 }
 
 const NavItem: React.FC<NavItemProps> = ({ href, children }) => {
+  const router = useRouter()
+
+  const isActiveLink = router.pathname === href
+
+  console.log('Pathname: ', router.pathname)
+  console.log('isActiveLink', isActiveLink)
+
   return (
     <Link href={href}>
-      <LinkHeading5>{children}</LinkHeading5>
+      <LinkHeading6 css={{ color: isActiveLink ? '$primary !important' : '' }}>
+        {children}
+      </LinkHeading6>
     </Link>
   )
 }

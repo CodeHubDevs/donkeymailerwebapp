@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { StyledHeading5 } from './styles'
+import { StyledHeading6 } from './styles'
 
 interface NavItemProps {
   href: string
@@ -21,7 +21,7 @@ const Nav = () => {
 const NavItem: React.FC<NavItemProps> = ({ href, children }) => {
   return (
     <Link href={href}>
-      <StyledHeading5>{children}</StyledHeading5>
+      <StyledHeading6>{children}</StyledHeading6>
     </Link>
   )
 }

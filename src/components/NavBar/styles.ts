@@ -1,6 +1,6 @@
 import { styled, StyledButton } from '@nextui-org/react'
 
-import { Heading5 } from '../Typography/Headings'
+import { Heading5, Heading6 } from '../Typography/Headings'
 
 export const LogoContainer = styled('div', {
   display: 'flex',
@@ -26,7 +26,7 @@ export const ButtonHeading5 = styled(Heading5, {
   color: '#fff !important'
 })
 
-export const LinkHeading5 = styled(Heading5, {
+export const LinkHeading6 = styled(Heading6, {
   cursor: 'pointer',
 
   '&:hover': {
