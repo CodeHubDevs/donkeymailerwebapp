@@ -6,4 +6,8 @@
   html {
     @apply text-black;
   }
+
+  body {
+    @apply bg-secondary10;
+  }
 }
