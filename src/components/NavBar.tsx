@@ -13,7 +13,7 @@ interface NavItemProps {
 
 const NavBar = () => {
   return (
-    <nav className='mt-10 flex items-center justify-between px-32'>
+    <nav className='flex items-center justify-between py-8 px-32'>
       <Link href='/'>
         <div className='flex cursor-pointer items-center'>
           <Image src={Logo} alt='logo' />
