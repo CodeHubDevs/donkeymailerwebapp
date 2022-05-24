@@ -9,6 +9,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
+import QRCode from '@/assets/images/qrcode.png'
 import Logo from '@/assets/logo/donkeylogo.png'
 import LogoText from '@/assets/logo/donkeylogotext.png'
 
@@ -45,7 +46,9 @@ const Footer = () => {
           <NavItem href='/service'>Service</NavItem>
           <NavItem href='/contact'>Contact</NavItem>
         </div>
-        <h1 className='text-5xl font-bold'>QR</h1>
+        <div className='w-60'>
+          <Image src={QRCode} alt='qr-code' />
+        </div>
       </div>
     </div>
   )
