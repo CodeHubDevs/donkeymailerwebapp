@@ -41,7 +41,7 @@ const Service = () => {
       <h1 className='py-8 text-center text-4xl font-bold text-primary'>
         US Quote
       </h1>
-      <div className='rounded-3xl bg-secondary25 py-8 text-center text-xl'>
+      <div className='rounded-3xl bg-secondary50 py-8 text-center text-xl'>
         <h5 className='text-white'>
           U.S. Express, 1-3 working days for production, 3-5 working days for
           delivery
