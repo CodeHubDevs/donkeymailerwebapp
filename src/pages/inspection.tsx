@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 import Hour from '@/assets/images/24hr.png'
@@ -22,9 +23,13 @@ const Inspection = () => {
         <p className='text-lg text-black50'>
           Factory Inspection, Mid-term Inspection, Final Inspection, Monitoring
         </p>
-        <button className='rounded-full bg-primary px-16 py-2 text-white'>
-          Visit TCO
-        </button>
+        <Link href='http://www.tcochina.com'>
+          <a
+            className='rounded-full bg-primary px-16 py-2 text-white'
+            target='_blank'>
+            Visit TCO
+          </a>
+        </Link>
       </div>
       <div className='-mt-40'>
         <div className='grid grid-cols-3 gap-32 px-72'>
