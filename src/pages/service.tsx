@@ -153,4 +153,4 @@ const Service = () => {
   )
 }
 
-export default Service
+export default Service;
