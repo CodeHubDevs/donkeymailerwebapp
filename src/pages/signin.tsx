@@ -26,7 +26,9 @@ const SignIn = () => {
           <h5 className='text-xl font-bold text-white'>Sign in with WeChat</h5>
         </button>
         <div className='w-2/5 px-8 py-4'>
-          <DividerText label='or' />
+          <DividerText>
+            <p className='text-black25'>or</p>
+          </DividerText>
         </div>
         <form className='flex w-2/6 flex-col gap-4'>
           <FormInput label='Email Address' />
