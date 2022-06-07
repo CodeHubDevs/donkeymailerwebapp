@@ -1,5 +1,5 @@
-import React from 'react'
 import Image from 'next/image'
+import React from 'react'
 
 import EmailSentIcon from '@/assets/images/email-sent.svg'
 
@@ -26,7 +26,7 @@ export default function EmailSent() {
             <Image src={EmailSentIcon} alt='email-sent' />
           </p>
           <p className='mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto'>
-            Didn't receive the link?
+            Didn&apos;t receive the link?
             <a href='#' style={{ color: '#45CEDE' }}>
               Resend
             </a>
