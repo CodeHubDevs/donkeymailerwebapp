@@ -9,12 +9,13 @@ import InspectionSearch from '@/assets/images/inspection.png'
 import InspectionFile from '@/assets/images/inspectionfile.png'
 import Tie from '@/assets/images/tie.png'
 import DividerText from '@/components/DividerText'
+import PublicLayout from '@/components/layout/PublicLayout'
 import InspectionCard from '@/containers/Inspection/InspectionCard'
 import TextCard from '@/containers/Inspection/TextCard'
 
 const Inspection = () => {
   return (
-    <div className=''>
+    <PublicLayout>
       <div className='flex flex-col items-center justify-center gap-4 bg-white pt-32 pb-64'>
         <h1 className='text-5xl font-bold'>
           <span className='text-primary'>TCO</span> Professional Third-Party
@@ -93,7 +94,7 @@ const Inspection = () => {
           <InspectionCard label='Supervise' isReverse image={CheckList} />
         </div>
       </div>
-    </div>
+    </PublicLayout>
   )
 }
 
