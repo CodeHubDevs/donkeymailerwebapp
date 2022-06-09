@@ -1,9 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import React, { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import * as yup from 'yup'
 
 import { useRegistration } from '@/api'
@@ -12,6 +12,7 @@ import FormCheckbox from '@/components/FormCheckbox'
 import FormInput from '@/components/FormInput'
 import PublicLayout from '@/components/layout/PublicLayout'
 import Spinner from '@/components/Spinner'
+import { capFirstWord } from '@/helpers'
 
 const schema = yup.object({
   email: yup.string().email().required('Required field'),
@@ -30,8 +31,7 @@ const schema = yup.object({
 })
 
 const SignUp = () => {
-  const { execute, isLoading } = useRegistration()
-  const router = useRouter()
+  const { execute, isLoading, error } = useRegistration()
 
   const {
     register,
@@ -41,15 +41,13 @@ const SignUp = () => {
 
   const onSubmit = useCallback(
     async (data: any) => {
-      console.log(data)
       try {
         await execute(data)
-        // router.push('/email-sent')
       } catch (e) {
-        console.error(e)
+        toast.error(capFirstWord(error[0]))
       }
     },
-    [execute]
+    [execute, error]
   )
 
   return (
