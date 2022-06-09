@@ -6,6 +6,8 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "@typescript-eslint/naming-convention": 0,
+    "@typescript-eslint/no-misused-promises": 0,
     "space-before-function-paren": 0,
     "@typescript-eslint/space-before-function-paren": 0,
     "@typescript-eslint/explicit-function-return-type": 0,

@@ -1,5 +1,5 @@
-import React from 'react'
 import Image from 'next/image'
+import React from 'react'
 
 import EmailSentIcon from '@/assets/images/email-sent.svg'
 import PublicLayout from '@/components/layout/PublicLayout'
@@ -7,6 +7,7 @@ import PublicLayout from '@/components/layout/PublicLayout'
 export default function EmailSent() {
   return (
     <PublicLayout isFooter={false}>
+
       <div className='py-12'>
         <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
           <div className='lg:text-center'>
@@ -40,12 +41,9 @@ export default function EmailSent() {
               </a>
             </p>
           </div>
-
           <div className='mt-10'></div>
         </div>
-
-        <div className='mt-10'></div>
       </div>
-    </div>
+    </PublicLayout>
   )
 }

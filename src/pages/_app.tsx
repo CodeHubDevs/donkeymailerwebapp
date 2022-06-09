@@ -1,5 +1,6 @@
-import Footer from '@/components/Footer'
-import NavBar from '@/components/NavBar'
+import { SWRConfig } from 'swr'
+
+import swrConfig from '@/lib/swrConfig'
 
 import type { AppProps } from 'next/app'
 
@@ -7,11 +8,9 @@ import '@/styles/globals.css'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <>
-      <NavBar />
+    <SWRConfig value={swrConfig}>
       <Component {...pageProps} />
-      <Footer />
-    </>
+    </SWRConfig>
   )
 }
 

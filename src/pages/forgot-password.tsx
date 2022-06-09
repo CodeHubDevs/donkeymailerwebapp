@@ -20,6 +20,7 @@ const ForgotPassword = () => {
             label='Email Address'
             placeholder='Enter your email address...'
             register={''}
+
           />
           <button className='rounded-full bg-primary px-8 py-2 text-white'>
             Send
