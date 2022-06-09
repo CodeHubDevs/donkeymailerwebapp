@@ -1,12 +1,37 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useCallback } from 'react'
+import { useForm } from 'react-hook-form'
+import * as yup from 'yup'
 
 import Key from '@/assets/images/key.png'
 import FormCheckbox from '@/components/FormCheckbox'
 import FormInput from '@/components/FormInput'
 
 const SignUp = () => {
+  const { execute, isLoading } = useRegistration()
+  const router = useRouter()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({ resolver: yupResolver(schema) })
+
+  const onSubmit = useCallback(
+    async (data: any) => {
+      console.log(data)
+      try {
+        await execute(data)
+        // router.push('/email-sent')
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    [execute]
+  )
+
   return (
     <div className='flex items-center gap-16 py-16 pr-32'>
       <div className='flex flex-grow flex-col items-center justify-center rounded-r-2xl bg-white py-32'>
