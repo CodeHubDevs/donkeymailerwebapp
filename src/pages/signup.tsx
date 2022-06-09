@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -30,6 +31,7 @@ const schema = yup.object({
 
 const SignUp = () => {
   const { execute, isLoading } = useRegistration()
+  const router = useRouter()
 
   const {
     register,
@@ -42,6 +44,7 @@ const SignUp = () => {
       console.log(data)
       try {
         await execute(data)
+        // router.push('/email-sent')
       } catch (e) {
         console.error(e)
       }
