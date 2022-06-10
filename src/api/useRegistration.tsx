@@ -15,27 +15,23 @@ const register = async (payload: RegisterPayloadProps) => {
 
 export const useRegistration = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(null as any)
   const [data, setData] = useState(null)
 
-  // ! Bug: error is not being set when the user clicks the submit button on first try of form
   const execute = useCallback(
     async (payload: RegisterPayloadProps) => {
       try {
-        setIsLoading(true)
         const response = await register(payload)
         setData(response as any)
         return response
       } catch (e: any) {
-        const errors = e.response.data.errors.message
-        setError(Object.values(errors)[0])
+        console.log()
         throw e
       } finally {
         setIsLoading(false)
       }
     },
-    [setIsLoading, setError, setData]
+    [setIsLoading, setData]
   )
 
-  return { isLoading, error, data, execute }
+  return { isLoading, data, execute }
 }

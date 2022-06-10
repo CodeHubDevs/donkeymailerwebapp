@@ -31,7 +31,7 @@ const schema = yup.object({
 })
 
 const SignUp = () => {
-  const { execute, isLoading, error } = useRegistration()
+  const { execute, isLoading } = useRegistration()
 
   const {
     register,
@@ -43,11 +43,13 @@ const SignUp = () => {
     async (data: any) => {
       try {
         await execute(data)
-      } catch (e) {
-        toast.error(capFirstWord(error[0]))
+        toast.success('Confirmation email has been sent')
+      } catch (e: any) {
+        const errorMessage = e.response.data.errors.message
+        toast.error(capFirstWord(Object.values(errorMessage)[0] as any))
       }
     },
-    [execute, error]
+    [execute]
   )
 
   return (
