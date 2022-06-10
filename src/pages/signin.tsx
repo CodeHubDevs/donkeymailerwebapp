@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import * as yup from 'yup'
 
 import { useSignin } from '@/api'
@@ -12,6 +13,7 @@ import FormCheckbox from '@/components/FormCheckbox'
 import FormInput from '@/components/FormInput'
 import PublicLayout from '@/components/layout/PublicLayout'
 import Spinner from '@/components/Spinner'
+import { useAuth } from '@/context/AuthContext'
 
 const schema = yup.object({
   email: yup.string().email().required('Required field'),
@@ -22,6 +24,8 @@ const schema = yup.object({
 })
 
 const SignIn = () => {
+  const auth = useAuth()
+
   const { execute, isLoading } = useSignin()
 
   const {
@@ -32,14 +36,17 @@ const SignIn = () => {
 
   const onSubmit = useCallback(
     async (data: any) => {
-      console.log(data)
       try {
-        await execute(data)
-      } catch (e) {
-        console.error(e)
+        const payload = await execute(data)
+        const token = payload.data.results.tokens.access
+        localStorage.setItem('token', token)
+        auth.signIn()
+        toast.success('Welcome back!')
+      } catch (e: any) {
+        toast.error(e.response.data.detail)
       }
     },
-    [execute]
+    [execute, auth]
   )
   return (
     <PublicLayout>

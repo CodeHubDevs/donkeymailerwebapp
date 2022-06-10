@@ -1,5 +1,5 @@
 export const toTitleCase = (str: any) => {
-  return str
+  return str[0]
     .toLowerCase()
     .split(' ')
     .map((word: any) => {
@@ -9,5 +9,5 @@ export const toTitleCase = (str: any) => {
 }
 
 export const capFirstWord = (str: string) => {
-  return `${str.charAt(0).toUpperCase()}${str.slice(1)}`
+  return `${str[0].charAt(0).toUpperCase()}${str[0].slice(1)}`
 }

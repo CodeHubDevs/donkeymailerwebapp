@@ -9,28 +9,26 @@ export interface LoginPayloadProps {
 
 const login = async (payload: LoginPayloadProps) => {
   const response = await client.post('authentication/login', payload)
-  return response.data
+  return response
 }
 
 export const useSignin = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(null)
   const [data, setData] = useState(null)
 
   const execute = useCallback(async (payload: LoginPayloadProps) => {
     try {
       setIsLoading(true)
       const response = await login(payload)
-      setData(response)
-      alert('working!')
+      setData(response as any)
       return response
     } catch (e: any) {
-      setError(e)
+      console.log('error', e)
       throw e
     } finally {
       setIsLoading(false)
     }
   }, [])
 
-  return { isLoading, error, data, execute }
+  return { isLoading, data, execute }
 }
