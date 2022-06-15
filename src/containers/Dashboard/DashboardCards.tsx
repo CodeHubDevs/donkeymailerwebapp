@@ -10,7 +10,7 @@ interface DashboardCardProps {
 
 const DashboardCards = () => {
   return (
-    <div className='grid grid-cols-4 gap-4'>
+    <div className='mt-8 grid grid-cols-4 gap-4'>
       <DashboardCard
         title='Campaigns'
         result='32'
