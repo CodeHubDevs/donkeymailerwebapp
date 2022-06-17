@@ -46,7 +46,7 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   withIcon
 }) => {
   return (
-    <div className='rounded-3xl p-4 shadow-2xl'>
+    <div className='rounded-3xl p-4 shadow-md'>
       <h5 className='mb-4 text-xl font-bold text-primary'>{title}</h5>
       <p className='mb-8 text-center text-5xl font-bold text-black'>{result}</p>
       <button className='w-full rounded-md bg-primary from-secondary to-primary py-2 px-6'>
