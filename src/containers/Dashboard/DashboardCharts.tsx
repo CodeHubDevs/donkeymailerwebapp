@@ -154,7 +154,7 @@ const SpendChart = () => {
 
 const DashboardCharts = () => {
   return (
-    <section className='mt-16'>
+    <section className='mt-10'>
       <h2 className='mb-2 text-2xl font-bold'>Tracking</h2>
       <div className='flex gap-4'>
         <SentChart />
