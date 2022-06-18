@@ -57,7 +57,9 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
               className='cursor-pointer rounded-full bg-primary text-white'
             />
           )}
-          <span className='text-center font-bold text-white'>{action}</span>
+          <span className='text-center text-sm font-bold text-white'>
+            {action}
+          </span>
         </div>
       </button>
     </div>
