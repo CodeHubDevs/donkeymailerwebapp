@@ -16,6 +16,7 @@
   [type='url']:focus,
   [type='password']:focus,
   [type='number']:focus,
+  [type='checkbox']:focus,
   [type='date']:focus,
   [type='datetime-local']:focus,
   [type='month']:focus,

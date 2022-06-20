@@ -38,7 +38,7 @@ const SideBar = () => {
   const { pathname } = useRouter()
   return (
     <div
-      className={`absolute h-screen bg-white pt-8 shadow-2xl ${
+      className={`fixed z-10 h-screen bg-white pt-8 shadow-2xl ${
         isOpen ? 'w-72' : 'w-24'
       }`}>
       <FontAwesomeIcon
