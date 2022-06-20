@@ -16,12 +16,12 @@ interface AppNavBarProps {
 const menuItems = [
   {
     name: 'My Settings',
-    href: '/app/setting',
+    href: '/app/user-settings',
     icon: faGear
   },
   {
     name: 'Billing Settings',
-    href: '/app/billing-setting',
+    href: '/app/billing-settings',
     icon: faWallet
   }
 ]
