@@ -2,6 +2,7 @@ import React from 'react'
 
 import AppNavBar from '@/components/AppNavBar'
 import PrivateLayout from '@/components/layout/PrivateLayout'
+import ChangePassword from '@/containers/UserSettings/ChangePassword'
 import UserDetails from '@/containers/UserSettings/UserDetails'
 
 const UserSettings = () => {
@@ -9,6 +10,7 @@ const UserSettings = () => {
     <PrivateLayout>
       <AppNavBar pageName='Settings' />
       <UserDetails />
+      <ChangePassword />
     </PrivateLayout>
   )
 }
