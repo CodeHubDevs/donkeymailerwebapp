@@ -13,7 +13,7 @@ import {
   YAxis
 } from 'recharts'
 
-import FilterSelectMenu from '@/components/FilterSelectMenu'
+import SelectMenu from '@/components/SelectMenu'
 
 const dateOptions = [
   { label: 'Last 7 days', value: 'last7days' },
@@ -57,12 +57,12 @@ const SentChart = () => {
       <div className='flex justify-between'>
         <h3 className='text-xl font-bold text-secondary'>Sent</h3>
         <div className='flex items-center gap-2'>
-          <FilterSelectMenu
+          <SelectMenu
             options={dateOptions}
             value={selectedDate}
             onChange={setSelectedDate}
           />
-          <FilterSelectMenu
+          <SelectMenu
             options={locationOptions}
             value={selectedLocation}
             onChange={setSelectedLocation}
@@ -100,12 +100,12 @@ const SpendChart = () => {
       <div className='flex justify-between'>
         <h3 className='text-xl font-bold text-secondary'>Spend</h3>
         <div className='flex items-center gap-2'>
-          <FilterSelectMenu
+          <SelectMenu
             options={dateOptions}
             value={selectedDate}
             onChange={setSelectedDate}
           />
-          <FilterSelectMenu
+          <SelectMenu
             options={locationOptions}
             value={selectedLocation}
             onChange={setSelectedLocation}

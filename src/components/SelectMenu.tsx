@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Listbox } from '@headlessui/react'
 import React from 'react'
 
-const FilterSelectMenu = ({ options, value, onChange }: any) => {
+const SelectMenu = ({ options, value, onChange }: any) => {
   return (
     <Listbox value={value} onChange={onChange} as='div' className='relative'>
       <Listbox.Button className='flex w-full items-center gap-2 rounded-lg bg-primary px-2 text-white'>
@@ -52,4 +52,4 @@ const FilterSelectMenu = ({ options, value, onChange }: any) => {
   )
 }
 
-export default FilterSelectMenu
+export default SelectMenu
