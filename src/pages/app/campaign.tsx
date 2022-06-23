@@ -1,11 +1,11 @@
 import React from 'react'
 
+import CampaignPostCard from '@/assets/images/campaign-card.png'
+import CampaignImage from '@/assets/images/campaign.png'
+import CampaignEnvelope from '@/assets/images/envelope-card.png'
 import AppNavBar from '@/components/AppNavBar'
 import PrivateLayout from '@/components/layout/PrivateLayout'
-import CampaignImage from '@/assets/images/campaign.png'
-import CampaignPostCard from '@/assets/images/campaign-card.png'
-import CampaignEnvelope from '@/assets/images/envelope-card.png'
-import CampaignCard from '@/containers/Campaign/campaigncard'
+import CampaignCard from '@/containers/Campaign/CampaignCard'
 import CampaignHeader from '@/containers/Campaign/CampaignHeader'
 
 const Campaign = () => {
