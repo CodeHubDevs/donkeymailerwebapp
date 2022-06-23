@@ -1,11 +1,11 @@
-import React from 'react'
 import Image from 'next/image'
+import React from 'react'
 
-interface CampaignHeaderProps {
+interface SelectHeaderProps {
   image: any
 }
 
-const CampaignHeader: React.FC<CampaignHeaderProps> = ({ image }) => {
+const SelectHeader: React.FC<SelectHeaderProps> = ({ image }) => {
   return (
     <div className='lg:text-center'>
       <Image src={image} alt='image' />
@@ -19,4 +19,4 @@ const CampaignHeader: React.FC<CampaignHeaderProps> = ({ image }) => {
   )
 }
 
-export default CampaignHeader
+export default SelectHeader
