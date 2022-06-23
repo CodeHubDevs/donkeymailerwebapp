@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
-interface CampaignCardProps {
+interface SelectCardProps {
   image: any
   title: string
   description: string
@@ -9,7 +9,7 @@ interface CampaignCardProps {
   detailTwo: string
 }
 
-const CampaignCard: React.FC<CampaignCardProps> = ({
+const SelectCard: React.FC<SelectCardProps> = ({
   image,
   title,
   description,
@@ -36,4 +36,4 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
   )
 }
 
-export default CampaignCard
+export default SelectCard
