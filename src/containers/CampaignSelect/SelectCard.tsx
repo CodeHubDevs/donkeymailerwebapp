@@ -19,8 +19,8 @@ const SelectCard: React.FC<SelectCardProps> = ({
   return (
     <div className='ml-12 mr-12 flex flex-col items-center rounded-2xl bg-black5 p-8'>
       <Image src={image} alt='' />
-      <h5 className='mt-5 text-3xl font-bold text-black'>{title}</h5>
-      <p className='mb-8 text-center text-lg text-black50'>{description}</p>
+      <h5 className='mt-5 text-2xl font-bold text-black'>{title}</h5>
+      <p className='mb-8 text-center text-base text-black50'>{description}</p>
       <div className='mr-24 ml-24 flex flex-col items-start bg-black5'>
         <p className='text-base text-black50'>{detailOne}</p>
         <p className='text-base text-black50'>{detailTwo}</p>
