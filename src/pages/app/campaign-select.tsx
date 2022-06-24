@@ -1,50 +1,52 @@
 import React from 'react'
 
+import CampaignPostCard from '@/assets/images/campaign-card.png'
+import CampaignImage from '@/assets/images/campaign.png'
+import CampaignEnvelope from '@/assets/images/envelope-card.png'
 import AppNavBar from '@/components/AppNavBar'
 import PrivateLayout from '@/components/layout/PrivateLayout'
-import CampaignImage from '@/assets/images/campaign.png'
-import CampaignPostCard from '@/assets/images/campaign-card.png'
-import CampaignEnvelope from '@/assets/images/envelope-card.png'
-import CampaignCard from '@/containers/Campaign/campaigncard'
-import CampaignHeader from '@/containers/Campaign/CampaignHeader'
+import SelectCard from '@/containers/CampaignSelect/SelectCard'
+import SelectHeader from '@/containers/CampaignSelect/SelectHeader'
 
-const Campaign = () => {
+const CampaignSelect = () => {
   return (
     <PrivateLayout>
       <AppNavBar pageName='Campaign' />
-      <CampaignHeader image={CampaignImage}></CampaignHeader>
+      <SelectHeader image={CampaignImage} />
       <div className='gap-18 mt-12 grid grid-cols-2'>
-        <CampaignCard
+        <SelectCard
           image={CampaignPostCard}
           title={'4 x 6 POSTCARD'}
           description={'(4 inches to 6 inches)'}
           detailOne={'• 14 pt Gloss Paper Stock'}
-          detailTwo={'• Full Color Double Sided'}></CampaignCard>
-        <CampaignCard
+          detailTwo={'• Full Color Double Sided'}
+        />
+        <SelectCard
           image={CampaignPostCard}
           title={'6 x 9 POSTCARD'}
           description={'(6 inches to 9 inches)'}
           detailOne={'• 70# Paper Stock'}
-          detailTwo={'• #10 Window Envelope'}></CampaignCard>
+          detailTwo={'• #10 Window Envelope'}
+        />
       </div>
       <div className='gap-18 mt-12 grid grid-cols-2'>
-        <CampaignCard
+        <SelectCard
           image={CampaignPostCard}
           title={'6 x 11 POSTCARD'}
           description={'(6 inches to 11 inches)'}
           detailOne={'• 14pt Gloss Paper Stock'}
-          detailTwo={'• Full Color Double Sided'}></CampaignCard>
-        <CampaignCard
+          detailTwo={'• Full Color Double Sided'}
+        />
+        <SelectCard
           image={CampaignEnvelope}
           title={'8.5 x 11 LETTER'}
           description={'(8.5 inches to 11 inches)'}
           detailOne={'• 70# Paper Stock'}
-          detailTwo={
-            '• Large Window Envelope to Show Logo and Sender Address'
-          }></CampaignCard>
+          detailTwo={'• Large Window Envelope to Show Logo and Sender Address'}
+        />
       </div>
     </PrivateLayout>
   )
 }
 
-export default Campaign
+export default CampaignSelect

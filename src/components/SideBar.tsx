@@ -18,16 +18,19 @@ const links = [
   {
     name: 'Dashboard',
     href: '/app/dashboard',
+    category: 'dashboard',
     icon: faChartLine
   },
   {
     name: 'Campaign',
     href: '/app/campaign',
+    category: 'campaign',
     icon: faEnvelopesBulk
   },
   {
     name: 'Template',
     href: '/app/template',
+    category: 'template',
     icon: faWindowMaximize
   }
 ]
@@ -60,11 +63,11 @@ const SideBar = () => {
         </div>
       </div>
       <ul className='mt-6'>
-        {links.map(({ name, href, icon }) => (
+        {links.map(({ name, href, icon, category }) => (
           <li key={name} className='mb-2'>
             <Link href={href}>
               <a className='relative flex items-center py-2 pl-8 hover:bg-gray-100'>
-                {pathname === href && (
+                {pathname.includes(category) && (
                   <div className='absolute left-0 h-full w-[6px] rounded-full bg-primary' />
                 )}
                 <FontAwesomeIcon
