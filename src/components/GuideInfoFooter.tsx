@@ -1,10 +1,10 @@
-import { faPlay } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCircleQuestion,
+  faFilePdf,
+  faPlay
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Image from 'next/image'
 import React from 'react'
-
-import PdfFileIcon from '@/assets/images/pdf-icon.png'
-import QuestionMarkIcon from '@/assets/images/question-icon.png'
 
 interface GuideInfoFooterProps {
   src: string
@@ -27,14 +27,20 @@ const GuideInfoFooter: React.FC<GuideInfoFooterProps> = ({ src }) => {
         </div>
         <div className='col-span-2'>
           <button className='hover:bg-grey text-grey-darkest inline-flex h-20 w-64 items-center rounded-xl bg-white py-2 px-4 font-bold shadow-lg'>
-            <Image src={PdfFileIcon} alt='logo' />
+            <FontAwesomeIcon
+              icon={faFilePdf}
+              className='text-5xl text-primary'
+            />
             <span className='ml-8 mr-16 text-lg'>Guides</span>
             <FontAwesomeIcon icon={faPlay} fontSize={15} />
           </button>
         </div>
         <div className='col-span-2'>
           <button className='hover:bg-grey text-grey-darkest inline-flex h-20 w-64 items-center rounded-xl bg-white py-2 px-4 font-bold shadow-lg'>
-            <Image src={QuestionMarkIcon} alt='src' />
+            <FontAwesomeIcon
+              icon={faCircleQuestion}
+              className='text-5xl text-primary'
+            />
             <span className='ml-8 mr-16 text-lg'>FAQ</span>
             <FontAwesomeIcon icon={faPlay} fontSize={15} />
           </button>
