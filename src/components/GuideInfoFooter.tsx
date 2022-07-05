@@ -26,14 +26,14 @@ const GuideInfoFooter: React.FC<GuideInfoFooterProps> = ({ src }) => {
             width={600}></iframe>
         </div>
         <div className='col-span-2'>
-          <button className='hover:bg-grey text-grey-darkest inline-flex h-20 w-64 items-center rounded-xl bg-white py-2 px-4 font-bold'>
+          <button className='hover:bg-grey text-grey-darkest inline-flex h-20 w-64 items-center rounded-xl bg-white py-2 px-4 font-bold shadow-lg'>
             <Image src={PdfFileIcon} alt='logo' />
             <span className='ml-8 mr-16 text-lg'>Guides</span>
             <FontAwesomeIcon icon={faPlay} fontSize={15} />
           </button>
         </div>
         <div className='col-span-2'>
-          <button className='hover:bg-grey text-grey-darkest inline-flex h-20 w-64 items-center rounded-xl bg-white py-2 px-4 font-bold'>
+          <button className='hover:bg-grey text-grey-darkest inline-flex h-20 w-64 items-center rounded-xl bg-white py-2 px-4 font-bold shadow-lg'>
             <Image src={QuestionMarkIcon} alt='src' />
             <span className='ml-8 mr-16 text-lg'>FAQ</span>
             <FontAwesomeIcon icon={faPlay} fontSize={15} />
