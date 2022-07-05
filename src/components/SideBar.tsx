@@ -3,7 +3,8 @@ import {
   faAngleLeft,
   faChartLine,
   faEnvelopesBulk,
-  faWindowMaximize
+  faWindowMaximize,
+  faUserGroup
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
@@ -22,16 +23,22 @@ const links = [
     icon: faChartLine
   },
   {
-    name: 'Campaign',
+    name: 'Campaigns',
     href: '/app/campaign',
     category: 'campaign',
     icon: faEnvelopesBulk
   },
   {
-    name: 'Template',
+    name: 'Templates',
     href: '/app/template',
     category: 'template',
     icon: faWindowMaximize
+  },
+  {
+    name: 'Recipients',
+    href: '/app/recipient',
+    category: 'recipient',
+    icon: faUserGroup
   }
 ]
 
