@@ -1,9 +1,10 @@
-import React from 'react'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Image from 'next/image'
+import React from 'react'
+
 import PdfFileIcon from '@/assets/images/pdf-icon.png'
 import QuestionMarkIcon from '@/assets/images/question-icon.png'
-import Image from 'next/image'
 
 interface GuideInfoFooterProps {
   src: string
@@ -16,7 +17,7 @@ const GuideInfoFooter: React.FC<GuideInfoFooterProps> = ({ src }) => {
       <div className='flex h-10 items-center justify-center pl-16 pr-16'>
         <div className='h-px w-full bg-black10' />
       </div>
-      <div className='ml-12 grid grid-flow-col grid-rows-2 items-center justify-center justify-around'>
+      <div className='ml-12 grid grid-flow-col grid-rows-2 items-center justify-around'>
         <div className='row-span-3 mx-auto bg-white p-2'>
           <iframe
             src={src}
@@ -33,7 +34,7 @@ const GuideInfoFooter: React.FC<GuideInfoFooterProps> = ({ src }) => {
         </div>
         <div className='col-span-2'>
           <button className='hover:bg-grey text-grey-darkest inline-flex h-20 w-64 items-center rounded-xl bg-white py-2 px-4 font-bold'>
-            <Image src={QuestionMarkIcon} />
+            <Image src={QuestionMarkIcon} alt='src' />
             <span className='ml-8 mr-16 text-lg'>FAQ</span>
             <FontAwesomeIcon icon={faPlay} fontSize={15} />
           </button>
