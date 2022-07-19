@@ -1,7 +1,9 @@
-import Image from 'next/image'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Image from 'next/image'
+
 import ArrowFilled from '@/assets/images/arrow-filled-down.png'
+
 const dummyData = [
   {
     id: '32143',
@@ -61,7 +63,9 @@ const CampaignTable = () => {
           <div>
             <input
               type='search'
-              className={`w-80  rounded-2xl border border-primary py-2 px-4 text-primary text-black50 placeholder-primary placeholder-opacity-50 shadow outline-primary placeholder:font-semibold`}
+              className={
+                'w-80  rounded-2xl border border-primary py-2 px-4 text-black50 placeholder-primary placeholder-opacity-50 shadow outline-primary placeholder:font-semibold'
+              }
               placeholder='Search for campaign...'
             />
             <button
@@ -79,7 +83,7 @@ const CampaignTable = () => {
           <div>
             <p className='text-2xl font-bold text-primary '>
               Latest Campaigns &nbsp;
-              <Image src={ArrowFilled} />
+              <Image src={ArrowFilled} alt='Arrow' />
             </p>
           </div>
           <div className='grid justify-items-end'>
@@ -99,15 +103,15 @@ const CampaignTable = () => {
             </div>
           </div>
         </div>
-        <table className='mt-5 w-full text-left text-sm text-gray-500 dark:text-gray-400'>
-          <thead className=' className border-b border-t text-sm text-gray-700 dark:text-gray-400'>
+        <table className='mt-5 w-full text-left text-sm text-gray-500'>
+          <thead className=' className border-b border-t text-sm text-gray-700'>
             <tr>
               <th scope='col' className='p-4'>
                 <div className='flex items-center'>
                   <input
                     id='checkbox-all'
                     type='checkbox'
-                    className='mr-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
+                    className='mr-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500'
                   />
                   All
                 </div>
@@ -143,59 +147,59 @@ const CampaignTable = () => {
           </thead>
           <tbody>
             {dummyData.map((res) => (
-              <tr className=' bg-white dark:border-gray-700 dark:bg-gray-800'>
+              <tr key={res.id} className=' bg-white'>
                 <th scope='col' className='p-4 text-center'>
                   <div className='flex items-center'>
                     <input
                       id='checkbox-all-search'
                       type='checkbox'
-                      className='h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
+                      className='h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500'
                     />
                   </div>
                 </th>
                 <th
                   scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white'>
+                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
                   {res.id}
                 </th>
                 <th
                   scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white'>
+                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
                   {res.status}
                 </th>
                 <th
                   scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white'>
+                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
                   {res.campaign_name}
                 </th>
                 <th
                   scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white'>
+                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
                   {res.type}
                 </th>
                 <th
                   scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white'>
+                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
                   {res.template}
                 </th>
                 <th
                   scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white'>
+                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
                   {res.recipients}
                 </th>
                 <th
                   scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white'>
+                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
                   {res.cost}
                 </th>
                 <th
                   scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white'>
+                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
                   Edit
                 </th>
                 <th
                   scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white'>
+                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
                   Track
                 </th>
               </tr>
