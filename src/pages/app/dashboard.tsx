@@ -1,15 +1,15 @@
 import React from 'react'
 
 import AppNavBar from '@/components/AppNavBar'
+import GuideInfoFooter from '@/components/GuideInfoFooter'
 import PrivateLayout from '@/components/layout/PrivateLayout'
 import CampaignTable from '@/containers/Dashboard/CampaignTable'
 import DashboardCards from '@/containers/Dashboard/DashboardCards'
 import DashboardCharts from '@/containers/Dashboard/DashboardCharts'
-import GuideInfoFooter from '@/components/GuideInfoFooter'
 
 const Dashboard = () => {
   return (
-    <PrivateLayout>
+    <PrivateLayout title='Dashboard'>
       <AppNavBar pageName='Main Dashboard' />
       <DashboardCards />
       <CampaignTable />

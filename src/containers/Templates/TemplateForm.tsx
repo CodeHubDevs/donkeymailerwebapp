@@ -43,7 +43,7 @@ const TemplateForm = () => {
         showModal={isOpen}
       />
       <div className='mt-8 rounded-2xl bg-white p-8 shadow-md'>
-        <h1 className='text-2xl font-bold'>Your Billing Address</h1>
+        <h1 className='text-2xl font-bold'>Create Your Template</h1>
         <form className='flex flex-col items-start px-24'>
           <div className='my-8 flex w-full gap-32'>
             <div className='flex w-full flex-col gap-4'>

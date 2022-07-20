@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const client = axios.create({
-  baseURL: 'https://donkeymailerwebapi-38gbu.ondigitalocean.app'
+  baseURL: 'https://donkeymailerwebapi.herokuapp.com'
 })
 
 client.interceptors.request.use((config: any) => {
