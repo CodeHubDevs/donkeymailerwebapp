@@ -9,7 +9,7 @@ import DashboardCharts from '@/containers/Dashboard/DashboardCharts'
 
 const Dashboard = () => {
   return (
-    <PrivateLayout>
+    <PrivateLayout title='Dashboard'>
       <AppNavBar pageName='Main Dashboard' />
       <DashboardCards />
       <CampaignTable />

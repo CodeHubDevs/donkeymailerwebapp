@@ -1,16 +1,16 @@
 import React from 'react'
 
 import AppNavBar from '@/components/AppNavBar'
+import GuideInfoFooter from '@/components/GuideInfoFooter'
 import PrivateLayout from '@/components/layout/PrivateLayout'
-import TemplateForm from '@/containers/CreateTemplate/TemplateForm'
 
-const CreateTemplate = () => {
+const Template = () => {
   return (
-    <PrivateLayout>
+    <PrivateLayout title='Template'>
       <AppNavBar pageName='Template' />
-      <TemplateForm />
+      <GuideInfoFooter />
     </PrivateLayout>
   )
 }
 
-export default CreateTemplate
+export default Template

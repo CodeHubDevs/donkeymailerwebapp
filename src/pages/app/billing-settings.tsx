@@ -7,7 +7,7 @@ import PaymentInformation from '@/containers/BillingSettings/PaymentInformation'
 
 const BillingSettings = () => {
   return (
-    <PrivateLayout>
+    <PrivateLayout title='Billing Settings'>
       <AppNavBar pageName='Billing Settings' />
       <BillingAddress />
       <PaymentInformation />

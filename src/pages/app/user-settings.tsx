@@ -8,7 +8,7 @@ import UserDetails from '@/containers/UserSettings/UserDetails'
 
 const UserSettings = () => {
   return (
-    <PrivateLayout>
+    <PrivateLayout title='User Settings'>
       <AppNavBar pageName='Settings' />
       <UserDetails />
       <ChangePassword />

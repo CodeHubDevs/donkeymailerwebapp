@@ -14,6 +14,38 @@ const dummyData = [
     date_modified: '2020-01-01',
     total_recipients: 423,
     countries: 3
+  },
+  {
+    id: '32143',
+    status: 'Draft',
+    group_name: 'Some Group Name',
+    date_modified: '2020-01-01',
+    total_recipients: 423,
+    countries: 3
+  },
+  {
+    id: '32143',
+    status: 'Draft',
+    group_name: 'Some Group Name',
+    date_modified: '2020-01-01',
+    total_recipients: 423,
+    countries: 3
+  },
+  {
+    id: '32143',
+    status: 'Draft',
+    group_name: 'Some Group Name',
+    date_modified: '2020-01-01',
+    total_recipients: 423,
+    countries: 3
+  },
+  {
+    id: '32143',
+    status: 'Draft',
+    group_name: 'Some Group Name',
+    date_modified: '2020-01-01',
+    total_recipients: 423,
+    countries: 3
   }
 ]
 
@@ -22,7 +54,7 @@ const RecipientGroups = () => {
   return (
     <div className='mt-10'>
       <h3 className='text-xl font-bold'>Reciepient Groups</h3>
-      <div className='mt-4 rounded-lg bg-white p-4'>
+      <div className='mt-4 rounded-lg bg-white p-4 shadow-xl'>
         <div className='mb-2 flex items-center justify-end'>
           <button
             type='button'
@@ -37,8 +69,8 @@ const RecipientGroups = () => {
             </span>
           </button>
         </div>
-        <table className='w-full text-left text-sm text-gray-500'>
-          <thead className=' className border-b border-t text-sm text-gray-700'>
+        <table className='min-h-[300px] w-full text-left text-sm text-gray-500'>
+          <thead className='border-b border-t text-sm text-gray-700'>
             <tr>
               <th scope='col' className='p-4'>
                 <div className='flex items-center'>
@@ -134,6 +166,7 @@ const RecipientGroups = () => {
           </tbody>
         </table>
       </div>
+      <h3>Pagination</h3>
     </div>
   )
 }

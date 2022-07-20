@@ -10,7 +10,7 @@ import SelectHeader from '@/containers/CampaignSelect/SelectHeader'
 
 const CampaignSelect = () => {
   return (
-    <PrivateLayout>
+    <PrivateLayout title='Campaign Select'>
       <AppNavBar pageName='Campaign' />
       <SelectHeader image={CampaignImage} />
       <div className='gap-18 mt-12 grid grid-cols-2'>

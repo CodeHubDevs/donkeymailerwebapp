@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
 interface GuideInfoFooterProps {
-  src: string
+  src?: string
 }
 
 const GuideInfoFooter: React.FC<GuideInfoFooterProps> = ({ src }) => {
