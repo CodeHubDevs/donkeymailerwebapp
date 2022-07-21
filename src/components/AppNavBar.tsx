@@ -7,7 +7,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Menu } from '@headlessui/react'
 import Link from 'next/link'
-import React from 'react'
+import React, { useCallback } from 'react'
+
+import { useAuth } from '@/context/AuthContext'
 
 interface AppNavBarProps {
   pageName: string
@@ -27,6 +29,10 @@ const menuItems = [
 ]
 
 const AppNavBar: React.FC<AppNavBarProps> = ({ pageName }) => {
+  const auth = useAuth()
+  const onSignOut = useCallback(() => {
+    auth.signOut()
+  }, [auth])
   return (
     <div className='flex w-full items-center justify-between'>
       <h1 className='text-2xl font-bold text-primary'>{pageName}</h1>
@@ -65,7 +71,9 @@ const AppNavBar: React.FC<AppNavBarProps> = ({ pageName }) => {
             </div>
             <div className='px-1 py-1'>
               <Menu.Item>
-                <button className='flex w-full items-center gap-x-2 rounded-md px-2 py-2 text-black50 hover:bg-primary hover:text-white'>
+                <button
+                  onClick={onSignOut}
+                  className='flex w-full items-center gap-x-2 rounded-md px-2 py-2 text-black50 hover:bg-primary hover:text-white'>
                   <FontAwesomeIcon icon={faRightFromBracket} />
                   <span className='text-sm font-bold'>Logout</span>
                 </button>
