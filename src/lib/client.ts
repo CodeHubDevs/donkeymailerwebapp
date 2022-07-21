@@ -29,7 +29,6 @@ client.interceptors.response.use(
   async (error: any) => {
     if (error.response.status === 401) {
       const token = await refreshToken()
-      // eslint-disable-next-line
       if (token) {
         return await client(error.config)
       }

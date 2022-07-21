@@ -9,8 +9,8 @@ export interface UserSettingsPayloadProps {
   company: string
 }
 
-const userSettings = async (payload: UserSettingsPayloadProps, id: string) => {
-  const response = await client.put(`/api/user/${id}`, payload)
+const userSettings = async (payload: UserSettingsPayloadProps, id: number) => {
+  const response = await client.put(`/api/user/${id}/`, payload)
   return response
 }
 
@@ -19,7 +19,7 @@ export const useUserSettings = () => {
   const [data, setData] = useState(null)
 
   const execute = useCallback(
-    async (payload: UserSettingsPayloadProps, id: string) => {
+    async (payload: UserSettingsPayloadProps, id: number) => {
       try {
         const response = await userSettings(payload, id)
         setData(response as any)

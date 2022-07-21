@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useProfile } from '@/api'
+import { useUserSettings } from '@/api/useUserSettings'
 import FormInput from '@/components/FormInput'
 
 const schema = yup.object({
@@ -14,17 +15,14 @@ const schema = yup.object({
   last_name: yup.string().required('Required field'),
   company: yup.string().required('Required field')
 })
-
 const UserDetails = () => {
   const { register, setValue, handleSubmit } = useForm({
     resolver: yupResolver(schema)
   })
   const { data: profile } = useProfile()
-
-  console.log(profile)
+  const { execute } = useUserSettings()
 
   useEffect(() => {
-    // eslint-disable-next-line
     if (profile) {
       setValue('first_name', profile.first_name)
       setValue('last_name', profile.last_name)
@@ -33,9 +31,17 @@ const UserDetails = () => {
     }
   }, [profile, setValue])
 
-  const onSubmit = useCallback(async (data: any, id: any) => {
-    console.log({ data, id })
-  }, [])
+  const onSubmit = useCallback(
+    async (data: any, id: number, e: React.FormEvent<HTMLInputElement>) => {
+      e.preventDefault()
+      try {
+        await execute(data, id)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    [execute]
+  )
 
   return (
     <div className='mt-8 rounded-2xl bg-white p-8 shadow-md'>
@@ -46,29 +52,26 @@ const UserDetails = () => {
           className='h-12 w-12 rounded-full bg-gradient-to-r from-secondary to-primary p-4 text-white'
         />
         <div className='mt-4 flex items-center gap-1'>
-          {
-            // eslint-disable-next-line
-            profile?.firstName && profile?.lastName ? (
-              <>
-                <span className='text-lg font-bold text-primary'>
-                  {profile.first_name}
-                </span>
-                <span className='text-lg font-bold text-primary'>
-                  {profile.last_name}
-                </span>
-              </>
-            ) : (
-              <span className='text-lg font-bold text-primary'>User</span>
-            )
-          }
+          {profile?.firstName && profile?.lastName ? (
+            <>
+              <span className='text-lg font-bold text-primary'>
+                {profile.first_name}
+              </span>
+              <span className='text-lg font-bold text-primary'>
+                {profile.last_name}
+              </span>
+            </>
+          ) : (
+            <span className='text-lg font-bold text-primary'>User</span>
+          )}
         </div>
         <span className='font-bold'>Tier I</span>
       </div>
       <form
         className='flex flex-col items-start px-24'
-        onSubmit={() =>
-          handleSubmit(async (data) => await onSubmit(data, profile.public_id))
-        }>
+        onSubmit={handleSubmit(
+          async (data, e: any) => await onSubmit(data, 1, e)
+        )}>
         <div className='my-8 flex w-full gap-32'>
           <div className='flex w-full flex-col gap-4'>
             <FormInput
@@ -92,7 +95,7 @@ const UserDetails = () => {
             />
             <FormInput
               register={register}
-              fieldName='jobTitle'
+              fieldName='job_title'
               label='Job Title'
               placeholder='Enter your job title...'
             />
@@ -119,7 +122,7 @@ const UserDetails = () => {
           </div>
         </div>
         <button
-          type='button'
+          type='submit'
           className='self-end rounded-full bg-primary py-1 px-12 font-bold text-white'>
           Save
         </button>

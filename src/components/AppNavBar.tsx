@@ -9,6 +9,7 @@ import { Menu } from '@headlessui/react'
 import Link from 'next/link'
 import React, { useCallback } from 'react'
 
+import { useProfile } from '@/api'
 import { useAuth } from '@/context/AuthContext'
 
 interface AppNavBarProps {
@@ -30,6 +31,9 @@ const menuItems = [
 
 const AppNavBar: React.FC<AppNavBarProps> = ({ pageName }) => {
   const auth = useAuth()
+
+  const { data: profile } = useProfile()
+
   const onSignOut = useCallback(() => {
     auth.signOut()
   }, [auth])
@@ -45,7 +49,11 @@ const AppNavBar: React.FC<AppNavBarProps> = ({ pageName }) => {
         </div>
         <h2 className='flex gap-x-2 text-xl font-bold'>
           <span>Welcome Back!</span>
-          <span className='text-black50'>John Doe</span>
+          <span className='text-black50'>
+            {profile?.first_name && profile.last_name
+              ? `${profile.first_name} ${profile.last_name}`
+              : 'User'}
+          </span>
         </h2>
         <Menu as='div' className='relative inline-block text-left'>
           <div>

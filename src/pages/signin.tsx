@@ -29,7 +29,6 @@ const SignIn = () => {
   const auth = useAuth()
 
   useEffect(() => {
-    // eslint-disable-next-line
     if (auth.token) {
       // eslint-disable-next-line
       router.replace('/app/dashboard')

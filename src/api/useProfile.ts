@@ -10,14 +10,12 @@ export const useProfile = () => {
   const [profile, setProfile] = useState<any>()
 
   useEffect(() => {
-    // eslint-disable-next-line
     if (auth.token) {
       const decoded = jwtDecode(auth.token)
       setProfile(decoded)
     }
   }, [auth.token])
 
-  // eslint-disable-next-line
   const response = useSWR(`/api/user/${profile?.user_id}`)
   return response
 }
