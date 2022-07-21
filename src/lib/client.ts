@@ -4,6 +4,14 @@ const client = axios.create({
   baseURL: 'https://donkeymailerwebapi.herokuapp.com'
 })
 
+const refreshToken = async () => {
+  const { data } = await client.post('/authentication/token/refresh', {
+    refresh: localStorage.getItem('refresh')
+  })
+  localStorage.setItem('token', data.access)
+  return data.access
+}
+
 client.interceptors.request.use((config: any) => {
   const token = localStorage.getItem('token')
 
@@ -19,12 +27,16 @@ client.interceptors.response.use(
     return response
   },
   async (error: any) => {
-    if (error.response.status !== 404 && error.response.status !== 500) {
-      localStorage.removeItem('token')
+    if (error.response.status === 401) {
+      const token = await refreshToken()
+      // eslint-disable-next-line
+      if (token) {
+        return await client(error.config)
+      }
     }
-
     if (error.response.status === 403) {
       localStorage.removeItem('token')
+      window.location.reload()
     }
 
     return await Promise.reject(error)

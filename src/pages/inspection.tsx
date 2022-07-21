@@ -15,7 +15,7 @@ import TextCard from '@/containers/Inspection/TextCard'
 
 const Inspection = () => {
   return (
-    <PublicLayout>
+    <PublicLayout title='Inspection Service'>
       <div className='flex flex-col items-center justify-center gap-4 bg-white pt-32 pb-64'>
         <h1 className='text-5xl font-bold'>
           <span className='text-primary'>TCO</span> Professional Third-Party
@@ -26,7 +26,7 @@ const Inspection = () => {
         </p>
         <Link href='http://www.tcochina.com'>
           <a
-            className='rounded-full bg-primary px-16 py-2 text-white'
+            className='rounded-full bg-primary px-16 py-2 font-bold text-white'
             target='_blank'>
             Visit TCO
           </a>

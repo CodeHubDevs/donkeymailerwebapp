@@ -39,7 +39,7 @@ const tableData = [
 
 const Service = () => {
   return (
-    <PublicLayout>
+    <PublicLayout title='Service'>
       <div className='my-8 mx-64'>
         <h1 className='py-8 text-center text-4xl font-bold text-primary'>
           US Quote

@@ -6,7 +6,7 @@ import ContactForm from '@/containers/Contact/ContactForm'
 
 const Contact = () => {
   return (
-    <PublicLayout>
+    <PublicLayout title='Contact'>
       <div className='mx-64 my-32 flex items-center justify-between'>
         <ContactCard />
         <ContactForm />

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { useAuth } from '@/context/AuthContext'
 
@@ -15,13 +15,13 @@ const PrivateLayout: React.FC<PrivateLayoutProps> = ({ children, title }) => {
   const router = useRouter()
   const auth = useAuth()
 
-  useEffect(() => {
+  if (typeof window !== 'undefined') {
     // eslint-disable-next-line
     if (!auth.token) {
       // eslint-disable-next-line
       router.push('/signin')
     }
-  }, [auth.token, router])
+  }
 
   return (
     <>

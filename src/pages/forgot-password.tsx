@@ -1,9 +1,9 @@
+import { yupResolver } from '@hookform/resolvers/yup'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
 
 import { useResetPassword } from '@/api'
 import Lock from '@/assets/images/Lock.svg'

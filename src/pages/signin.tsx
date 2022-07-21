@@ -49,7 +49,9 @@ const SignIn = () => {
       try {
         const payload = await execute(data)
         const token = payload.data.results.tokens.access
+        const refresh = payload.data.results.tokens.refresh
         localStorage.setItem('token', token)
+        localStorage.setItem('refresh', refresh)
         auth.signIn()
         toast.success('Welcome back!')
       } catch (e: any) {
@@ -59,7 +61,7 @@ const SignIn = () => {
     [execute, auth]
   )
   return (
-    <PublicLayout>
+    <PublicLayout title='Sign In'>
       <div className='flex items-center gap-16 py-16 pr-32'>
         <div className='flex flex-grow flex-col items-center justify-center rounded-r-2xl bg-white py-32'>
           <div className='mb-10 text-center'>

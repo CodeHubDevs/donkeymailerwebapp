@@ -13,15 +13,15 @@ interface AuthProviderProps {
 const AuthContext = createContext({} as any)
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [token, setToken] = useState<string | null>(null)
+  const [token, setToken] = useState<string | null>(
+    typeof window !== 'undefined' ? localStorage.getItem('token') : null
+  )
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    // eslint-disable-next-line
-    if (token) {
-      setToken(token)
+    if (typeof window !== 'undefined') {
+      setToken(localStorage.getItem('token'))
     }
-  }, [])
+  }, [token])
 
   const signIn = useCallback(() => {
     setToken(localStorage.getItem('token'))
