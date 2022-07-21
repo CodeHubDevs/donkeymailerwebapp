@@ -1,4 +1,10 @@
-import React, { useCallback, createContext, useState, useContext } from 'react'
+import React, {
+  useCallback,
+  createContext,
+  useState,
+  useContext,
+  useEffect
+} from 'react'
 
 interface AuthProviderProps {
   children: React.ReactNode
@@ -7,7 +13,15 @@ interface AuthProviderProps {
 const AuthContext = createContext({} as any)
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [token, setToken] = useState<string | null>('')
+  const [token, setToken] = useState<string | null>(null)
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    // eslint-disable-next-line
+    if (token) {
+      setToken(token)
+    }
+  }, [])
 
   const signIn = useCallback(() => {
     setToken(localStorage.getItem('token'))

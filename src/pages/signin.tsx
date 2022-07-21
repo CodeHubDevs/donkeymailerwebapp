@@ -1,7 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useCallback } from 'react'
+import { useRouter } from 'next/router'
+import React, { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import * as yup from 'yup'
@@ -24,7 +25,16 @@ const schema = yup.object({
 })
 
 const SignIn = () => {
+  const router = useRouter()
   const auth = useAuth()
+
+  useEffect(() => {
+    // eslint-disable-next-line
+    if (auth.token) {
+      // eslint-disable-next-line
+      router.replace('/app/dashboard')
+    }
+  }, [auth.token, router])
 
   const { execute, isLoading } = useSignin()
 
