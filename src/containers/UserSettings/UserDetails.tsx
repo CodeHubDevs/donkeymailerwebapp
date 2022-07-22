@@ -89,12 +89,6 @@ const UserDetails = () => {
             />
             <FormInput
               register={register}
-              fieldName='title'
-              label='Title'
-              placeholder='Enter your title...'
-            />
-            <FormInput
-              register={register}
               fieldName='job_title'
               label='Job Title'
               placeholder='Enter your job title...'

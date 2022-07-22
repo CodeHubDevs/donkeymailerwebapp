@@ -5,7 +5,7 @@ import AppNavBar from '@/components/AppNavBar'
 import PrivateLayout from '@/components/layout/PrivateLayout'
 import Loading from '@/components/Loading'
 import ChangePassword from '@/containers/UserSettings/ChangePassword'
-import HowToContact from '@/containers/UserSettings/HowToContact'
+// import HowToContact from '@/containers/UserSettings/HowToContact'
 import UserDetails from '@/containers/UserSettings/UserDetails'
 
 const UserSettings = () => {
@@ -19,7 +19,7 @@ const UserSettings = () => {
         <>
           <UserDetails />
           <ChangePassword />
-          <HowToContact />
+          {/* <HowToContact /> */}
         </>
       )}
     </PrivateLayout>
