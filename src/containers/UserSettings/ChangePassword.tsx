@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import * as yup from 'yup'
 
-import { useChangePassword } from '@/api/useChangePassword'
+import { useChangePassword } from '@/api'
 import FormInput from '@/components/FormInput'
 import Spinner from '@/components/Spinner'
 

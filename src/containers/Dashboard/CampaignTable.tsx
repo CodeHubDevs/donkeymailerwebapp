@@ -106,16 +106,6 @@ const CampaignTable = () => {
         <table className='mt-5 w-full text-left text-sm text-gray-500'>
           <thead className=' className border-b border-t text-sm text-gray-700'>
             <tr>
-              <th scope='col' className='p-4'>
-                <div className='flex items-center'>
-                  <input
-                    id='checkbox-all'
-                    type='checkbox'
-                    className='mr-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500'
-                  />
-                  All
-                </div>
-              </th>
               <th scope='col' className='px-6 py-3'>
                 ID
               </th>
@@ -148,15 +138,6 @@ const CampaignTable = () => {
           <tbody>
             {dummyData.map((res) => (
               <tr key={res.id} className=' bg-white'>
-                <th scope='col' className='p-4 text-center'>
-                  <div className='flex items-center'>
-                    <input
-                      id='checkbox-all-search'
-                      type='checkbox'
-                      className='h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500'
-                    />
-                  </div>
-                </th>
                 <th
                   scope='row'
                   className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
@@ -195,12 +176,16 @@ const CampaignTable = () => {
                 <th
                   scope='row'
                   className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  Edit
+                  <button className='font-bold text-primary hover:text-secondary'>
+                    Track
+                  </button>
                 </th>
                 <th
                   scope='row'
                   className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  Track
+                  <button className='font-bold text-red-500 hover:text-red-600'>
+                    Delete
+                  </button>
                 </th>
               </tr>
             ))}

@@ -5,8 +5,7 @@ import React, { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
-import { useProfile } from '@/api'
-import { useUserSettings } from '@/api/useUserSettings'
+import { useProfile, useUserSettings } from '@/api'
 import FormInput from '@/components/FormInput'
 
 const schema = yup.object({

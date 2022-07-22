@@ -1,8 +1,9 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { useCallback } from 'react'
+import { useForm } from 'react-hook-form'
 
-import StatusPin from '@/components/StatusPin'
+import FormInput from '@/components/FormInput'
 
 import GroupModal from './GroupModal'
 
@@ -16,7 +17,7 @@ const dummyData = [
     countries: 3
   },
   {
-    id: '32143',
+    id: '321431',
     status: 'Draft',
     group_name: 'Some Group Name',
     date_modified: '2020-01-01',
@@ -24,7 +25,7 @@ const dummyData = [
     countries: 3
   },
   {
-    id: '32143',
+    id: '321432',
     status: 'Draft',
     group_name: 'Some Group Name',
     date_modified: '2020-01-01',
@@ -32,7 +33,7 @@ const dummyData = [
     countries: 3
   },
   {
-    id: '32143',
+    id: '321433',
     status: 'Draft',
     group_name: 'Some Group Name',
     date_modified: '2020-01-01',
@@ -40,7 +41,7 @@ const dummyData = [
     countries: 3
   },
   {
-    id: '32143',
+    id: '321434',
     status: 'Draft',
     group_name: 'Some Group Name',
     date_modified: '2020-01-01',
@@ -51,6 +52,36 @@ const dummyData = [
 
 const RecipientGroups = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false)
+  const [editItem, setEditItem] = React.useState<any>()
+
+  const { register, handleSubmit, reset } = useForm()
+
+  const onSubmit = useCallback((data: any) => {
+    console.log(data)
+    setTimeout(() => {
+      setEditItem(null)
+    }, 1000)
+  }, [])
+
+  const editRow = useCallback(
+    (row: any) => {
+      reset()
+      setEditItem(row)
+    },
+    [reset]
+  )
+
+  const handleClick = useCallback(
+    (id: any) => {
+      if (editItem === id) {
+        return handleSubmit(onSubmit)()
+      }
+
+      return editRow(id)
+    },
+    [editItem, handleSubmit, onSubmit, editRow]
+  )
+
   return (
     <div className='mt-10'>
       <h3 className='text-xl font-bold'>Reciepient Groups</h3>
@@ -72,21 +103,8 @@ const RecipientGroups = () => {
         <table className='min-h-[300px] w-full text-left text-sm text-gray-500'>
           <thead className='border-b border-t text-sm text-gray-700'>
             <tr>
-              <th scope='col' className='p-4'>
-                <div className='flex items-center'>
-                  <input
-                    id='checkbox-all'
-                    type='checkbox'
-                    className='mr-2 border border-primary text-primary outline-primary checked:bg-primary hover:bg-primary focus:ring-primary'
-                  />
-                  All
-                </div>
-              </th>
               <th scope='col' className='px-6 py-3'>
                 ID
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Status
               </th>
               <th scope='col' className='px-6 py-3'>
                 Group Name
@@ -113,15 +131,6 @@ const RecipientGroups = () => {
             />
             {dummyData.map((item) => (
               <tr key={item.id}>
-                <td scope='col' className='p-4 text-center'>
-                  <div className='flex items-center'>
-                    <input
-                      id='checkbox-all'
-                      type='checkbox'
-                      className='mr-2 border border-primary text-primary outline-primary checked:bg-primary hover:bg-primary focus:ring-primary'
-                    />
-                  </div>
-                </td>
                 <td
                   scope='row'
                   className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
@@ -130,12 +139,16 @@ const RecipientGroups = () => {
                 <td
                   scope='row'
                   className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  <StatusPin status={item.status} />
-                </td>
-                <td
-                  scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  {item.group_name}
+                  {editItem === item.id ? (
+                    <FormInput
+                      register={register}
+                      fieldName='group_name'
+                      placeholder='Enter New Group Name...'
+                      className='py-1'
+                    />
+                  ) : (
+                    item.group_name
+                  )}
                 </td>
                 <td
                   scope='row'
@@ -152,14 +165,22 @@ const RecipientGroups = () => {
                   className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
                   {item.countries}
                 </td>
-                <th
-                  scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-bold text-primary'>
-                  <span
-                    className='cursor-pointer'
-                    onClick={() => setIsModalOpen(true)}>
-                    View
-                  </span>
+                <th scope='row' className='whitespace-nowrap px-6 py-4'>
+                  <div className='flex items-center gap-8'>
+                    <button
+                      className='cursor-pointer font-bold text-primary hover:text-secondary'
+                      onClick={() => setIsModalOpen(true)}>
+                      View
+                    </button>
+                    <button
+                      className='cursor-pointer font-bold text-primary hover:text-secondary'
+                      onClick={() => handleClick(item.id)}>
+                      {editItem === item.id ? 'Save' : 'Edit'}
+                    </button>
+                    <button className='font-bold text-red-500 hover:text-red-600'>
+                      Delete
+                    </button>
+                  </div>
                 </th>
               </tr>
             ))}
