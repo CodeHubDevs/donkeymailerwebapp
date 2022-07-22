@@ -7,7 +7,6 @@ import * as yup from 'yup'
 import { useChangePassword } from '@/api/useChangePassword'
 import FormInput from '@/components/FormInput'
 import Spinner from '@/components/Spinner'
-import { capFirstWord } from '@/helpers'
 
 const schema = yup.object({
   old_password: yup.string().required('Required field'),
@@ -59,6 +58,7 @@ const ChangePassword = () => {
             register={register}
             fieldName='old_password'
             label='Current Password'
+            type='password'
             placeholder='Enter your current password...'
           />
           {Boolean(errors.old_password) && (
@@ -70,6 +70,7 @@ const ChangePassword = () => {
             register={register}
             fieldName='new_password'
             label='New Password'
+            type='password'
             placeholder='Enter your new password...'
           />
           {Boolean(errors.new_password) && (
@@ -81,6 +82,7 @@ const ChangePassword = () => {
             register={register}
             fieldName='confirm_password'
             label='Confirm New Password'
+            type='password'
             placeholder='Confirm your new password...'
           />
           {Boolean(errors.confirm_password) && (

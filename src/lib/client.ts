@@ -5,11 +5,15 @@ const client = axios.create({
 })
 
 const refreshToken = async () => {
-  const { data } = await client.post('/authentication/token/refresh', {
-    refresh: localStorage.getItem('refresh')
-  })
-  localStorage.setItem('token', data.access)
-  return data.access
+  try {
+    const { data } = await client.post('/authentication/token/refresh', {
+      refresh: localStorage.getItem('refresh')
+    })
+    localStorage.setItem('token', data.access)
+    return data.access
+  } catch (error) {
+    console.log()
+  }
 }
 
 client.interceptors.request.use((config: any) => {

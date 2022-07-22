@@ -23,7 +23,7 @@ export const useSignin = () => {
       setData(response as any)
       return response
     } catch (e: any) {
-      console.log('error', e)
+      console.log()
       throw e
     } finally {
       setIsLoading(false)

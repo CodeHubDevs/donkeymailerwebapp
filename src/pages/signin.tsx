@@ -10,7 +10,7 @@ import * as yup from 'yup'
 import { useSignin } from '@/api'
 import Key from '@/assets/images/key.png'
 import DividerText from '@/components/DividerText'
-import FormCheckbox from '@/components/FormCheckbox'
+// import FormCheckbox from '@/components/FormCheckbox'
 import FormInput from '@/components/FormInput'
 import PublicLayout from '@/components/layout/PublicLayout'
 import Spinner from '@/components/Spinner'
@@ -110,7 +110,7 @@ const SignIn = () => {
                 {errors.password?.message}
               </span>
             )}
-            <FormCheckbox register={register} fieldName='terms'>
+            {/* <FormCheckbox register={register} fieldName='terms'>
               <span className='text-sm text-black25'>
                 Remember me (Please use this feature on a private device)
               </span>
@@ -119,7 +119,7 @@ const SignIn = () => {
               <span className='text-sm text-red-400'>
                 {errors.terms?.message}
               </span>
-            )}
+            )} */}
             <div className='mt-8 flex flex-col items-center justify-center gap-2'>
               <button
                 className={`rounded-full bg-gradient-to-r from-secondary to-primary py-2 px-6 ${
