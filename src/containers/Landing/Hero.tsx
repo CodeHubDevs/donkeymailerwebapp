@@ -1,6 +1,7 @@
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 import MailBox from '@/assets/images/mailbox.png'
@@ -21,12 +22,16 @@ const Hero = () => {
         <h1 className='w-[600px] text-7xl font-bold'>
           Online Order, Efficient Printing, and Fast Delivery
         </h1>
-        <button className='flex items-center justify-center rounded-full bg-primary py-2 px-2'>
-          <h5 className='mr-8 ml-2 text-lg font-bold text-white'>Start Now</h5>
-          <div className='rounded-full bg-white px-8 text-2xl text-primary'>
-            <FontAwesomeIcon icon={faArrowRight} />
-          </div>
-        </button>
+        <Link href='/signin'>
+          <a className='flex items-center justify-center rounded-full bg-primary py-2 px-2'>
+            <h5 className='mr-8 ml-2 text-lg font-bold text-white'>
+              Start Now
+            </h5>
+            <div className='rounded-full bg-white px-8 text-2xl text-primary'>
+              <FontAwesomeIcon icon={faArrowRight} />
+            </div>
+          </a>
+        </Link>
       </div>
       <div className='grid grid-cols-2 justify-center gap-4'>
         <HeroCard

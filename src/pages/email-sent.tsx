@@ -11,7 +11,7 @@ export default function EmailSent() {
         <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
           <div className='lg:text-center'>
             <p
-              className='text-base text-5xl font-semibold'
+              className='text-5xl font-semibold'
               style={{
                 color: '#45CEDE',
                 fontStyle: 'normal',

@@ -53,7 +53,7 @@ const SignUp = () => {
   )
 
   return (
-    <PublicLayout>
+    <PublicLayout title='Sign Up'>
       <div className='flex items-center gap-16 py-16 pr-32'>
         <div className='flex flex-grow flex-col items-center justify-center rounded-r-2xl bg-white py-32'>
           <div className='mb-10 text-center'>

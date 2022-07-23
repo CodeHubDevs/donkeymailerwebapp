@@ -11,7 +11,7 @@ interface AboutCardProps {
 
 const About = () => {
   return (
-    <PublicLayout>
+    <PublicLayout title='About'>
       <div className='bg-white py-32'>
         <div className='mx-64 mb-8'>
           <DividerIcon icon={faQuestionCircle} />

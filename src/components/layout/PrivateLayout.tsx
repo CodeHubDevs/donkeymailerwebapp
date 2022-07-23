@@ -1,5 +1,8 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
+
+import { useAuth } from '@/context/AuthContext'
 
 import SideBar from '../SideBar'
 
@@ -9,6 +12,17 @@ interface PrivateLayoutProps {
 }
 
 const PrivateLayout: React.FC<PrivateLayoutProps> = ({ children, title }) => {
+  const router = useRouter()
+  const auth = useAuth()
+
+  if (typeof window !== 'undefined') {
+    // eslint-disable-next-line
+    if (!auth.token) {
+      // eslint-disable-next-line
+      router.push('/signin')
+    }
+  }
+
   return (
     <>
       <Head>

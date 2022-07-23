@@ -29,9 +29,11 @@ const NavBar = () => {
         <Dot />
         <NavItem href='/contact'>Contact</NavItem>
       </div>
-      <button className='rounded-full bg-gradient-to-r from-secondary to-primary px-8 py-2 text-lg font-semibold text-white'>
-        Get Started
-      </button>
+      <Link href='/signin'>
+        <a className='rounded-full bg-gradient-to-r from-secondary to-primary px-8 py-2 text-lg font-semibold text-white'>
+          Get Started
+        </a>
+      </Link>
     </nav>
   )
 }

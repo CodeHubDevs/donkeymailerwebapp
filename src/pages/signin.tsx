@@ -1,7 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useCallback } from 'react'
+import { useRouter } from 'next/router'
+import React, { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import * as yup from 'yup'
@@ -9,7 +10,7 @@ import * as yup from 'yup'
 import { useSignin } from '@/api'
 import Key from '@/assets/images/key.png'
 import DividerText from '@/components/DividerText'
-import FormCheckbox from '@/components/FormCheckbox'
+// import FormCheckbox from '@/components/FormCheckbox'
 import FormInput from '@/components/FormInput'
 import PublicLayout from '@/components/layout/PublicLayout'
 import Spinner from '@/components/Spinner'
@@ -24,7 +25,15 @@ const schema = yup.object({
 })
 
 const SignIn = () => {
+  const router = useRouter()
   const auth = useAuth()
+
+  useEffect(() => {
+    if (auth.token) {
+      // eslint-disable-next-line
+      router.replace('/app/dashboard')
+    }
+  }, [auth.token, router])
 
   const { execute, isLoading } = useSignin()
 
@@ -39,7 +48,9 @@ const SignIn = () => {
       try {
         const payload = await execute(data)
         const token = payload.data.results.tokens.access
+        const refresh = payload.data.results.tokens.refresh
         localStorage.setItem('token', token)
+        localStorage.setItem('refresh', refresh)
         auth.signIn()
         toast.success('Welcome back!')
       } catch (e: any) {
@@ -49,7 +60,7 @@ const SignIn = () => {
     [execute, auth]
   )
   return (
-    <PublicLayout>
+    <PublicLayout title='Sign In'>
       <div className='flex items-center gap-16 py-16 pr-32'>
         <div className='flex flex-grow flex-col items-center justify-center rounded-r-2xl bg-white py-32'>
           <div className='mb-10 text-center'>
@@ -99,7 +110,7 @@ const SignIn = () => {
                 {errors.password?.message}
               </span>
             )}
-            <FormCheckbox register={register} fieldName='terms'>
+            {/* <FormCheckbox register={register} fieldName='terms'>
               <span className='text-sm text-black25'>
                 Remember me (Please use this feature on a private device)
               </span>
@@ -108,7 +119,7 @@ const SignIn = () => {
               <span className='text-sm text-red-400'>
                 {errors.terms?.message}
               </span>
-            )}
+            )} */}
             <div className='mt-8 flex flex-col items-center justify-center gap-2'>
               <button
                 className={`rounded-full bg-gradient-to-r from-secondary to-primary py-2 px-6 ${

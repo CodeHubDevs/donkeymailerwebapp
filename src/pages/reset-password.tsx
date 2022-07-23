@@ -1,14 +1,14 @@
-import * as yup from 'yup'
-import Link from 'next/link'
+import { yupResolver } from '@hookform/resolvers/yup'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 import { useResetPassword } from '@/api'
-import FormInput from '@/components/FormInput'
 import Lock from '@/assets/images/Lock.svg'
+import FormInput from '@/components/FormInput'
 import PublicLayout from '@/components/layout/PublicLayout'
 
 const schema = yup.object({
@@ -37,7 +37,7 @@ const ResetPassword = () => {
     },
     [execute]
   )
-  console.log(query['id'])
+  console.log(query.id)
   return (
     <PublicLayout isFooter={false}>
       <div className='mt-16 flex flex-col items-center justify-center gap-4 px-64'>
