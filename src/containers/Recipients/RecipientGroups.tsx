@@ -64,7 +64,7 @@ const RecipientGroups = () => {
   }, [])
 
   const editRow = useCallback(
-    (row: any) => {
+    (row: string) => {
       reset()
       setEditItem(row)
     },
@@ -72,7 +72,7 @@ const RecipientGroups = () => {
   )
 
   const handleClick = useCallback(
-    (id: any) => {
+    (id: string) => {
       if (editItem === id) {
         return handleSubmit(onSubmit)()
       }

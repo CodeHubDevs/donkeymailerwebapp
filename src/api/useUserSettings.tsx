@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 
+import { useAuth } from '@/context/AuthContext'
 import client from '@/lib/client'
 
 export interface UserSettingsPayloadProps {
@@ -7,6 +8,8 @@ export interface UserSettingsPayloadProps {
   last_name: string
   first_name: string
   company: string
+  job_title: string
+  contact: string
 }
 
 const userSettings = async (payload: UserSettingsPayloadProps, id: number) => {
@@ -18,10 +21,12 @@ export const useUserSettings = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState(null)
 
+  const auth = useAuth()
+
   const execute = useCallback(
-    async (payload: UserSettingsPayloadProps, id: number) => {
+    async (payload: UserSettingsPayloadProps) => {
       try {
-        const response = await userSettings(payload, id)
+        const response = await userSettings(payload, auth.decoded?.user_id)
         setData(response as any)
         return response
       } catch (e: any) {
@@ -31,7 +36,7 @@ export const useUserSettings = () => {
         setIsLoading(false)
       }
     },
-    [setIsLoading, setData]
+    [setIsLoading, setData, auth.decoded]
   )
 
   return { isLoading, data, execute }

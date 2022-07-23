@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 
+import { useAuth } from '@/context/AuthContext'
 import client from '@/lib/client'
 
 interface BillingSettingsPayloadProps {
@@ -14,19 +15,24 @@ interface BillingSettingsPayloadProps {
   postal_code: string
 }
 
-const billingSettings = async (payload: BillingSettingsPayloadProps) => {
-  const response = await client.post('/api/billing-address-list/', payload)
+const billingSettings = async (
+  payload: BillingSettingsPayloadProps,
+  id: any
+) => {
+  const response = await client.put(`/api/billing-address-list/${id}/`, payload)
   return response
 }
 
-export const useAddBillingSettings = () => {
+export const useUpdateBillingSettings = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState(null)
+
+  const auth = useAuth()
 
   const execute = useCallback(
     async (payload: BillingSettingsPayloadProps) => {
       try {
-        const response = await billingSettings(payload)
+        const response = await billingSettings(payload, auth.decoded?.user_id)
         setData(response as any)
         return response
       } catch (e: any) {
@@ -36,7 +42,7 @@ export const useAddBillingSettings = () => {
         setIsLoading(false)
       }
     },
-    [setIsLoading, setData]
+    [setIsLoading, setData, auth.decoded]
   )
 
   return { isLoading, data, execute }
