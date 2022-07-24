@@ -1,39 +1,38 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 
 interface DashboardCardProps {
   title: string
   result: string
   action: string
   withIcon: boolean
+  href?: any
 }
 
 const DashboardCards = () => {
   return (
-    <div className='mt-8 grid grid-cols-4 gap-4'>
+    <div className='mt-8 grid grid-cols-3 gap-4'>
       <DashboardCard
         title='Campaigns'
         result='32'
         action='Create New Campaign'
         withIcon={true}
+        href='campaign/select'
       />
       <DashboardCard
         title='Templates'
         result='50'
         action='Create New Template'
         withIcon={true}
+        href='template/create'
       />
       <DashboardCard
-        title='Recipients'
+        title='Recipient Groups'
         result='10'
-        action='Create New Recipient'
+        action='Create New Recipient Group'
         withIcon={true}
-      />
-      <DashboardCard
-        title='Total Mails'
-        result='22'
-        action='Track All Mails'
-        withIcon={false}
+        href={{ pathname: 'recipient/create', query: { new: true } }}
       />
     </div>
   )
@@ -43,25 +42,24 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   title,
   result,
   action,
-  withIcon
+  withIcon,
+  href = '#'
 }) => {
   return (
     <div className='rounded-3xl p-4 shadow-md'>
       <h5 className='mb-4 text-xl font-bold text-primary'>{title}</h5>
       <p className='mb-8 text-center text-5xl font-bold text-black'>{result}</p>
-      <button className='w-full rounded-md bg-primary from-secondary to-primary py-2 px-6'>
-        <div className='flex items-center justify-center gap-x-2 rounded-md px-1 py-1 text-black50'>
+      <Link href={href}>
+        <a className='mx-12 flex items-center justify-center gap-x-2 rounded-md bg-primary py-3 px-6'>
           {withIcon && (
             <FontAwesomeIcon
               icon={faCirclePlus}
-              className='cursor-pointer rounded-full bg-primary text-white'
+              className='cursor-pointer rounded-full bg-primary text-lg text-white'
             />
           )}
-          <span className='text-center text-sm font-bold text-white'>
-            {action}
-          </span>
-        </div>
-      </button>
+          <span className='text-center font-bold text-white'>{action}</span>
+        </a>
+      </Link>
     </div>
   )
 }

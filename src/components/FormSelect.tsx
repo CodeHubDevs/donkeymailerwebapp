@@ -3,10 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Listbox } from '@headlessui/react'
 import React from 'react'
 
-const FormSelect = ({ options, value, onChange, label }: any) => {
+const FormSelect = ({
+  options,
+  value,
+  onChange,
+  label,
+  className = ''
+}: any) => {
   return (
-    <div className='flex w-full flex-col gap-2'>
-      <label className='font-bold text-primary'>{label}</label>
+    <div className={`flex w-full flex-col gap-2 ${className}`}>
+      {label && <label className='font-bold text-primary'>{label}</label>}
       <Listbox value={value} onChange={onChange}>
         <div className='relative w-full'>
           <Listbox.Button

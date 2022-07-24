@@ -1,15 +1,18 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 import GoBackToSelectButton from '@/components/GoBackToSelectButton'
 
 const CreateRecipient = () => {
+  const router = useRouter()
+
   return (
     <div className='mt-10'>
       <div className='flex items-center justify-between'>
-        <h3 className='text-xl font-bold'>Type Recipients Manually</h3>
-        <GoBackToSelectButton />
+        <h3 className='text-2xl font-bold'>Create Recipient Group</h3>
+        {!router.query.new && <GoBackToSelectButton />}
       </div>
       <div className='mt-4 rounded-xl bg-white p-4 shadow-lg'>
         <form className='flex flex-col items-start gap-2'>
@@ -29,20 +32,18 @@ const CreateRecipient = () => {
         <div>
           <div className='mt-4 flex items-center justify-between border-t py-2'>
             <h3 className='text-xl font-bold'>Recipients</h3>
-            <div className=''>
-              <button
-                type='button'
-                className='rounded-lg bg-primary from-secondary to-primary py-2 px-8 text-white '>
-                <span className='absolute inset-y-0 left-0 flex items-center pl-3'></span>
-                <FontAwesomeIcon
-                  icon={faCirclePlus}
-                  className='mt-1 cursor-pointer rounded-full bg-primary text-white'
-                />
-                <span className='ml-2 text-center text-sm font-bold text-white'>
-                  Add Recipient
-                </span>
-              </button>
-            </div>
+            <button
+              type='button'
+              className='rounded-lg bg-primary from-secondary to-primary py-2 px-8 text-white '>
+              <span className='absolute inset-y-0 left-0 flex items-center pl-3'></span>
+              <FontAwesomeIcon
+                icon={faCirclePlus}
+                className='mt-1 cursor-pointer rounded-full bg-primary text-white'
+              />
+              <span className='ml-2 text-center text-sm font-bold text-white'>
+                Add Recipient
+              </span>
+            </button>
           </div>
           <table className='w-full text-left text-sm text-gray-500'>
             <thead className=' className border-b border-t text-sm text-gray-700'>

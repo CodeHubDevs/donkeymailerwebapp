@@ -1,8 +1,8 @@
 import {
-  faUser,
   faGear,
   faWallet,
-  faRightFromBracket
+  faRightFromBracket,
+  faChevronDown
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Menu } from '@headlessui/react'
@@ -47,21 +47,15 @@ const AppNavBar: React.FC<AppNavBarProps> = ({ pageName }) => {
             Top-Up Balance
           </button>
         </div>
-        <h2 className='flex gap-x-2 text-xl font-bold'>
-          <span>Welcome Back!</span>
-          <span className='text-black50'>
-            {profile?.first_name && profile.last_name
-              ? `${profile.first_name} ${profile.last_name}`
-              : 'User'}
-          </span>
-        </h2>
         <Menu as='div' className='relative inline-block text-left'>
           <div>
-            <Menu.Button>
-              <FontAwesomeIcon
-                icon={faUser}
-                className='h-8 w-8 rounded-full bg-gradient-to-r from-secondary to-primary p-2 text-white'
-              />
+            <Menu.Button className='flex items-center gap-2 rounded-lg px-4 py-2 text-lg font-bold hover:bg-gray-200'>
+              <h2 className='flex'>
+                {profile?.first_name && profile.last_name
+                  ? `Welcome ${profile.first_name} ${profile.last_name}`
+                  : 'Welcome User'}
+              </h2>
+              <FontAwesomeIcon icon={faChevronDown} className='text-sm' />
             </Menu.Button>
           </div>
           <Menu.Items className='absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>

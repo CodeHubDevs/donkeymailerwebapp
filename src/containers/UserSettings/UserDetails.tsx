@@ -1,5 +1,3 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -54,27 +52,9 @@ const UserDetails = () => {
         </div>
       ) : (
         <>
-          <div className='flex flex-col items-center'>
-            <FontAwesomeIcon
-              icon={faUser}
-              className='h-12 w-12 rounded-full bg-gradient-to-r from-secondary to-primary p-4 text-white'
-            />
-            <div className='mt-4 flex items-center gap-1'>
-              {profile?.first_name && profile?.last_name ? (
-                <>
-                  <span className='text-lg font-bold text-primary'>
-                    {profile.first_name}
-                  </span>
-                  <span className='text-lg font-bold text-primary'>
-                    {profile.last_name}
-                  </span>
-                </>
-              ) : (
-                <span className='text-lg font-bold text-primary'>User</span>
-              )}
-            </div>
+          {/* <div className='flex justify-center'>
             <span className='font-bold'>Tier I</span>
-          </div>
+          </div> */}
           <form
             className='flex flex-col items-start px-24'
             onSubmit={handleSubmit(
