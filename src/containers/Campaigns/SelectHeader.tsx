@@ -7,12 +7,14 @@ interface SelectHeaderProps {
 
 const SelectHeader: React.FC<SelectHeaderProps> = ({ image }) => {
   return (
-    <div className='lg:text-center'>
-      <Image src={image} alt='image' />
-      <h3 className='mt-5 text-4xl font-bold text-secondary'>
+    <div className='mt-10 flex flex-col items-center justify-center gap-2'>
+      <div className='relative h-40 w-40'>
+        <Image src={image} alt='Image' layout='fill' objectFit='cover' />
+      </div>
+      <h3 className='text-2xl font-bold text-secondary'>
         Choose a Template size to start
       </h3>
-      <p className='mt-8 max-w-xl text-lg text-black lg:mx-auto'>
+      <p className='max-w-xl text-black lg:mx-auto'>
         One from the scratch to have everything customized.
       </p>
     </div>

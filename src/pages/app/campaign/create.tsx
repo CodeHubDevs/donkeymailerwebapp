@@ -3,16 +3,16 @@ import React from 'react'
 import AppNavBar from '@/components/AppNavBar'
 import GuideInfoFooter from '@/components/GuideInfoFooter'
 import PrivateLayout from '@/components/layout/PrivateLayout'
-import MyCampaigns from '@/containers/Campaigns/MyCampaigns'
+import CreateCampaign from '@/containers/Campaigns/CreateCampaign'
 
-const Campaign = () => {
+const CampaignCreate = () => {
   return (
-    <PrivateLayout title='Campaign'>
+    <PrivateLayout title='Template Create'>
       <AppNavBar pageName='Campaign' />
-      <MyCampaigns />
+      <CreateCampaign />
       <GuideInfoFooter />
     </PrivateLayout>
   )
 }
 
-export default Campaign
+export default CampaignCreate

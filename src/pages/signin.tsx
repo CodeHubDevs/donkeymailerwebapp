@@ -52,7 +52,7 @@ const SignIn = () => {
         localStorage.setItem('token', token)
         localStorage.setItem('refresh', refresh)
         auth.signIn()
-        toast.success('Welcome back!')
+        toast.success('Welcome!')
       } catch (e: any) {
         toast.error(e.response.data.detail)
       }

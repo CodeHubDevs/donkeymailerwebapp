@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Listbox } from '@headlessui/react'
 import React from 'react'
 
-const SelectMenu = ({ options, value, onChange }: any) => {
+const SelectMenu = ({ options, value, onChange, isLeft }: any) => {
   return (
     <Listbox value={value} onChange={onChange} as='div' className='relative'>
       <Listbox.Button className='flex w-full items-center gap-2 rounded-lg bg-primary px-2 text-white'>
@@ -18,7 +18,10 @@ const SelectMenu = ({ options, value, onChange }: any) => {
           />
         </span>
       </Listbox.Button>
-      <Listbox.Options className='absolute right-0 z-50 mt-2 max-h-60 origin-top-right overflow-auto rounded-md bg-white py-1 shadow-lg'>
+      <Listbox.Options
+        className={`absolute z-50 mt-2 max-h-60 origin-top-right overflow-auto rounded-md bg-white py-1 shadow-lg ${
+          isLeft ? 'left-0' : 'right-0'
+        }`}>
         {options.map((option: any, index: any) => {
           return (
             <Listbox.Option
