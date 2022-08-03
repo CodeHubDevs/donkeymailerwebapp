@@ -15,7 +15,7 @@ import Spinner from '@/components/Spinner'
 import { capFirstWord } from '@/helpers'
 
 const schema = yup.object({
-  email: yup.string().email().required('Required field'),
+  email: yup.string().email().required('Email is required'),
   password: yup
     .string()
     .min(6, 'Password must be at least 6 characters')
@@ -23,7 +23,7 @@ const schema = yup.object({
   confirm_password: yup
     .string()
     .oneOf([yup.ref('password'), null], 'Passwords must match')
-    .required('Required field'),
+    .required('Confirm password is required'),
   terms: yup
     .bool()
     .oneOf([true], 'You must agree to the terms and conditions')
