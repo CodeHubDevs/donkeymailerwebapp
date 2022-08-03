@@ -20,7 +20,7 @@ interface Card {
 const Main = () => {
   return (
     <section className='-mt-24 bg-white py-32 px-32'>
-      <div className='mx-32 mt-16'>
+      <div className='mx-32'>
         <DividerIcon icon={faMessage} />
       </div>
       <h3 className='mx-16 mt-8 text-center text-2xl text-secondary'>
