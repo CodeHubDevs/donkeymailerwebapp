@@ -11,8 +11,8 @@ interface ContactInfoProps {
 const ContactCard = () => {
   return (
     <div className='relative rounded-3xl bg-white px-32 shadow-2xl'>
-      <div className='absolute -top-24 -left-4'>
-        <Image src={ContactUser} alt='user' />
+      <div className='absolute -top-16 -left-12 h-32 w-32'>
+        <Image src={ContactUser} alt='Image' layout='fill' objectFit='cover' />
       </div>
       <div className='my-32 flex flex-col gap-6'>
         <ContactInfo
