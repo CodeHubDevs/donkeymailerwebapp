@@ -7,7 +7,7 @@ import ContactForm from '@/containers/Contact/ContactForm'
 const Contact = () => {
   return (
     <PublicLayout title='Contact'>
-      <div className='mx-64 my-32 flex items-center justify-between'>
+      <div className=' my-32 flex w-full items-center justify-center gap-8 px-32'>
         <ContactCard />
         <ContactForm />
       </div>

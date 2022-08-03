@@ -15,9 +15,13 @@ const NavBar = () => {
   return (
     <nav className='flex items-center justify-between py-8 px-32'>
       <Link href='/'>
-        <div className='flex cursor-pointer items-center'>
-          <Image src={Logo} alt='logo' />
-          <Image src={LogoText} alt='logo-text' />
+        <div className='flex cursor-pointer items-center gap-2'>
+          <div className='relative h-10 w-16'>
+            <Image src={Logo} alt='Image' layout='fill' objectFit='cover' />
+          </div>
+          <div className='relative h-8 w-40'>
+            <Image src={LogoText} alt='Image' layout='fill' objectFit='cover' />
+          </div>
         </div>
       </Link>
       <div className='flex items-center gap-2'>

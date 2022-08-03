@@ -33,7 +33,7 @@ const Inspection = () => {
         </Link>
       </div>
       <div className='-mt-40'>
-        <div className='grid grid-cols-3 gap-32 px-72'>
+        <div className='grid grid-cols-3 gap-16 px-72'>
           <InspectionCard label='24-hour Report' image={Hour} />
           <InspectionCard label='Discount Price' image={Discount} />
           <InspectionCard label='Professional Service' image={Tie} />
@@ -58,17 +58,17 @@ const Inspection = () => {
       <div className='mx-64'>
         <div className='mx-32 mt-24'>
           <DividerText>
-            <h5 className='flex w-1/2 items-center justify-center text-2xl font-bold text-primary'>
+            <h5 className='flex w-1/2 items-center justify-center text-center text-2xl font-bold text-primary'>
               Our Service
             </h5>
           </DividerText>
         </div>
-        <h3 className='mx-64 my-8 text-center text-2xl text-black50'>
+        <h3 className='mx-48 my-8 text-center text-xl text-black50'>
           According to customer needs, the professional team provides customized
           inspection schemes and services to escort your supply chain quality
           control
         </h3>
-        <div className='my-16 grid grid-cols-2 gap-16 px-64'>
+        <div className='my-16 grid grid-cols-2 gap-4 px-40'>
           <InspectionCard
             label='Factory Inspection'
             isReverse
@@ -80,7 +80,7 @@ const Inspection = () => {
             image={InspectionSearch}
           />
         </div>
-        <div className='grid grid-cols-3 gap-16 px-32'>
+        <div className='grid grid-cols-3 gap-4 px-20'>
           <InspectionCard
             label='Mid-Term Inspection'
             isReverse

@@ -7,7 +7,7 @@ import FormTextArea from '@/components/FormTextArea'
 const ContactForm = () => {
   const { register } = useForm()
   return (
-    <form className='flex w-full flex-col items-center gap-4 px-32'>
+    <form className='flex w-full flex-col items-center gap-4'>
       <div className='flex w-full gap-2'>
         <FormInput
           register={register}

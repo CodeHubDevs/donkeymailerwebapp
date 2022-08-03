@@ -17,9 +17,9 @@ interface HeroCardProps {
 
 const Hero = () => {
   return (
-    <section className='mt-24 flex w-full items-center justify-between gap-32 px-32'>
+    <section className='mt-10 flex w-full items-center justify-between gap-16 px-32'>
       <div className='flex flex-col items-start gap-8'>
-        <h1 className='w-[600px] text-7xl font-bold'>
+        <h1 className='w-[600px] text-3xl font-bold'>
           Online Order, Efficient Printing, and Fast Delivery
         </h1>
         <Link href='/signin'>
@@ -66,10 +66,14 @@ const HeroCard: React.FC<HeroCardProps> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col items-center gap-4 rounded-3xl bg-white p-8 shadow-lg ${className}`}>
-      <h5 className='text-xl font-bold text-primary'>{title}</h5>
-      <Image src={image} alt='' />
-      <p className='text-center  text-lg text-black50'>{description}</p>
+      className={`flex flex-col items-center gap-8 rounded-3xl bg-white p-8 shadow-lg ${className}`}>
+      <h5 className='h-10 text-center text-xl font-bold text-primary'>
+        {title}
+      </h5>
+      <div className='relative h-32 w-32'>
+        <Image src={image} alt='Image' layout='fill' objectFit='cover' />
+      </div>
+      <p className='text-center text-black50'>{description}</p>
     </div>
   )
 }

@@ -54,8 +54,8 @@ const SignUp = () => {
 
   return (
     <PublicLayout title='Sign Up'>
-      <div className='flex items-center gap-16 py-16 pr-32'>
-        <div className='flex flex-grow flex-col items-center justify-center rounded-r-2xl bg-white py-32'>
+      <div className='flex items-center gap-16 py-8 pr-32'>
+        <div className='flex flex-grow flex-col items-center justify-center rounded-r-2xl bg-white py-16'>
           <div className='mb-10 text-center'>
             <h2 className='text-4xl font-bold'>Get Started!</h2>
             <p className='text-black25'>
@@ -131,7 +131,9 @@ const SignUp = () => {
             </div>
           </form>
         </div>
-        <Image src={Key} alt='key' />
+        <div className='relative h-48 w-48'>
+          <Image src={Key} alt='Image' layout='fill' objectFit='cover' />
+        </div>
       </div>
     </PublicLayout>
   )

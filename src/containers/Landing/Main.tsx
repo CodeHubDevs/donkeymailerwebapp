@@ -23,15 +23,15 @@ const Main = () => {
       <div className='mx-32 mt-16'>
         <DividerIcon icon={faMessage} />
       </div>
-      <h3 className='mt-16 text-center text-4xl text-secondary'>
+      <h3 className='mx-16 mt-8 text-center text-2xl text-secondary'>
         The preferred method of communication for overseas consumers Mailing
         Postcards and Letters that can help you get closer to U.S. consumers
         quickly
       </h3>
       <div className='relative mx-32 mt-32 rounded-3xl bg-secondary10 p-20'>
-        <div className='absolute -top-10 -left-20 flex items-center'>
+        <div className='absolute -top-9 -left-20 flex items-center'>
           <Image src={Logo} alt='logo' />
-          <h3 className='text-4xl font-bold'>
+          <h3 className='text-2xl font-bold'>
             What is{' '}
             <span className='bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent'>
               DonkeyMailer
@@ -39,7 +39,7 @@ const Main = () => {
             ?
           </h3>
         </div>
-        <h4 className='text-center text-3xl font-semibold text-black50'>
+        <h4 className='text-center text-xl font-semibold text-black50'>
           Direct mail automation tool supporting US, multi-format letters and
           postcards
         </h4>
@@ -83,10 +83,10 @@ const Main = () => {
 const MainCard: React.FC<Card> = ({ title, image, description }) => {
   return (
     <div className='relative flex flex-col items-center rounded-3xl p-10 shadow-2xl'>
-      <div className='absolute -top-24'>
-        <Image src={image} alt='image' />
+      <div className='absolute -top-16 h-32 w-40'>
+        <Image src={image} alt='Image' layout='fill' objectFit='cover' />
       </div>
-      <h5 className='mt-32 mb-8 text-xl font-bold text-primary'>{title}</h5>
+      <h5 className='mt-16 mb-8 text-xl font-bold text-primary'>{title}</h5>
       <p className='text-center text-lg text-black50'>{description}</p>
     </div>
   )
@@ -99,8 +99,12 @@ const SubCard: React.FC<Card> = ({ title, image, description }) => {
         <h5 className='text-center text-xl font-bold text-primary'>{title}</h5>
       </div>
       <div className='flex flex-col items-center p-8'>
-        <p className='mb-8 text-center text-lg text-black50'>{description}</p>
-        <Image src={image} alt='image' />
+        <p className='mb-8 h-48 text-center text-lg text-black50'>
+          {description}
+        </p>
+        <div className='relative h-32 w-40'>
+          <Image src={image} alt='Image' layout='fill' objectFit='cover' />
+        </div>
       </div>
     </div>
   )
