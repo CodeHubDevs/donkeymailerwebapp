@@ -1,20 +1,40 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { yupResolver } from '@hookform/resolvers/yup'
 import React, { Fragment, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import * as yup from 'yup'
 
 import { useCreateRecipientLists } from '@/api'
 import { useRecipientLists } from '@/api/useRecipientLists'
 import FormInput from '@/components/FormInput'
 
+const schema = yup.object({
+  first_name: yup.string().required(),
+  last_name: yup.string().required(),
+  company_name: yup.string().required(),
+  address_1: yup.string().required(),
+  address_2: yup.string().required(),
+  city: yup.string().required(),
+  country_or_state: yup.string().required(),
+  postal_or_zipcode: yup.string().required(),
+  country: yup.string().required(),
+  phone_number: yup.string().required()
+})
+
 const CreateRecipientList = ({ groupName, grp, stannpId }: any) => {
   const [formArray, setFormArray] = React.useState<any>([])
   const [isFormActive, setIsFormActive] = React.useState(false)
 
-  // TODO add formstate error make border red
-
-  const { register, handleSubmit, reset } = useForm()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(schema)
+  })
 
   const { data: lists, mutate } = useRecipientLists(stannpId)
 
@@ -71,7 +91,7 @@ const CreateRecipientList = ({ groupName, grp, stannpId }: any) => {
           </span>
         </button>
       </div>
-      <div className='grid grid-cols-11 gap-2 border-b border-t py-4 text-sm font-bold text-gray-700'>
+      <div className='grid grid-cols-11 gap-2 border-b border-t py-4 text-center text-sm font-bold text-gray-700'>
         <h4>First Name</h4>
         <h4>Last Name</h4>
         <h4>Company Name</h4>
@@ -83,13 +103,15 @@ const CreateRecipientList = ({ groupName, grp, stannpId }: any) => {
         <h4>Country</h4>
         <h4>Phone Number</h4>
       </div>
-      <div className='grid grid-cols-11 gap-2 py-3 text-sm text-gray-700'>
-        {lists?.recipients?.map((list: any) => (
-          <Fragment key={list.id}>
-            <p>hi</p>
-          </Fragment>
-        ))}
-      </div>
+      {lists?.recipients && lists.recipients.length > 0 && (
+        <div className='grid grid-cols-11 gap-2 py-3 text-sm text-gray-700'>
+          {lists?.recipients?.map((list: any) => (
+            <Fragment key={list.id}>
+              <p>hi</p>
+            </Fragment>
+          ))}
+        </div>
+      )}
       {formArray.map((item: any) => (
         <form
           key={item}
@@ -99,47 +121,61 @@ const CreateRecipientList = ({ groupName, grp, stannpId }: any) => {
             fieldName='first_name'
             register={register}
             placeholder='First Name'
+            errors={errors.first_name}
           />
           <FormInput
             fieldName='last_name'
             register={register}
             placeholder='Last Name'
+            errors={errors.last_name}
           />
           <FormInput
             fieldName='company_name'
             register={register}
             placeholder='Company Name'
+            errors={errors.company_name}
           />
           <FormInput
             fieldName='address_1'
             register={register}
             placeholder='Address 1'
+            errors={errors.address_1}
           />
           <FormInput
             fieldName='address_2'
             register={register}
             placeholder='Address 2'
+            errors={errors.address_2}
           />
-          <FormInput fieldName='city' register={register} placeholder='City' />
+          <FormInput
+            fieldName='city'
+            register={register}
+            placeholder='City'
+            errors={errors.city}
+          />
           <FormInput
             fieldName='country_or_state'
             register={register}
             placeholder='County/State'
+            errors={errors.country_or_state}
           />
           <FormInput
             fieldName='postal_or_zipcode'
             register={register}
             placeholder='Postal/Zip Code'
+            errors={errors.postal_or_zipcode}
           />
           <FormInput
             fieldName='country'
             register={register}
             placeholder='Country'
+            errors={errors.country}
           />
           <FormInput
             fieldName='phone_number'
             register={register}
             placeholder='Phone Number'
+            errors={errors.phone_number}
           />
           <button className='h-6 w-16 self-center justify-self-center rounded-full bg-primary text-xs text-white'>
             Save

@@ -1,41 +1,27 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 // import { useForm } from 'react-hook-form'
 
-import { useDeleteGroup } from '@/api'
 import { useRecipients } from '@/api/useRecipients'
 // import FormInput from '@/components/FormInput'
+import DeleteModal from '@/components/DeleteModal'
 import Spinner from '@/components/Spinner'
 
 import GroupModal from './GroupModal'
 
 const RecipientGroups = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [selectedGroup, setSelectedGroup] = useState<any>(null)
   // const [editItem, setEditItem] = useState<any>()
 
-  const {
-    data: groups,
-    isValidating: groupValidating,
-    mutate
-  } = useRecipients()
-
-  const { execute } = useDeleteGroup()
-
+  const { data: groups, isValidating: groupValidating } = useRecipients()
   const isLoading = useMemo(() => {
     return groupValidating || !groups
   }, [groupValidating, groups])
 
-  const deleteGroup = useCallback(
-    async (id: string) => {
-      await execute({
-        group_id: id
-      })
-      await mutate('/api/recipients-list/')
-    },
-    [execute, mutate]
-  )
   // const { register, handleSubmit, reset } = useForm()
 
   // const onSubmit = useCallback((data: any) => {
@@ -112,6 +98,11 @@ const RecipientGroups = () => {
                 setShowModal={setIsModalOpen}
                 showModal={isModalOpen}
               />
+              <DeleteModal
+                showModal={isDeleting}
+                closeModal={() => setIsDeleting(false)}
+                id={selectedGroup?.stannp_group_id}
+              />
               {groups?.map((item: any) => (
                 <tr key={item.id}>
                   <td
@@ -153,9 +144,10 @@ const RecipientGroups = () => {
                       </button> */}
                       <button
                         className='font-bold text-red-500 hover:text-red-600'
-                        onClick={async () =>
-                          await deleteGroup(item.stannp_group_id)
-                        }>
+                        onClick={() => {
+                          setSelectedGroup(item)
+                          setIsDeleting(true)
+                        }}>
                         Delete
                       </button>
                     </div>

@@ -2,12 +2,8 @@ import { useState, useCallback } from 'react'
 
 import client from '@/lib/client'
 
-export interface DeleteGroupPayloadProps {
-  group_id: string
-}
-
-const deleteGroup = async (payload: DeleteGroupPayloadProps) => {
-  const response = await client.post('/api/recipients-group/', payload)
+const deleteGroup = async (id: string) => {
+  const response = await client.delete(`/api/recipients-group/${id}/`)
   return response
 }
 
@@ -16,10 +12,10 @@ export const useDeleteGroup = () => {
   const [data, setData] = useState(null)
 
   const execute = useCallback(
-    async (payload: DeleteGroupPayloadProps) => {
+    async (id: string) => {
       try {
         setIsLoading(true)
-        const response = await deleteGroup(payload)
+        const response = await deleteGroup(id)
         setData(response as any)
         return response
       } catch (e: any) {
