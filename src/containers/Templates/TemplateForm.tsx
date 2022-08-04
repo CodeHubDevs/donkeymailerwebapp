@@ -1,11 +1,8 @@
-import {
-  faDownload,
-  faEye,
-  faFileArrowUp
-} from '@fortawesome/free-solid-svg-icons'
+import { faDownload, faFileArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 
 import { useAddTemplateBoard, useTemplateBoard } from '@/api'
 import FormInput from '@/components/FormInput'
@@ -14,26 +11,21 @@ import { useAuth } from '@/context/AuthContext'
 
 const countryOptions = [
   { value: '', label: 'Select Country' },
-  { value: 'US', label: 'United States' },
-  { value: 'UK', label: 'United Kingdom' },
-  { value: 'CA', label: 'Canada' }
+  { value: 'UK', label: 'United Kingdom' }
 ]
 
-const postCardOptions = [
-  { value: '', label: 'Select Post Card' },
-  { value: '4x6', label: '4 x 6' },
-  { value: '6x9', label: '6 x 9' },
-  { value: '6x11', label: '6 x 11' },
-  { value: '8.5x11', label: '8.5 x 11' }
+const sizeOptions = [
+  { value: '', label: 'Select Size' },
+  { value: 'A5', label: 'A5' },
+  { value: 'A6', label: 'A6' },
+  { value: 'A5-ENV', label: 'A5-ENV' }
 ]
 
 const TemplateForm = () => {
   const [selectedCountry, setSelectedCountry] = React.useState(
     countryOptions[0]
   )
-  const [selectedPostCard, setSelectedPostCard] = React.useState(
-    postCardOptions[0]
-  )
+  const [selectedSize, setSelectedSize] = React.useState(sizeOptions[0])
 
   const [selectedFile, setSelectedFile] = useState<any>([])
 
@@ -42,11 +34,7 @@ const TemplateForm = () => {
   const auth = useAuth()
 
   const { execute: addExecute } = useAddTemplateBoard()
-  const { data: templateBoard, mutate, isValidating } = useTemplateBoard()
-
-  const isLoading = useMemo(() => {
-    return isValidating
-  }, [isValidating])
+  const { data: templateBoard } = useTemplateBoard()
 
   useEffect(() => {
     if (templateBoard) {
@@ -56,23 +44,33 @@ const TemplateForm = () => {
         countryOptions.find((c) => c.value === templateBoard.country) ??
           countryOptions[0]
       )
-      setSelectedPostCard(
-        postCardOptions.find((c) => c.value === templateBoard.specifications) ??
-          postCardOptions[0]
+      setSelectedSize(
+        sizeOptions.find((c) => c.value === templateBoard.specifications) ??
+          sizeOptions[0]
       )
     }
-  }, [templateBoard, setSelectedPostCard, setSelectedCountry, setValue])
+  }, [templateBoard, setValue])
+
+  const downloadTemplate = useMemo(() => {
+    if (selectedSize.value === 'A5') {
+      return '/files/A5Postcard-Template.pdf'
+    }
+    if (selectedSize.value === 'A6') {
+      return '/files/A6Postcard-Template.pdf'
+    }
+    if (selectedSize.value === 'A5-ENV') {
+      return '/files/A5EnvelopedPostcard-Template.pdf'
+    }
+  }, [selectedSize])
 
   const onSubmit = useCallback(
     async (data: any, e: React.FormEvent<HTMLInputElement>) => {
       e.preventDefault()
-      // const reader = new FileReader()
-      // reader.readAsDataURL(selectedFile)
       const payload = {
         ...data,
         country: selectedCountry.value,
         user_id: auth.decoded?.user_id,
-        specifications: selectedPostCard.value,
+        specifications: selectedSize.value,
         file: selectedFile[0],
         template_name: 'test',
         modified_by: 'admin'
@@ -85,7 +83,14 @@ const TemplateForm = () => {
         console.log(e)
       }
     },
-    [addExecute, selectedCountry, selectedPostCard, mutate, templateBoard]
+    [
+      auth.decoded,
+      addExecute,
+      templateBoard,
+      selectedCountry,
+      selectedSize,
+      selectedFile
+    ]
   )
 
   return (
@@ -104,9 +109,9 @@ const TemplateForm = () => {
             />
             <FormSelect
               label='Choose a post card'
-              options={postCardOptions}
-              value={selectedPostCard}
-              onChange={setSelectedPostCard}
+              options={sizeOptions}
+              value={selectedSize}
+              onChange={setSelectedSize}
             />
           </div>
           <FormInput
@@ -123,16 +128,18 @@ const TemplateForm = () => {
             type='file'
             className='text-grey-500 text-sm file:mr-5 file:rounded-full file:border-0 file:bg-primary file:py-2 file:px-6 file:text-sm file:font-medium file:text-white hover:file:cursor-pointer focus:outline-none'
           />
-          <div className='flex items-center gap-4'>
-            <button className='flex items-center text-sm text-primary'>
-              <FontAwesomeIcon icon={faEye} className='mr-2' />
-              <span>Preview Template Guide</span>
-            </button>
-            <button className='flex items-center text-sm text-primary'>
-              <FontAwesomeIcon icon={faDownload} className='mr-2' />
-              <span>Download(.psd) Template Guide</span>
-            </button>
-          </div>
+          <a
+            href={downloadTemplate}
+            onClick={() =>
+              selectedSize.value
+                ? toast.success(`Downloading ${selectedSize.label} template`)
+                : toast.error('Please select a size')
+            }
+            download='template.pdf'
+            className='flex cursor-pointer items-center text-sm text-primary'>
+            <FontAwesomeIcon icon={faDownload} className='mr-2' />
+            <span>Download Template Guide</span>
+          </a>
         </div>
         <button className='mt-8 self-end rounded-full bg-primary py-1 px-12 font-bold text-white'>
           Submit
