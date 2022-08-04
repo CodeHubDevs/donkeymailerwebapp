@@ -94,9 +94,9 @@ const RecipientGroups = () => {
             </thead>
             <tbody>
               <GroupModal
-                onClick={() => {}}
-                setShowModal={setIsModalOpen}
+                closeModal={() => setIsModalOpen(false)}
                 showModal={isModalOpen}
+                currGroup={selectedGroup}
               />
               <DeleteModal
                 showModal={isDeleting}
@@ -134,7 +134,10 @@ const RecipientGroups = () => {
                     <div className='flex items-center gap-8'>
                       <button
                         className='cursor-pointer font-bold text-primary hover:text-secondary'
-                        onClick={() => setIsModalOpen(true)}>
+                        onClick={() => {
+                          setSelectedGroup(item)
+                          setIsModalOpen(true)
+                        }}>
                         View
                       </button>
                       {/* <button

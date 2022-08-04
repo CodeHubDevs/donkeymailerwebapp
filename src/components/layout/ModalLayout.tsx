@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Dialog, Transition } from '@headlessui/react'
 import React from 'react'
 
-const ModalLayout = ({ showModal, closeModal, children }: any) => {
+const ModalLayout = ({ showModal, closeModal, children, className }: any) => {
   return (
     <Transition appear show={showModal} as={React.Fragment}>
       <Dialog as='div' className='relative z-10' onClose={() => {}}>
@@ -19,7 +19,8 @@ const ModalLayout = ({ showModal, closeModal, children }: any) => {
         </Transition.Child>
 
         <div className='fixed inset-0 overflow-y-auto'>
-          <div className='m-auto flex min-h-full max-w-4xl items-center justify-center p-4 text-center'>
+          <div
+            className={`m-auto flex min-h-full max-w-4xl items-center justify-center p-4 text-center ${className}`}>
             <Transition.Child
               as={React.Fragment}
               enter='ease-out duration-300'
