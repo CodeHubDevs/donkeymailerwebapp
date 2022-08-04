@@ -136,7 +136,8 @@ const GroupModal = ({ showModal, closeModal, currGroup }: any) => {
     ]
   )
 
-  console.log('currGroup', currGroup)
+  console.log('lists', lists)
+
   return (
     <ModalLayout
       showModal={showModal}
@@ -264,9 +265,11 @@ const GroupModal = ({ showModal, closeModal, currGroup }: any) => {
       ) : (
         <>
           {lists?.recipients && lists.recipients.length > 0 && (
-            <div className='grid grid-cols-11 items-center gap-2 py-3 text-center text-sm text-gray-700'>
+            <>
               {lists?.recipients?.map((list: any) => (
-                <Fragment key={list.id}>
+                <div
+                  key={list.id}
+                  className='grid grid-cols-11 items-center gap-2 py-3 text-center text-sm text-gray-700'>
                   <p>{list.firstname}</p>
                   <p>{list.lastname}</p>
                   <p>{list.company}</p>
@@ -277,9 +280,9 @@ const GroupModal = ({ showModal, closeModal, currGroup }: any) => {
                   <p>{list.postcode}</p>
                   <p>{list.country}</p>
                   <p>{list.phone_number}</p>
-                </Fragment>
+                </div>
               ))}
-            </div>
+            </>
           )}
         </>
       )}

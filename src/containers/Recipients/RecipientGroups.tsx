@@ -1,4 +1,4 @@
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { faCirclePlus, faFileArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React, { useMemo, useState } from 'react'
@@ -60,20 +60,38 @@ const RecipientGroups = () => {
       ) : (
         <div className='mt-4 rounded-lg bg-white p-4 shadow-xl'>
           <div className='mb-2 flex items-center justify-end'>
-            <Link href={{ pathname: 'recipient/create', query: { new: true } }}>
-              <a
-                type='button'
-                className='rounded-lg bg-primary from-secondary to-primary py-2 px-8 text-white '>
-                <span className='absolute inset-y-0 left-0 flex items-center pl-3'></span>
-                <FontAwesomeIcon
-                  icon={faCirclePlus}
-                  className='mt-1 cursor-pointer rounded-full bg-primary text-white'
-                />
-                <span className='ml-2 text-center text-sm font-bold text-white'>
-                  Create New Group
-                </span>
-              </a>
-            </Link>
+            <div className='flex gap-2'>
+              <Link
+                href={{ pathname: 'recipient/upload', query: { new: true } }}>
+                <a
+                  type='button'
+                  className='rounded-lg bg-primary from-secondary to-primary py-2 px-8 text-white '>
+                  <span className='absolute inset-y-0 left-0 flex items-center pl-3'></span>
+                  <FontAwesomeIcon
+                    icon={faFileArrowUp}
+                    className='mt-1 cursor-pointer rounded-full bg-primary text-white'
+                  />
+                  <span className='ml-2 text-center text-sm font-bold text-white'>
+                    Upload Recipients
+                  </span>
+                </a>
+              </Link>
+              <Link
+                href={{ pathname: 'recipient/create', query: { new: true } }}>
+                <a
+                  type='button'
+                  className='rounded-lg bg-primary from-secondary to-primary py-2 px-8 text-white '>
+                  <span className='absolute inset-y-0 left-0 flex items-center pl-3'></span>
+                  <FontAwesomeIcon
+                    icon={faCirclePlus}
+                    className='mt-1 cursor-pointer rounded-full bg-primary text-white'
+                  />
+                  <span className='ml-2 text-center text-sm font-bold text-white'>
+                    Create New Group
+                  </span>
+                </a>
+              </Link>
+            </div>
           </div>
           <table className='min-h-[100px] w-full text-left text-sm text-gray-500'>
             <thead className='border-b border-t text-sm text-gray-700'>

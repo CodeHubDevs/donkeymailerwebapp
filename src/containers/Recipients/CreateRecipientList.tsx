@@ -236,9 +236,11 @@ const CreateRecipientList = ({ groupName, grp, stannpId }: any) => {
         </form>
       ))}
       {lists?.recipients && lists.recipients.length > 0 && (
-        <div className='grid grid-cols-11 items-center gap-2 py-3 text-center text-sm text-gray-700'>
+        <>
           {lists?.recipients?.map((list: any) => (
-            <Fragment key={list.id}>
+            <div
+              key={list.id}
+              className='grid grid-cols-11 items-center gap-2 py-3 text-center text-sm text-gray-700'>
               <p>{list.firstname}</p>
               <p>{list.lastname}</p>
               <p>{list.company}</p>
@@ -249,9 +251,9 @@ const CreateRecipientList = ({ groupName, grp, stannpId }: any) => {
               <p>{list.postcode}</p>
               <p>{list.country}</p>
               <p>{list.phone_number}</p>
-            </Fragment>
+            </div>
           ))}
-        </div>
+        </>
       )}
     </>
   )
