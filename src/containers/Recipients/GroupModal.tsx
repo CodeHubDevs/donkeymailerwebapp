@@ -67,16 +67,6 @@ const GroupModal: React.FC<GroupModalProps> = ({
                   <table className='w-full text-left text-sm text-gray-500'>
                     <thead className=' className border-b border-t text-sm text-gray-700'>
                       <tr>
-                        <th scope='col' className='p-4'>
-                          <div className='flex items-center'>
-                            <input
-                              id='checkbox-all'
-                              type='checkbox'
-                              className='mr-2 border border-primary text-primary outline-primary checked:bg-primary hover:bg-primary focus:ring-primary'
-                            />
-                            All
-                          </div>
-                        </th>
                         <th scope='col' className='px-6 py-3'>
                           First Name
                         </th>

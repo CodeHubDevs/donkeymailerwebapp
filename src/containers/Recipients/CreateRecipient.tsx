@@ -1,12 +1,60 @@
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 
+import { useCreateGroup, useRecipients } from '@/api'
 import GoBackToSelectButton from '@/components/GoBackToSelectButton'
+import Spinner from '@/components/Spinner'
+import { useAuth } from '@/context/AuthContext'
+
+import CreateRecipientList from './CreateRecipientList'
 
 const CreateRecipient = () => {
+  const [canCreate, setCanCreate] = useState(false)
+  const [groupName, setGroupName] = useState('')
+  const [groupId, setGroupId] = useState<any>()
+  const [newGroup, setNewGroup] = useState<any>()
+
+  const auth = useAuth()
   const router = useRouter()
+
+  const { register, handleSubmit } = useForm()
+  const { execute, isLoading } = useCreateGroup()
+  const { data: groups, mutate } = useRecipients()
+
+  useEffect(() => {
+    if (groupId) {
+      setNewGroup(() =>
+        groups?.find((group: any) => group.stannp_group_id === groupId)
+      )
+    }
+  }, [groupId, groups])
+
+  const onSubmit = useCallback(
+    async (data: any) => {
+      try {
+        const { group_name } = data
+
+        const {
+          data: { data: groupId }
+        } = await execute({
+          group_name,
+          modified_by: 'admin',
+          user_id: auth.decoded?.user_id
+        })
+
+        await mutate(`/api/recipients-group/${auth.decoded?.user_id}`)
+
+        setGroupName(group_name)
+        setGroupId(groupId)
+        setCanCreate(true)
+      } catch (error: any) {
+        toast.error(error.response.data.error)
+      }
+    },
+    [execute, auth.decoded?.user_id, mutate]
+  )
 
   return (
     <div className='mt-10'>
@@ -15,89 +63,39 @@ const CreateRecipient = () => {
         {!router.query.new && <GoBackToSelectButton />}
       </div>
       <div className='mt-4 rounded-xl bg-white p-4 shadow-lg'>
-        <form className='flex flex-col items-start gap-2'>
+        <form
+          className='flex flex-col items-start gap-2'
+          onSubmit={handleSubmit(onSubmit)}>
           <div className='flex items-center gap-2'>
             <h4 className='text-xl font-bold'>Name of Group</h4>
             <p>(First, create your recipient group name)</p>
           </div>
           <input
             type='text'
-            className='w-64 rounded-lg border-2 border-gray-300 p-2'
+            disabled={canCreate}
+            className='disabled:placeholder:text-black2 w-64 rounded-lg border-2 border-gray-300 p-2 disabled:cursor-not-allowed disabled:bg-black10 disabled:opacity-75'
             placeholder='Enter Group Name'
+            {...register('group_name')}
           />
-          <button className='block rounded-full bg-primary py-1 px-4 text-sm font-bold text-white'>
-            Save
-          </button>
-        </form>
-        <div>
-          <div className='mt-4 flex items-center justify-between border-t py-2'>
-            <h3 className='text-xl font-bold'>Recipients</h3>
+          {!canCreate && (
             <button
-              type='button'
-              className='rounded-lg bg-primary from-secondary to-primary py-2 px-8 text-white '>
-              <span className='absolute inset-y-0 left-0 flex items-center pl-3'></span>
-              <FontAwesomeIcon
-                icon={faCirclePlus}
-                className='mt-1 cursor-pointer rounded-full bg-primary text-white'
-              />
-              <span className='ml-2 text-center text-sm font-bold text-white'>
-                Add Recipient
-              </span>
+              className={`block rounded-full bg-primary py-1 px-4 ${
+                isLoading ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+              }`}
+              disabled={isLoading}>
+              <h5 className='flex items-center justify-center gap-2 text-sm font-bold text-white'>
+                {isLoading && <Spinner className='h-3 w-3' />}Save
+              </h5>
             </button>
-          </div>
-          <table className='w-full text-left text-sm text-gray-500'>
-            <thead className=' className border-b border-t text-sm text-gray-700'>
-              <tr>
-                <th scope='col' className='p-4'>
-                  <div className='flex items-center'>
-                    <input
-                      id='checkbox-all'
-                      type='checkbox'
-                      className='mr-2 border border-primary text-primary outline-primary checked:bg-primary hover:bg-primary focus:ring-primary'
-                    />
-                    All
-                  </div>
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  First Name
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  Last Name
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  Company Name
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  Address 1
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  Address 2
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  City
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  County/State
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  Postal/Zip Code
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  Country
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  Phone Number
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  Joined Date
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  <span className='className-only'></span>
-                </th>
-              </tr>
-            </thead>
-          </table>
-        </div>
+          )}
+        </form>
+        {canCreate && (
+          <CreateRecipientList
+            groupName={groupName}
+            grp={newGroup?.id}
+            stannpId={newGroup?.stannp_group_id}
+          />
+        )}
       </div>
     </div>
   )
