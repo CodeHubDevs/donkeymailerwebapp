@@ -1,13 +1,7 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { yupResolver } from '@hookform/resolvers/yup'
-import React, {
-  Fragment,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import * as yup from 'yup'
@@ -15,7 +9,6 @@ import * as yup from 'yup'
 import { useCreateRecipientLists } from '@/api'
 import { useRecipientLists } from '@/api/useRecipientLists'
 import FormInput from '@/components/FormInput'
-import ModalLayout from '@/components/layout/ModalLayout'
 import Spinner from '@/components/Spinner'
 import { useAuth } from '@/context/AuthContext'
 import useAlternativeAddressStore from '@/stores/useAlternativeAddressStore'
@@ -35,7 +28,7 @@ const schema = yup.object({
   phone_number: yup.string()
 })
 
-const GroupModal = ({ showModal, closeModal, currGroup }: any) => {
+const CreateRecipientList = ({ groupName, grp, stannpId }: any) => {
   const [formArray, setFormArray] = useState<any>([])
   const [isFormActive, setIsFormActive] = useState(false)
   const [alternativeAddresses, setAlternativeAddresses] = useState<any>([])
@@ -53,15 +46,7 @@ const GroupModal = ({ showModal, closeModal, currGroup }: any) => {
     resolver: yupResolver(schema)
   })
 
-  const {
-    data: lists,
-    mutate,
-    isValidating
-  } = useRecipientLists(currGroup?.stannp_group_id)
-
-  const isListLoading = useMemo(() => {
-    return isValidating || !lists
-  }, [isValidating, lists])
+  const { data: lists, mutate } = useRecipientLists(stannpId)
 
   const { execute, isLoading } = useCreateRecipientLists()
 
@@ -98,9 +83,9 @@ const GroupModal = ({ showModal, closeModal, currGroup }: any) => {
           ...data,
           address3: '',
           job_title: '',
-          stannp_group_id: currGroup?.stannp_group_id,
+          stannp_group_id: stannpId,
           modified_by: 'admin',
-          recipients_grp: currGroup?.id,
+          recipients_grp: grp,
           user_id: auth.decoded?.user_id
         })
 
@@ -124,32 +109,24 @@ const GroupModal = ({ showModal, closeModal, currGroup }: any) => {
     },
     [
       execute,
+      grp,
+      stannpId,
       mutate,
       cancelInputField,
       auth.decoded?.user_id,
-      currGroup?.id,
-      currGroup?.stannp_group_id,
-      setAlternativeAddress,
-      setIsAlternativeExist,
-      setAlternativeAddresses,
-      setShowAlternativeAddressModal
+      setAlternativeAddress
     ]
   )
 
-  console.log('lists', lists)
-
   return (
-    <ModalLayout
-      showModal={showModal}
-      closeModal={closeModal}
-      className='max-w-full !items-start'>
+    <>
       <AlternativeAddressModal
         showModal={showAlternativeAddressModal}
         closeModal={() => setShowAlternativeAddressModal(false)}
         alternativeAddresses={alternativeAddresses}
       />
       <div className='mt-4 flex items-center justify-between border-t py-2'>
-        <h3 className='text-xl font-bold'>{currGroup?.group_name}</h3>
+        <h3 className='text-xl font-bold'>{groupName}</h3>
         <button
           onClick={() => (isFormActive ? cancelInputField() : addInputField())}
           type='button'
@@ -258,36 +235,28 @@ const GroupModal = ({ showModal, closeModal, currGroup }: any) => {
           </button>
         </form>
       ))}
-      {isListLoading ? (
-        <div className='mt-10 flex h-full items-center justify-center'>
-          <Spinner />
-        </div>
-      ) : (
+      {lists?.recipients && lists.recipients.length > 0 && (
         <>
-          {lists?.recipients && lists.recipients.length > 0 && (
-            <>
-              {lists?.recipients?.map((list: any) => (
-                <div
-                  key={list.id}
-                  className='grid grid-cols-11 items-center gap-2 py-3 text-center text-sm text-gray-700'>
-                  <p>{list.firstname}</p>
-                  <p>{list.lastname}</p>
-                  <p>{list.company}</p>
-                  <p>{list.address1}</p>
-                  <p>{list.address2}</p>
-                  <p>{list.city}</p>
-                  <p>{list.county}</p>
-                  <p>{list.postcode}</p>
-                  <p>{list.country}</p>
-                  <p>{list.phone_number}</p>
-                </div>
-              ))}
-            </>
-          )}
+          {lists?.recipients?.map((list: any) => (
+            <div
+              key={list.id}
+              className='grid grid-cols-11 items-center gap-2 py-3 text-center text-sm text-gray-700'>
+              <p>{list.firstname}</p>
+              <p>{list.lastname}</p>
+              <p>{list.company}</p>
+              <p>{list.address1}</p>
+              <p>{list.address2}</p>
+              <p>{list.city}</p>
+              <p>{list.county}</p>
+              <p>{list.postcode}</p>
+              <p>{list.country}</p>
+              <p>{list.phone_number}</p>
+            </div>
+          ))}
         </>
       )}
-    </ModalLayout>
+    </>
   )
 }
 
-export default GroupModal
+export default CreateRecipientList
