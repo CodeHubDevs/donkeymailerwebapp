@@ -1,14 +1,15 @@
-import { faFileArrowUp } from '@fortawesome/free-solid-svg-icons'
+import {
+  faDownload,
+  faEye,
+  faFileArrowUp
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-
-import FormInput from '@/components/FormInput'
-import FormSelect from '@/components/FormSelect'
-
-import TemplateModal from './TemplateModal'
+import { useForm } from 'react-hook-form'
 
 import { useAddTemplateBoard, useTemplateBoard } from '@/api'
-import { useForm } from 'react-hook-form'
+import FormInput from '@/components/FormInput'
+import FormSelect from '@/components/FormSelect'
 import { useAuth } from '@/context/AuthContext'
 
 const countryOptions = [
@@ -35,8 +36,6 @@ const TemplateForm = () => {
   )
 
   const [selectedFile, setSelectedFile] = useState<any>(null)
-
-  const [isOpen, setIsOpen] = React.useState(false)
 
   const { register, handleSubmit, setValue } = useForm()
 
@@ -85,59 +84,55 @@ const TemplateForm = () => {
   )
 
   return (
-    <>
-      <TemplateModal
-        onClick={() => {}}
-        setShowModal={setIsOpen}
-        showModal={isOpen}
-      />
-      <div className='mt-8 rounded-2xl bg-white p-8 shadow-md'>
-        <h1 className='text-2xl font-bold'>Create Your Template</h1>
-        <form
-          onSubmit={handleSubmit(
-            async (data, e: any) => await onSubmit(data, e)
-          )}
-          className='flex flex-col items-start px-24'>
-          <div className='my-8 flex w-full gap-32'>
-            <div className='flex w-full flex-col gap-4'>
-              <FormSelect
-                label='Choose a country'
-                options={countryOptions}
-                value={selectedCountry}
-                onChange={setSelectedCountry}
-              />
-              <FormSelect
-                label='Choose a post card'
-                options={postCardOptions}
-                value={selectedPostCard}
-                onChange={setSelectedPostCard}
-              />
-            </div>
-            <FormInput
-              fieldName='name'
-              label='Template Name'
-              register={register}
-              placeholder='Enter template name...'
+    <div className='mt-8 rounded-2xl bg-white p-8 shadow-md'>
+      <h1 className='text-2xl font-bold'>Create Your Template</h1>
+      <form
+        onSubmit={handleSubmit(async (data, e: any) => await onSubmit(data, e))}
+        className='flex flex-col items-start px-24'>
+        <div className='my-8 flex w-full gap-32'>
+          <div className='flex w-full flex-col gap-4'>
+            <FormSelect
+              label='Choose a country'
+              options={countryOptions}
+              value={selectedCountry}
+              onChange={setSelectedCountry}
+            />
+            <FormSelect
+              label='Choose a post card'
+              options={postCardOptions}
+              value={selectedPostCard}
+              onChange={setSelectedPostCard}
             />
           </div>
-          <div className='flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-primary bg-secondary10 p-32'>
-            <FontAwesomeIcon
-              icon={faFileArrowUp}
-              className='h-16 w-16 text-primary'
-            />
-            <button
-              type='button'
-              onClick={() => setIsOpen(true)}
-              className='mt-4 rounded-full bg-primary py-1 px-12 font-light text-white'>
-              Upload
+          <FormInput
+            fieldName='name'
+            label='Template Name'
+            register={register}
+            placeholder='Enter template name...'
+          />
+        </div>
+        <div className='flex w-full flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-black25 bg-gray-100 p-20'>
+          <FontAwesomeIcon icon={faFileArrowUp} className='h-12 w-12' />
+          <input
+            type='file'
+            className='text-grey-500 text-sm file:mr-5 file:rounded-full file:border-0 file:bg-primary file:py-2 file:px-6 file:text-sm file:font-medium file:text-white hover:file:cursor-pointer focus:outline-none'
+          />
+          <div className='flex items-center gap-4'>
+            <button className='flex items-center text-sm text-primary'>
+              <FontAwesomeIcon icon={faEye} className='mr-2' />
+              <span>Preview Template Guide</span>
+            </button>
+            <button className='flex items-center text-sm text-primary'>
+              <FontAwesomeIcon icon={faDownload} className='mr-2' />
+              <span>Download(.psd) Template Guide</span>
             </button>
           </div>
-          <button className='mt-8 self-end rounded-full bg-primary py-1 px-12 font-bold text-white'>
-            Submit
-          </button>
-        </form>
-      </div>
-    </>
+        </div>
+        <button className='mt-8 self-end rounded-full bg-primary py-1 px-12 font-bold text-white'>
+          Submit
+        </button>
+      </form>
+    </div>
   )
 }
 
