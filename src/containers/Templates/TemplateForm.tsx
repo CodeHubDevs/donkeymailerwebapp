@@ -35,7 +35,7 @@ const TemplateForm = () => {
     postCardOptions[0]
   )
 
-  const [selectedFile, setSelectedFile] = useState<any>(null)
+  const [selectedFile, setSelectedFile] = useState<any>([])
 
   const { register, handleSubmit, setValue } = useForm()
 
@@ -51,7 +51,7 @@ const TemplateForm = () => {
   useEffect(() => {
     if (templateBoard) {
       setValue('template_name', templateBoard.template_name)
-      setValue('file', templateBoard.file)
+
       setSelectedCountry(
         countryOptions.find((c) => c.value === templateBoard.country) ??
           countryOptions[0]
@@ -66,11 +66,16 @@ const TemplateForm = () => {
   const onSubmit = useCallback(
     async (data: any, e: React.FormEvent<HTMLInputElement>) => {
       e.preventDefault()
+      // const reader = new FileReader()
+      // reader.readAsDataURL(selectedFile)
       const payload = {
         ...data,
         country: selectedCountry.value,
         user_id: auth.decoded?.user_id,
-        specifications: selectedPostCard.value
+        specifications: selectedPostCard.value,
+        file: selectedFile[0],
+        template_name: 'test',
+        modified_by: 'admin'
       }
       try {
         if (!templateBoard) {
@@ -114,6 +119,7 @@ const TemplateForm = () => {
         <div className='flex w-full flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-black25 bg-gray-100 p-20'>
           <FontAwesomeIcon icon={faFileArrowUp} className='h-12 w-12' />
           <input
+            onChange={(e) => setSelectedFile(e.target.files)}
             type='file'
             className='text-grey-500 text-sm file:mr-5 file:rounded-full file:border-0 file:bg-primary file:py-2 file:px-6 file:text-sm file:font-medium file:text-white hover:file:cursor-pointer focus:outline-none'
           />

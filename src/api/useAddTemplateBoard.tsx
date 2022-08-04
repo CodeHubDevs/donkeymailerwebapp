@@ -10,7 +10,7 @@ interface TemplateBoardPayloadProps {
 }
 
 const templateBoard = async (payload: TemplateBoardPayloadProps) => {
-  const response = await client.post('/api/template-board/', payload, {
+  const response = await client.post('/api/templates-board/', payload, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
