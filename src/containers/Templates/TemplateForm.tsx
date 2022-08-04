@@ -1,12 +1,15 @@
 import { faFileArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
-import { useForm } from 'react-hook-form'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import FormInput from '@/components/FormInput'
 import FormSelect from '@/components/FormSelect'
 
 import TemplateModal from './TemplateModal'
+
+import { useAddTemplateBoard, useTemplateBoard } from '@/api'
+import { useForm } from 'react-hook-form'
+import { useAuth } from '@/context/AuthContext'
 
 const countryOptions = [
   { value: '', label: 'Select Country' },
@@ -31,9 +34,55 @@ const TemplateForm = () => {
     postCardOptions[0]
   )
 
+  const [selectedFile, setSelectedFile] = useState<any>(null)
+
   const [isOpen, setIsOpen] = React.useState(false)
 
-  const { register } = useForm()
+  const { register, handleSubmit, setValue } = useForm()
+
+  const auth = useAuth()
+
+  const { execute: addExecute } = useAddTemplateBoard()
+  const { data: templateBoard, mutate, isValidating } = useTemplateBoard()
+
+  const isLoading = useMemo(() => {
+    return isValidating
+  }, [isValidating])
+
+  useEffect(() => {
+    if (templateBoard) {
+      setValue('template_name', templateBoard.template_name)
+      setValue('file', templateBoard.file)
+      setSelectedCountry(
+        countryOptions.find((c) => c.value === templateBoard.country) ??
+          countryOptions[0]
+      )
+      setSelectedPostCard(
+        postCardOptions.find((c) => c.value === templateBoard.specifications) ??
+          postCardOptions[0]
+      )
+    }
+  }, [templateBoard, setSelectedPostCard, setSelectedCountry, setValue])
+
+  const onSubmit = useCallback(
+    async (data: any, e: React.FormEvent<HTMLInputElement>) => {
+      e.preventDefault()
+      const payload = {
+        ...data,
+        country: selectedCountry.value,
+        user_id: auth.decoded?.user_id,
+        specifications: selectedPostCard.value
+      }
+      try {
+        if (!templateBoard) {
+          await addExecute(payload)
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    [addExecute, selectedCountry, selectedPostCard, mutate, templateBoard]
+  )
 
   return (
     <>
@@ -44,7 +93,11 @@ const TemplateForm = () => {
       />
       <div className='mt-8 rounded-2xl bg-white p-8 shadow-md'>
         <h1 className='text-2xl font-bold'>Create Your Template</h1>
-        <form className='flex flex-col items-start px-24'>
+        <form
+          onSubmit={handleSubmit(
+            async (data, e: any) => await onSubmit(data, e)
+          )}
+          className='flex flex-col items-start px-24'>
           <div className='my-8 flex w-full gap-32'>
             <div className='flex w-full flex-col gap-4'>
               <FormSelect
