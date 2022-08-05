@@ -12,7 +12,10 @@ const refreshToken = async () => {
     localStorage.setItem('token', data.access)
     return data.access
   } catch (error) {
-    console.log()
+    localStorage.removeItem('token')
+    localStorage.removeItem('refresh')
+    window.location.href = '/signin'
+    return null
   }
 }
 
@@ -45,17 +48,5 @@ client.interceptors.response.use(
     return await Promise.reject(error)
   }
 )
-
-export const attachToken = () => {
-  const token = localStorage.getItem('token')
-
-  if (token !== null) {
-    client.defaults.headers.common.Authorization = `Bearer ${token}`
-  }
-}
-
-export const detachToken = () => {
-  delete client.defaults.headers.common.Authorization
-}
 
 export default client

@@ -1,90 +1,151 @@
-import { faFileArrowUp } from '@fortawesome/free-solid-svg-icons'
+import { faDownload, faFileArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 
+import { useAddTemplateBoard, useTemplateBoard } from '@/api'
 import FormInput from '@/components/FormInput'
 import FormSelect from '@/components/FormSelect'
-
-import TemplateModal from './TemplateModal'
+import { useAuth } from '@/context/AuthContext'
 
 const countryOptions = [
   { value: '', label: 'Select Country' },
-  { value: 'US', label: 'United States' },
-  { value: 'UK', label: 'United Kingdom' },
-  { value: 'CA', label: 'Canada' }
+  { value: 'UK', label: 'United Kingdom' }
 ]
 
-const postCardOptions = [
-  { value: '', label: 'Select Post Card' },
-  { value: '4x6', label: '4 x 6' },
-  { value: '6x9', label: '6 x 9' },
-  { value: '6x11', label: '6 x 11' },
-  { value: '8.5x11', label: '8.5 x 11' }
+const sizeOptions = [
+  { value: '', label: 'Select Size' },
+  { value: 'A5', label: 'A5' },
+  { value: 'A6', label: 'A6' },
+  { value: 'A5-ENV', label: 'A5-ENV' }
 ]
 
 const TemplateForm = () => {
   const [selectedCountry, setSelectedCountry] = React.useState(
     countryOptions[0]
   )
-  const [selectedPostCard, setSelectedPostCard] = React.useState(
-    postCardOptions[0]
+  const [selectedSize, setSelectedSize] = React.useState(sizeOptions[0])
+
+  const [selectedFile, setSelectedFile] = useState<any>([])
+
+  const { register, handleSubmit, setValue } = useForm()
+
+  const auth = useAuth()
+
+  const { execute: addExecute } = useAddTemplateBoard()
+  const { data: templateBoard } = useTemplateBoard()
+
+  useEffect(() => {
+    if (templateBoard) {
+      setValue('template_name', templateBoard.template_name)
+
+      setSelectedCountry(
+        countryOptions.find((c) => c.value === templateBoard.country) ??
+          countryOptions[0]
+      )
+      setSelectedSize(
+        sizeOptions.find((c) => c.value === templateBoard.specifications) ??
+          sizeOptions[0]
+      )
+    }
+  }, [templateBoard, setValue])
+
+  const downloadTemplate = useMemo(() => {
+    if (selectedSize.value === 'A5') {
+      return '/files/A5Postcard-Template.pdf'
+    }
+    if (selectedSize.value === 'A6') {
+      return '/files/A6Postcard-Template.pdf'
+    }
+    if (selectedSize.value === 'A5-ENV') {
+      return '/files/A5EnvelopedPostcard-Template.pdf'
+    }
+  }, [selectedSize])
+
+  const onSubmit = useCallback(
+    async (data: any, e: React.FormEvent<HTMLInputElement>) => {
+      e.preventDefault()
+      const payload = {
+        ...data,
+        country: selectedCountry.value,
+        user_id: auth.decoded?.user_id,
+        specifications: selectedSize.value,
+        file: selectedFile[0],
+        template_name: 'test',
+        modified_by: 'admin'
+      }
+      try {
+        if (!templateBoard) {
+          await addExecute(payload)
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    [
+      auth.decoded,
+      addExecute,
+      templateBoard,
+      selectedCountry,
+      selectedSize,
+      selectedFile
+    ]
   )
 
-  const [isOpen, setIsOpen] = React.useState(false)
-
-  const { register } = useForm()
-
   return (
-    <>
-      <TemplateModal
-        onClick={() => {}}
-        setShowModal={setIsOpen}
-        showModal={isOpen}
-      />
-      <div className='mt-8 rounded-2xl bg-white p-8 shadow-md'>
-        <h1 className='text-2xl font-bold'>Create Your Template</h1>
-        <form className='flex flex-col items-start px-24'>
-          <div className='my-8 flex w-full gap-32'>
-            <div className='flex w-full flex-col gap-4'>
-              <FormSelect
-                label='Choose a country'
-                options={countryOptions}
-                value={selectedCountry}
-                onChange={setSelectedCountry}
-              />
-              <FormSelect
-                label='Choose a post card'
-                options={postCardOptions}
-                value={selectedPostCard}
-                onChange={setSelectedPostCard}
-              />
-            </div>
-            <FormInput
-              fieldName='name'
-              label='Template Name'
-              register={register}
-              placeholder='Enter template name...'
+    <div className='mt-8 rounded-2xl bg-white p-8 shadow-md'>
+      <h1 className='text-2xl font-bold'>Create Your Template</h1>
+      <form
+        onSubmit={handleSubmit(async (data, e: any) => await onSubmit(data, e))}
+        className='flex flex-col items-start px-24'>
+        <div className='my-8 flex w-full gap-32'>
+          <div className='flex w-full flex-col gap-4'>
+            <FormSelect
+              label='Choose a country'
+              options={countryOptions}
+              value={selectedCountry}
+              onChange={setSelectedCountry}
+            />
+            <FormSelect
+              label='Choose a post card'
+              options={sizeOptions}
+              value={selectedSize}
+              onChange={setSelectedSize}
             />
           </div>
-          <div className='flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-primary bg-secondary10 p-32'>
-            <FontAwesomeIcon
-              icon={faFileArrowUp}
-              className='h-16 w-16 text-primary'
-            />
-            <button
-              type='button'
-              onClick={() => setIsOpen(true)}
-              className='mt-4 rounded-full bg-primary py-1 px-12 font-light text-white'>
-              Upload
-            </button>
-          </div>
-          <button className='mt-8 self-end rounded-full bg-primary py-1 px-12 font-bold text-white'>
-            Submit
-          </button>
-        </form>
-      </div>
-    </>
+          <FormInput
+            fieldName='name'
+            label='Template Name'
+            register={register}
+            placeholder='Enter template name...'
+          />
+        </div>
+        <div className='flex w-full flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-black25 bg-gray-100 p-20'>
+          <FontAwesomeIcon icon={faFileArrowUp} className='h-12 w-12' />
+          <input
+            onChange={(e) => setSelectedFile(e.target.files)}
+            type='file'
+            className='text-grey-500 text-sm file:mr-5 file:rounded-full file:border-0 file:bg-primary file:py-2 file:px-6 file:text-sm file:font-medium file:text-white hover:file:cursor-pointer focus:outline-none'
+          />
+          <a
+            href={downloadTemplate}
+            onClick={() =>
+              selectedSize.value
+                ? toast.success(`Downloading ${selectedSize.label} template`)
+                : toast.error('Please select a size')
+            }
+            download='template.pdf'
+            className='flex cursor-pointer items-center text-sm text-primary'>
+            <FontAwesomeIcon icon={faDownload} className='mr-2' />
+            <span>Download Template Guide</span>
+          </a>
+        </div>
+        <button className='mt-8 self-end rounded-full bg-primary py-1 px-12 font-bold text-white'>
+          Submit
+        </button>
+      </form>
+    </div>
   )
 }
 

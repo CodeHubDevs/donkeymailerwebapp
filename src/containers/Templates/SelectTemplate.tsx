@@ -15,31 +15,30 @@ const dummyTemplates: any = [
   {
     id: '1',
     name: 'Name Template',
-    type: '4x6 Postcard'
+    type: 'A5'
   },
   {
     id: '2',
     name: 'Name Template',
-    type: '6x9 Postcard'
+    type: 'A5'
   },
   {
     id: '3',
     name: 'Name Template',
-    type: '6x9 Postcard'
+    type: 'A6'
   },
   {
     id: '4',
     name: 'Name Template',
-    type: '8.5x11 Letter'
+    type: 'A5-ENV'
   }
 ]
 
 const typeOptions = [
-  { label: 'All', value: 'all' },
-  { label: '4x6 Postcard', value: '4x6 postcard' },
-  { label: '6x9 Postcard', value: '6x9 postcard' },
-  { label: '6x11 Postcard', value: '6x11 postcard' },
-  { label: '8.5x11 Letter', value: '8.5x11 letter' }
+  { value: 'all', label: 'All' },
+  { value: 'A5', label: 'A5' },
+  { value: 'A6', label: 'A6' },
+  { value: 'A5-ENV', label: 'A5-ENV' }
 ]
 
 const SelectTemplate = () => {
@@ -47,7 +46,7 @@ const SelectTemplate = () => {
   const [selectedType, setSelectedType] = useState(typeOptions[0])
 
   const filteredData = data.filter(
-    (item: any) => item.type.toLowerCase() === selectedType.value
+    (item: any) => item.type === selectedType.value
   )
 
   return (
