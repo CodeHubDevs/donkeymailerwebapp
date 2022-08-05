@@ -70,6 +70,7 @@ const SelectTemplate = () => {
                           key={item.id}
                           name={item.template_name}
                           type={item.specifications}
+                          file={item.file}
                           image={
                             item.specifications?.includes('Postcard')
                               ? CampaignPostCard
@@ -82,6 +83,7 @@ const SelectTemplate = () => {
                           key={item.id}
                           name={item.template_name}
                           type={item.specifications}
+                          file={item.file}
                           image={
                             item.specifications?.includes('Postcard')
                               ? CampaignPostCard
