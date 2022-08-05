@@ -15,13 +15,9 @@ const schema = yup.object({
 })
 
 const ForgotPassword = () => {
-  const { execute, isLoading } = useResetPassword()
+  const { execute } = useResetPassword()
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({ resolver: yupResolver(schema) })
+  const { register, handleSubmit } = useForm({ resolver: yupResolver(schema) })
 
   const onSubmit = useCallback(
     async (data: any) => {
