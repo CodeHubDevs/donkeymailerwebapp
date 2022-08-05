@@ -6,6 +6,8 @@ import React from 'react'
 // import FormSelect from '@/components/FormSelect'
 import StatusPin from '@/components/StatusPin'
 
+import { useCampaign } from '@/api'
+
 const dummyData = [
   {
     id: '32143',
@@ -73,6 +75,9 @@ const MyCampaigns = () => {
   //   campaignOptions[0]
   // )
   const [data, setData] = React.useState(dummyData)
+  const campaigns = useCampaign()
+
+  console.log('Campaigns', campaigns.data)
   return (
     <>
       <div className='mt-10 mb-2 flex justify-between gap-2'>
@@ -143,7 +148,7 @@ const MyCampaigns = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
+            {campaigns.data?.map((item: any) => (
               <tr key={item.id} className=' bg-white'>
                 <th
                   scope='row'
@@ -178,7 +183,7 @@ const MyCampaigns = () => {
                 <th
                   scope='row'
                   className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  {item.cost}
+                  {item.rates}
                 </th>
                 <th
                   scope='row'

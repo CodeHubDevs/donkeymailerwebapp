@@ -30,3 +30,7 @@
     @apply border-primary ring-primary;
   }
 }
+
+.campaign-name-input {
+  width: 500px;
+}
