@@ -86,10 +86,14 @@ const CreateCampaign = () => {
       }
       try {
         const {
-          data: { id }
+          data: { id, campaign_name, type }
         } = await execute(payload)
         toast.success('Campaign created successfully')
-        setCampaign(id)
+        setCampaign({
+          id,
+          name: campaign_name,
+          type
+        })
         await router.push('/app/recipient/select')
       } catch (e: any) {
         toast.error(e.response.data.detail)

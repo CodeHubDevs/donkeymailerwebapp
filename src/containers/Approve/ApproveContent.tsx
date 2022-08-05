@@ -36,6 +36,8 @@ const ApproveContent = ({ groupId }: any) => {
     recipientsValidating
   ])
 
+  console.log('stannpCampaign', stannpCampaign)
+
   const campaign = useMemo(
     () =>
       campaigns?.find((campaign: any) => {
@@ -61,6 +63,9 @@ const ApproveContent = ({ groupId }: any) => {
         stannp_campaign_id: stannpCampaign?.data.id
       })
       toast.success('Campaign approved!')
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
     } catch (error: any) {
       console.log(error)
       toast.error('Error approving campaign!')

@@ -21,18 +21,19 @@ const SelectGroup = () => {
   const handleClick = useCallback(
     async (id: any) => {
       setRecipientId(id)
-      const {
-        data: { data }
-      } = await execute({
-        campaign_id: campaign.id,
-        name: campaign.name,
-        type: campaign.type,
+      console.log('id', id)
+      console.log('campaign', campaign)
+      console.log('templateId', templateId)
+      const { data } = await execute({
+        campaign_id: campaign?.id,
+        name: campaign?.name,
+        type: campaign?.type,
         template_id: templateId,
         group_id: id,
         what_recipients: 'all'
       })
       console.log('data', data)
-      await router.push(`/app/approve/${data}`)
+      await router.push(`/app/approve/${data.data}`)
     },
     [router, setRecipientId, execute, campaign, templateId]
   )
@@ -58,13 +59,13 @@ const SelectGroup = () => {
             {groups?.map((group: any) => (
               <div
                 className='grid grid-cols-3 py-3 text-center text-sm text-gray-700'
-                key={group.id}>
-                <div>{group.id}</div>
-                <div>{group.group_name}</div>
+                key={group?.id}>
+                <div>{group?.id}</div>
+                <div>{group?.group_name}</div>
                 <div>
                   <button
                     onClick={async () =>
-                      await handleClick(group.stannp_group_id)
+                      await handleClick(group?.stannp_group_id)
                     }
                     className='cursor-pointer rounded-full bg-secondary py-1 px-2 text-sm text-white'>
                     Select
