@@ -7,6 +7,8 @@ import { useState } from 'react'
 // import ArrowFilled from '@/assets/images/arrow-filled-down.png'
 import StatusPin from '@/components/StatusPin'
 
+import { useCampaign } from '@/api'
+
 const dummyData = [
   {
     id: '321432',
@@ -57,6 +59,8 @@ const dummyData = [
 
 const CampaignTable = () => {
   const [data, setData] = useState(dummyData)
+  const campaigns = useCampaign()
+
   return (
     <div>
       <div className='mt-10 mb-2 grid grid-cols-2 gap-2'>
@@ -140,7 +144,7 @@ const CampaignTable = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
+            {campaigns.data?.map((item: any) => (
               <tr key={item.id} className=' bg-white'>
                 <th
                   scope='row'
@@ -175,7 +179,12 @@ const CampaignTable = () => {
                 <th
                   scope='row'
                   className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  {item.cost}
+                  {item.rates}
+                </th>
+                <th
+                  scope='row'
+                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
+                  {item.rates}
                 </th>
                 <th
                   scope='row'
