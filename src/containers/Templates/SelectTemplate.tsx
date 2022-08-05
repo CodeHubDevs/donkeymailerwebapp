@@ -104,17 +104,19 @@ const SelectTemplate = () => {
               <h3 className='text-lg font-bold text-primary'>
                 Sorry you don&apos;t have any saved templates.
               </h3>
-              <button
-                type='button'
-                className='rounded-lg bg-primary py-2 px-8 text-white '>
-                <FontAwesomeIcon
-                  icon={faCirclePlus}
-                  className='mt-1 cursor-pointer rounded-full bg-primary text-white'
-                />
-                <span className='ml-2 text-center text-sm font-bold text-white'>
-                  Create New Template
-                </span>
-              </button>
+              <Link href='/app/template/create'>
+                <a
+                  type='button'
+                  className='rounded-lg bg-primary py-2 px-8 text-white '>
+                  <FontAwesomeIcon
+                    icon={faCirclePlus}
+                    className='mt-1 cursor-pointer rounded-full bg-primary text-white'
+                  />
+                  <span className='ml-2 text-center text-sm font-bold text-white'>
+                    Create New Template
+                  </span>
+                </a>
+              </Link>
             </div>
           )}
         </div>

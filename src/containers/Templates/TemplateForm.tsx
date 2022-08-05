@@ -72,25 +72,17 @@ const TemplateForm = () => {
         user_id: auth.decoded?.user_id,
         specifications: selectedSize.value,
         file: selectedFile[0],
-        template_name: 'test',
         modified_by: 'admin'
       }
       try {
-        if (!templateBoard) {
-          await addExecute(payload)
-        }
+        await addExecute(payload)
+        toast.success('Template created successfully')
       } catch (e) {
         console.log(e)
+        toast.error('Something went wrong')
       }
     },
-    [
-      auth.decoded,
-      addExecute,
-      templateBoard,
-      selectedCountry,
-      selectedSize,
-      selectedFile
-    ]
+    [auth.decoded, addExecute, selectedCountry, selectedSize, selectedFile]
   )
 
   return (
@@ -115,7 +107,7 @@ const TemplateForm = () => {
             />
           </div>
           <FormInput
-            fieldName='name'
+            fieldName='template_name'
             label='Template Name'
             register={register}
             placeholder='Enter template name...'
