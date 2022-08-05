@@ -1,5 +1,6 @@
 import { faDownload, faFileArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -28,6 +29,8 @@ const TemplateForm = () => {
   const [selectedSize, setSelectedSize] = React.useState(sizeOptions[0])
 
   const [selectedFile, setSelectedFile] = useState<any>([])
+
+  const router = useRouter()
 
   const { register, handleSubmit, setValue } = useForm()
 
@@ -72,24 +75,24 @@ const TemplateForm = () => {
         user_id: auth.decoded?.user_id,
         specifications: selectedSize.value,
         file: selectedFile[0],
-        template_name: 'test',
         modified_by: 'admin'
       }
       try {
-        if (!templateBoard) {
-          await addExecute(payload)
-        }
+        await addExecute(payload)
+        toast.success('Template created successfully')
+        await router.push('/app/template')
       } catch (e) {
         console.log(e)
+        toast.error('Something went wrong')
       }
     },
     [
       auth.decoded,
       addExecute,
-      templateBoard,
       selectedCountry,
       selectedSize,
-      selectedFile
+      selectedFile,
+      router
     ]
   )
 
@@ -115,7 +118,7 @@ const TemplateForm = () => {
             />
           </div>
           <FormInput
-            fieldName='name'
+            fieldName='template_name'
             label='Template Name'
             register={register}
             placeholder='Enter template name...'

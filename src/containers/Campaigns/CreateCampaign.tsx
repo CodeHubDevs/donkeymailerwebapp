@@ -1,23 +1,21 @@
+import { yupResolver } from '@hookform/resolvers/yup'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import * as yup from 'yup'
 
+import { useCreateCampaign } from '@/api'
 import CampaignImage from '@/assets/images/campaign.png'
 import FormInput from '@/components/FormInput'
 import FormSelect from '@/components/FormSelect'
+import { useAuth } from '@/context/AuthContext'
 import { RATES } from '@/data/rates'
-
-import * as yup from 'yup'
-import { useCreateCampaign } from '@/api'
-import { yupResolver } from '@hookform/resolvers/yup'
+import useProcessStore from '@/stores/useProcessStore'
 
 const schema = yup.object({
-  campaign_name: yup.string().required('Campaign name is required'),
-  postage_class: yup.string(),
-  postage_destination: yup.string(),
-  type: yup.string()
+  campaign_name: yup.string().required('Campaign name is required')
 })
 
 interface RateItemProps {
@@ -48,13 +46,16 @@ const RateItem: React.FC<RateItemProps> = ({ tier, rate }) => {
 const CreateCampaign = () => {
   const [selectedPostage, setSelectedPostage] = useState(postageOptions[0])
   const router = useRouter()
-  const { execute, isLoading } = useCreateCampaign()
+  const { execute } = useCreateCampaign()
+  const { setCampaign }: any = useProcessStore()
 
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm({ resolver: yupResolver(schema) })
+
+  const auth = useAuth()
 
   useEffect(() => {
     if (!router.query.destination || !router.query.type) {
@@ -73,15 +74,32 @@ const CreateCampaign = () => {
 
   const onSubmit = useCallback(
     async (data: any) => {
+      const payload = {
+        ...data,
+        postage_class: selectedPostage.value,
+        postage_destination: router.query.destination,
+        type: router.query.type,
+        modified_by: 'admin',
+        status: 'Draft',
+        action_status: 'Select Templates',
+        user_id: auth.decoded?.user_id
+      }
       try {
-        const payload = await execute(data)
-        toast.success('Welcome!')
+        const {
+          data: { id, campaign_name, type }
+        } = await execute(payload)
+        toast.success('Campaign created successfully')
+        setCampaign({
+          id,
+          name: campaign_name,
+          type
+        })
+        await router.push('/app/recipient/select')
       } catch (e: any) {
-        console.log('Error', e)
         toast.error(e.response.data.detail)
       }
     },
-    [execute]
+    [execute, selectedPostage, router, auth.decoded?.user_id, setCampaign]
   )
 
   return (
@@ -109,6 +127,7 @@ const CreateCampaign = () => {
               fieldName='campaign_name'
               register={register}
               placeholder='Enter the name of your campaign...'
+              errors={errors.campaign_name}
             />
             <div className='flex items-center justify-between'>
               <p>Choose a postage class</p>

@@ -3,10 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Listbox } from '@headlessui/react'
 import React from 'react'
 
-const SelectMenu = ({ options, value, onChange, isLeft }: any) => {
+const SelectMenu = ({ options, value, onChange, isLeft, disabled }: any) => {
   return (
-    <Listbox value={value} onChange={onChange} as='div' className='relative'>
-      <Listbox.Button className='flex w-full items-center gap-2 rounded-lg bg-primary px-2 text-white'>
+    <Listbox
+      disabled={disabled}
+      value={value}
+      onChange={onChange}
+      as='div'
+      className='relative'>
+      <Listbox.Button className='flex w-full items-center gap-2 rounded-lg bg-primary px-2 text-white disabled:cursor-not-allowed disabled:opacity-50'>
         <span className='block truncate text-sm font-semibold'>
           {value.label}
         </span>

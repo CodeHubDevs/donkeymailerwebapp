@@ -1,60 +1,15 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useCallback, useMemo } from 'react'
 
 // import FormSelect from '@/components/FormSelect'
-import StatusPin from '@/components/StatusPin'
-
 import { useCampaign } from '@/api'
+import Spinner from '@/components/Spinner'
+import StatusPin from '@/components/StatusPin'
+import useProcessStore from '@/stores/useProcessStore'
 
-const dummyData = [
-  {
-    id: '32143',
-    status: 'Draft',
-    campaign_name: 'Some Campaign Name',
-    type: '6x9 Postcard',
-    template: '',
-    recipients: 32,
-    cost: '$24.99'
-  },
-  {
-    id: '32143',
-    status: 'Draft',
-    campaign_name: 'Some Campaign Name',
-    type: '6x9 Postcard',
-    template: '',
-    recipients: 32,
-    cost: '$24.99'
-  },
-  {
-    id: '32143',
-    status: 'Draft',
-    campaign_name: 'Some Campaign Name',
-    type: '6x9 Postcard',
-    template: '',
-    recipients: 32,
-    cost: '$24.99'
-  },
-  {
-    id: '32143',
-    status: 'Draft',
-    campaign_name: 'Some Campaign Name',
-    type: '6x9 Postcard',
-    template: '',
-    recipients: 32,
-    cost: '$24.99'
-  },
-  {
-    id: '32143',
-    status: 'Draft',
-    campaign_name: 'Some Campaign Name',
-    type: '6x9 Postcard',
-    template: '',
-    recipients: 32,
-    cost: '$24.99'
-  }
-]
 // const campaignOptions = [
 //   {
 //     value: 'all',
@@ -74,10 +29,30 @@ const MyCampaigns = () => {
   // const [selectedOptions, setSelectedOptions] = React.useState(
   //   campaignOptions[0]
   // )
-  const [data, setData] = React.useState(dummyData)
-  const campaigns = useCampaign()
+  const { data: campaigns, isValidating } = useCampaign()
+  const { setCampaign }: any = useProcessStore()
 
-  console.log('Campaigns', campaigns.data)
+  const router = useRouter()
+
+  const isLoading = useMemo(() => {
+    return isValidating || !campaigns
+  }, [isValidating, campaigns])
+
+  const handleClick = useCallback(
+    async (campaign: any) => {
+      if (campaign.stannp_campaign_id) {
+        return await router.push(`/app/approve/${campaign.stannp_campaign_id}`)
+      }
+      setCampaign({
+        id: campaign.id,
+        name: campaign.campaign_name,
+        type: campaign.type
+      })
+      return await router.push('/app/recipient/select')
+    },
+    [router, setCampaign]
+  )
+
   return (
     <>
       <div className='mt-10 mb-2 flex justify-between gap-2'>
@@ -118,90 +93,46 @@ const MyCampaigns = () => {
             </a>
           </Link>
         </div>
-        <table className='mt-5 min-h-[30vh] w-full min-w-fit text-left text-sm text-gray-500'>
-          <thead className=' className border-b border-t text-sm text-gray-700'>
-            <tr>
-              <th scope='col' className='px-6 py-3'>
-                ID
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Status
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Campaign Name
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Type
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Template
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Recipients
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Cost
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                <span className='className-only'></span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {campaigns.data?.map((item: any) => (
-              <tr key={item.id} className=' bg-white'>
-                <th
-                  scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  {item.id}
-                </th>
-                <th
-                  scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  <StatusPin>{item.status}</StatusPin>
-                </th>
-                <th
-                  scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  {item.campaign_name}
-                </th>
-                <th
-                  scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  {item.type}
-                </th>
-                <th
-                  scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  {item.template}
-                </th>
-                <th
-                  scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  {item.recipients}
-                </th>
-                <th
-                  scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  {item.rates}
-                </th>
-                <th
-                  scope='row'
-                  className='flex items-center gap-4 whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  <button className='font-bold text-primary hover:text-secondary'>
-                    Track
+        <div className='mt-4 grid grid-cols-7 border-t border-b py-4 text-center text-sm font-bold text-gray-700'>
+          <h4>ID</h4>
+          <h4>Status</h4>
+          <h4>Campaign Name</h4>
+          <h4>Type</h4>
+          <h4>Template</h4>
+          <h4>Recipient Group</h4>
+          <h4>Action</h4>
+        </div>
+        {isLoading ? (
+          <div className='my-4 flex h-full items-center justify-center'>
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            {campaigns?.map((campaign: any) => (
+              <div
+                key={campaign.id}
+                className='grid grid-cols-7 items-center py-3 text-center text-sm text-gray-700'>
+                <p>{campaign.id}</p>
+                <div>
+                  <StatusPin className='font-normal'>
+                    {campaign.status}
+                  </StatusPin>
+                </div>
+                <p>{campaign.campaign_name}</p>
+                <p>{campaign.type}</p>
+                <div className='h-8 w-16 justify-self-center bg-primary' />
+                <p>No Group</p>
+                <div>
+                  <button
+                    onClick={async () => await handleClick(campaign)}
+                    className='cursor-pointer rounded-full bg-secondary p-2 text-sm text-white'>
+                    {campaign.action_status}
                   </button>
-                  <button className='font-bold text-primary hover:text-secondary'>
-                    Edit
-                  </button>
-                  <button className='font-bold text-red-500 hover:text-red-600'>
-                    Delete
-                  </button>
-                </th>
-              </tr>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </>
+        )}
       </div>
     </>
   )

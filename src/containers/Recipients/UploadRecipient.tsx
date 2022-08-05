@@ -75,7 +75,10 @@ const UploadRecipient = () => {
         group_id: newGroup?.stannp_group_id
       })
       toast.success('Recipients uploaded successfully')
-      await router.push('/app/recipient')
+      if (!router.query.new) {
+        return await router.push('/app/recipient/select')
+      }
+      return await router.push('/app/recipient')
     } catch (error: any) {
       toast.error(error.response.data.error)
     }

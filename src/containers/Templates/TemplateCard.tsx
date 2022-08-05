@@ -1,7 +1,5 @@
-import { url } from 'inspector'
 import Image from 'next/image'
 import React from 'react'
-import { string } from 'yup'
 
 interface TemplateCardProps {
   name: string
@@ -17,7 +15,6 @@ const TemplateCard: React.FC<TemplateCardProps> = ({
   file
 }) => {
   const routeChange = () => {
-    file = file
     window.location = file
   }
 

@@ -1,5 +1,6 @@
-import useSWR from 'swr'
 import { useState, useCallback } from 'react'
+import useSWR from 'swr'
+
 import { useAuth } from '@/context/AuthContext'
 import client from '@/lib/client'
 
@@ -25,23 +26,26 @@ const createCampaign = async (payload: CampaignPayloadProps) => {
   return response
 }
 
-export const useCreateCampaign = async () => {
+export const useCreateCampaign = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState(null)
 
-  const execute = useCallback(async (payload: CampaignPayloadProps) => {
-    try {
-      setIsLoading(true)
-      const response = await createCampaign(payload)
-      setData(response as any)
-      return response
-    } catch (e: any) {
-      console.log()
-      throw e
-    } finally {
-      setIsLoading(false)
-    }
-  }, [])
+  const execute = useCallback(
+    async (payload: CampaignPayloadProps) => {
+      try {
+        setIsLoading(true)
+        const response = await createCampaign(payload)
+        setData(response as any)
+        return response
+      } catch (e: any) {
+        console.log()
+        throw e
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [setIsLoading, setData]
+  )
 
   return { isLoading, data, execute }
 }

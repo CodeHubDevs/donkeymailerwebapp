@@ -1,50 +1,43 @@
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useCallback, useMemo } from 'react'
 
+import { useCreateStannpCampaign, useRecipients } from '@/api'
 import GoBackToSelectButton from '@/components/GoBackToSelectButton'
+import Spinner from '@/components/Spinner'
+import useProcessStore from '@/stores/useProcessStore'
 
-const dummyData = [
-  {
-    id: '32143',
-    status: 'Draft',
-    group_name: 'Some Group Name',
-    date_modified: '2020-01-01',
-    total_recipients: 423,
-    countries: 3
-  },
-  {
-    id: '32143',
-    status: 'Draft',
-    group_name: 'Some Group Name',
-    date_modified: '2020-01-01',
-    total_recipients: 423,
-    countries: 3
-  },
-  {
-    id: '32143',
-    status: 'Draft',
-    group_name: 'Some Group Name',
-    date_modified: '2020-01-01',
-    total_recipients: 423,
-    countries: 3
-  },
-  {
-    id: '32143',
-    status: 'Draft',
-    group_name: 'Some Group Name',
-    date_modified: '2020-01-01',
-    total_recipients: 423,
-    countries: 3
-  },
-  {
-    id: '32143',
-    status: 'Draft',
-    group_name: 'Some Group Name',
-    date_modified: '2020-01-01',
-    total_recipients: 423,
-    countries: 3
-  }
-]
 const SelectGroup = () => {
+  const { data: groups, isValidating } = useRecipients()
+  const router = useRouter()
+  const { setRecipientId }: any = useProcessStore()
+
+  const isLoading = useMemo(() => {
+    return isValidating || !groups
+  }, [isValidating, groups])
+
+  const { execute } = useCreateStannpCampaign()
+  const { campaign, templateId }: any = useProcessStore()
+
+  const handleClick = useCallback(
+    async (id: any) => {
+      setRecipientId(id)
+      console.log('id', id)
+      console.log('campaign', campaign)
+      console.log('templateId', templateId)
+      const { data } = await execute({
+        campaign_id: campaign?.id,
+        name: campaign?.name,
+        type: campaign?.type,
+        template_id: templateId,
+        group_id: id,
+        what_recipients: 'all'
+      })
+      console.log('data', data)
+      await router.push(`/app/approve/${data.data}`)
+    },
+    [router, setRecipientId, execute, campaign, templateId]
+  )
+
   return (
     <div className='mt-10'>
       <div className='flex items-center justify-between'>
@@ -52,60 +45,36 @@ const SelectGroup = () => {
         <GoBackToSelectButton />
       </div>
       <div className='mt-4 rounded-lg bg-white p-4 shadow-xl'>
-        <table className='min-h-[300px] w-full text-left text-sm text-gray-500'>
-          <thead className='border-b border-t text-sm text-gray-700'>
-            <tr>
-              <th scope='col' className='px-6 py-3'>
-                Group ID
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Group Name
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Total Recipients
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Countries
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                <span className='className-only'></span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {dummyData.map((item) => (
-              <tr key={item.id}>
-                <td
-                  scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  {item.id}
-                </td>
-                <td
-                  scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  {item.group_name}
-                </td>
-                <td
-                  scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  {item.total_recipients}
-                </td>
-                <td
-                  scope='row'
-                  className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                  {item.countries}
-                </td>
-                <th scope='row' className='whitespace-nowrap px-6 py-4'>
+        <div className='text-bold grid grid-cols-3 border-b border-t py-4 text-center text-sm font-bold text-gray-700'>
+          <h4>ID</h4>
+          <h4>Group Name</h4>
+          <h4>Action</h4>
+        </div>
+        {isLoading ? (
+          <div className='flex h-full items-center justify-center py-4'>
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            {groups?.map((group: any) => (
+              <div
+                className='grid grid-cols-3 py-3 text-center text-sm text-gray-700'
+                key={group?.id}>
+                <div>{group?.id}</div>
+                <div>{group?.group_name}</div>
+                <div>
                   <button
-                    className='rounded-lg bg-primary py-1 px-3 text-xs font-bold text-white'
-                    onClick={() => {}}>
+                    onClick={async () =>
+                      await handleClick(group?.stannp_group_id)
+                    }
+                    className='cursor-pointer rounded-full bg-secondary py-1 px-2 text-sm text-white'>
                     Select
                   </button>
-                </th>
-              </tr>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </>
+        )}
       </div>
     </div>
   )
