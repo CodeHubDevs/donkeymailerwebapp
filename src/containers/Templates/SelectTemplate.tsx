@@ -29,6 +29,14 @@ const SelectTemplate = () => {
     return isValidating || !templatesBoard
   }, [isValidating, templatesBoard])
 
+  const filteredTemplates = useMemo(() => {
+    if (!templatesBoard) return []
+    if (selectedType.value === 'all') return templatesBoard
+    return templatesBoard.filter(
+      (t: any) => t.specifications === selectedType.value
+    )
+  }, [selectedType, templatesBoard])
+
   return (
     <div className='mt-10'>
       <h3 className='text-2xl font-bold'>My Templates</h3>
@@ -62,33 +70,19 @@ const SelectTemplate = () => {
                 </Link>
               </div>
               <div className='mt-4 grid grid-cols-3 gap-10'>
-                {selectedType.value === 'all'
-                  ? templatesBoard.map((item: any) => (
-                      <TemplateCard
-                        key={item.id}
-                        name={item.template_name}
-                        type={item.specifications}
-                        file={item.file}
-                        image={
-                          item.specifications?.includes('Postcard')
-                            ? CampaignPostCard
-                            : CampaignEnvelope
-                        }
-                      />
-                    ))
-                  : templatesBoard.map((item: any) => (
-                      <TemplateCard
-                        key={item.id}
-                        name={item.template_name}
-                        type={item.specifications}
-                        file={item.file}
-                        image={
-                          item.specifications?.includes('Postcard')
-                            ? CampaignPostCard
-                            : CampaignEnvelope
-                        }
-                      />
-                    ))}
+                {filteredTemplates.map((item: any) => (
+                  <TemplateCard
+                    key={item.id}
+                    name={item.template_name}
+                    type={item.specifications}
+                    file={item.file}
+                    image={
+                      item.specifications?.includes('Postcard')
+                        ? CampaignPostCard
+                        : CampaignEnvelope
+                    }
+                  />
+                ))}
               </div>
             </>
           ) : (

@@ -8,7 +8,9 @@ import toast from 'react-hot-toast'
 import { useAddTemplateBoard, useTemplateBoard } from '@/api'
 import FormInput from '@/components/FormInput'
 import FormSelect from '@/components/FormSelect'
+import ProgressBar from '@/components/ProgressBar'
 import { useAuth } from '@/context/AuthContext'
+import useProgressUploadStore from '@/stores/useProgressUploadStore'
 
 const countryOptions = [
   { value: '', label: 'Select Country' },
@@ -36,8 +38,10 @@ const TemplateForm = () => {
 
   const auth = useAuth()
 
-  const { execute: addExecute } = useAddTemplateBoard()
+  const { execute: addExecute, isLoading } = useAddTemplateBoard()
   const { data: templateBoard } = useTemplateBoard()
+
+  const { setProgress }: any = useProgressUploadStore()
 
   useEffect(() => {
     if (templateBoard) {
@@ -80,6 +84,7 @@ const TemplateForm = () => {
       try {
         await addExecute(payload)
         toast.success('Template created successfully')
+        setProgress(0)
         await router.push('/app/template')
       } catch (e) {
         console.log(e)
@@ -92,7 +97,8 @@ const TemplateForm = () => {
       selectedCountry,
       selectedSize,
       selectedFile,
-      router
+      router,
+      setProgress
     ]
   )
 
@@ -144,6 +150,11 @@ const TemplateForm = () => {
             <span>Download Template Guide</span>
           </a>
         </div>
+        {isLoading && (
+          <div className='mt-4 w-full'>
+            <ProgressBar />
+          </div>
+        )}
         <button className='mt-8 self-end rounded-full bg-primary py-1 px-12 font-bold text-white'>
           Submit
         </button>
