@@ -32,6 +32,8 @@ const MyCampaigns = () => {
   const { data: campaigns, isValidating } = useCampaign()
   const { setCampaign }: any = useProcessStore()
 
+  console.log('campaigns', campaigns)
+
   const router = useRouter()
 
   const isLoading = useMemo(() => {
