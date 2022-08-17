@@ -13,7 +13,7 @@ const ProgressBar = () => {
         className='absolute h-full bg-primary'
         style={{ width: `${progress}%` }}></div>
       <span className='absolute flex h-full w-full items-center justify-center text-xs text-white'>
-        {progress === 100 ? <Spinner className='h-3 w-3' /> : `${progress}%`}
+        {progress === 100 ? <Spinner className='h-2 w-2' /> : `${progress}%`}
       </span>
     </div>
   )

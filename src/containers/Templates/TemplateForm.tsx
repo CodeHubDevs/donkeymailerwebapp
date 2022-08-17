@@ -9,6 +9,7 @@ import { useAddTemplateBoard, useTemplateBoard } from '@/api'
 import FormInput from '@/components/FormInput'
 import FormSelect from '@/components/FormSelect'
 import ProgressBar from '@/components/ProgressBar'
+import StepForm from '@/components/StepForm'
 import { useAuth } from '@/context/AuthContext'
 import useProgressUploadStore from '@/stores/useProgressUploadStore'
 
@@ -103,63 +104,68 @@ const TemplateForm = () => {
   )
 
   return (
-    <div className='mt-8 rounded-2xl bg-white p-8 shadow-md'>
-      <h1 className='text-2xl font-bold'>Create Your Template</h1>
-      <form
-        onSubmit={handleSubmit(async (data, e: any) => await onSubmit(data, e))}
-        className='flex flex-col items-start px-24'>
-        <div className='my-8 flex w-full gap-32'>
-          <div className='flex w-full flex-col gap-4'>
-            <FormSelect
-              label='Choose a country'
-              options={countryOptions}
-              value={selectedCountry}
-              onChange={setSelectedCountry}
-            />
-            <FormSelect
-              label='Choose a post card'
-              options={sizeOptions}
-              value={selectedSize}
-              onChange={setSelectedSize}
+    <>
+      {router.query.step && <StepForm currStep={2} />}
+      <div className='mt-8 rounded-2xl bg-white p-8 shadow-md'>
+        <h1 className='text-2xl font-bold'>Create Your Template</h1>
+        <form
+          onSubmit={handleSubmit(
+            async (data, e: any) => await onSubmit(data, e)
+          )}
+          className='flex flex-col items-start px-24'>
+          <div className='my-8 flex w-full gap-32'>
+            <div className='flex w-full flex-col gap-4'>
+              <FormSelect
+                label='Choose a country'
+                options={countryOptions}
+                value={selectedCountry}
+                onChange={setSelectedCountry}
+              />
+              <FormSelect
+                label='Choose a post card'
+                options={sizeOptions}
+                value={selectedSize}
+                onChange={setSelectedSize}
+              />
+            </div>
+            <FormInput
+              fieldName='template_name'
+              label='Template Name'
+              register={register}
+              placeholder='Enter template name...'
             />
           </div>
-          <FormInput
-            fieldName='template_name'
-            label='Template Name'
-            register={register}
-            placeholder='Enter template name...'
-          />
-        </div>
-        <div className='flex w-full flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-black25 bg-gray-100 p-20'>
-          <FontAwesomeIcon icon={faFileArrowUp} className='h-12 w-12' />
-          <input
-            onChange={(e) => setSelectedFile(e.target.files)}
-            type='file'
-            className='text-grey-500 text-sm file:mr-5 file:rounded-full file:border-0 file:bg-primary file:py-2 file:px-6 file:text-sm file:font-medium file:text-white hover:file:cursor-pointer focus:outline-none'
-          />
-          <a
-            href={downloadTemplate}
-            onClick={() =>
-              selectedSize.value
-                ? toast.success(`Downloading ${selectedSize.label} template`)
-                : toast.error('Please select a size')
-            }
-            download='template.pdf'
-            className='flex cursor-pointer items-center text-sm text-primary'>
-            <FontAwesomeIcon icon={faDownload} className='mr-2' />
-            <span>Download Template Guide</span>
-          </a>
-        </div>
-        {isLoading && (
-          <div className='mt-4 w-full'>
-            <ProgressBar />
+          <div className='flex w-full flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-black25 bg-gray-100 p-20'>
+            <FontAwesomeIcon icon={faFileArrowUp} className='h-12 w-12' />
+            <input
+              onChange={(e) => setSelectedFile(e.target.files)}
+              type='file'
+              className='text-grey-500 text-sm file:mr-5 file:rounded-full file:border-0 file:bg-primary file:py-2 file:px-6 file:text-sm file:font-medium file:text-white hover:file:cursor-pointer focus:outline-none'
+            />
+            <a
+              href={downloadTemplate}
+              onClick={() =>
+                selectedSize.value
+                  ? toast.success(`Downloading ${selectedSize.label} template`)
+                  : toast.error('Please select a size')
+              }
+              download='template.pdf'
+              className='flex cursor-pointer items-center text-sm text-primary'>
+              <FontAwesomeIcon icon={faDownload} className='mr-2' />
+              <span>Download Template Guide</span>
+            </a>
           </div>
-        )}
-        <button className='mt-8 self-end rounded-full bg-primary py-1 px-12 font-bold text-white'>
-          Submit
-        </button>
-      </form>
-    </div>
+          {isLoading && (
+            <div className='mt-4 w-full'>
+              <ProgressBar />
+            </div>
+          )}
+          <button className='mt-8 self-end rounded-full bg-primary py-1 px-12 font-bold text-white'>
+            Submit
+          </button>
+        </form>
+      </div>
+    </>
   )
 }
 
