@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 
 import CampaignImage from '@/assets/images/campaign.png'
+import StepForm from '@/components/StepForm'
 
 interface OptionCardProps {
   label: string
@@ -33,17 +34,20 @@ const OptionsCard: React.FC<OptionCardProps> = ({ label, href, children }) => {
 
 const RecipientOptions = () => {
   return (
-    <div className='mt-8 grid grid-cols-3 gap-4'>
-      <OptionsCard label='Select From Your Recipient Group' href='group'>
-        Select Group
-      </OptionsCard>
-      <OptionsCard label='Upload Recipients' href='upload'>
-        Upload Group
-      </OptionsCard>
-      <OptionsCard label='Create New Recipient Group' href='create'>
-        Create Group
-      </OptionsCard>
-    </div>
+    <>
+      <StepForm currStep={3} />
+      <div className='mt-8 grid grid-cols-3 gap-4'>
+        <OptionsCard label='Select From Your Recipient Group' href='group'>
+          Select Group
+        </OptionsCard>
+        <OptionsCard label='Upload Recipients' href='upload'>
+          Upload Group
+        </OptionsCard>
+        <OptionsCard label='Create New Recipient Group' href='create'>
+          Create Group
+        </OptionsCard>
+      </div>
+    </>
   )
 }
 
