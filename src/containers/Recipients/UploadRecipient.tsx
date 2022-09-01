@@ -45,7 +45,8 @@ const UploadRecipient = () => {
         } = await execute({
           group_name,
           modified_by: 'admin',
-          user_id: auth.decoded?.user_id
+          user_id: auth.decoded?.user_id,
+          country: 'Not'
         })
 
         await mutate(`/api/recipients-group/${auth.decoded?.user_id}`)
