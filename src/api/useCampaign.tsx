@@ -16,13 +16,13 @@ export interface CampaignPayloadProps {
 export const useCampaign = () => {
   const auth = useAuth()
 
-  const response = useSWR(`/api/campaign/${auth.decoded?.user_id}/`)
+  const response = useSWR(`/api/stannp/campaign/${auth.decoded?.user_id}/`)
 
   return response
 }
 
 const createCampaign = async (payload: CampaignPayloadProps) => {
-  const response = await client.post('/api/campaign/', payload)
+  const response = await client.post('/api/stannp/campaign/', payload)
   return response
 }
 

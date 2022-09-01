@@ -6,7 +6,7 @@ const useProcessStore = create((set) => ({
     name: null,
     type: null
   },
-  templateId: '212986',
+  templateId: '',
   recipientId: '',
   setCampaign: (campaign: any) => set((state) => ({ ...state, campaign })),
   setTemplateId: (templateId: string) =>

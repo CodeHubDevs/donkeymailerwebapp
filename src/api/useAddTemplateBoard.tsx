@@ -14,7 +14,7 @@ const templateBoard = async (
   payload: TemplateBoardPayloadProps,
   setStateProgress: any
 ) => {
-  const response = await client.post('/api/templates-board/', payload, {
+  const response = await client.post('/api/stannp/templates-board/', payload, {
     headers: {
       'Content-Type': 'multipart/form-data'
     },

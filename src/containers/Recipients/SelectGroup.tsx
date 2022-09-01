@@ -19,22 +19,21 @@ const SelectGroup = () => {
   const { execute } = useCreateStannpCampaign()
   const { campaign, templateId }: any = useProcessStore()
 
+  console.log({ groups })
+
   const handleClick = useCallback(
     async (id: any) => {
       setRecipientId(id)
-      console.log('id', id)
       console.log('campaign', campaign)
       console.log('templateId', templateId)
+      console.log('recipientId', id)
       const { data } = await execute({
         campaign_id: campaign?.id,
-        name: campaign?.name,
-        type: campaign?.type,
         template_id: templateId,
         group_id: id,
         what_recipients: 'all'
       })
-      console.log('data', data)
-      await router.push(`/app/approve/${data.data}`)
+      await router.push(`/app/approve/${data.id}`)
     },
     [router, setRecipientId, execute, campaign, templateId]
   )
@@ -62,8 +61,8 @@ const SelectGroup = () => {
               {groups?.map((group: any) => (
                 <div
                   className='grid grid-cols-3 py-3 text-center text-sm text-gray-700'
-                  key={group?.id}>
-                  <div>{group?.id}</div>
+                  key={group?.stannp_group_id}>
+                  <div>{group?.stannp_group_id}</div>
                   <div>{group?.group_name}</div>
                   <div>
                     <button

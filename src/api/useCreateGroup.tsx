@@ -6,6 +6,7 @@ export interface CreateGroupPayloadProps {
   modified_by: string
   group_name: string
   user_id: string
+  country: string
 }
 
 const createGroup = async (payload: CreateGroupPayloadProps) => {

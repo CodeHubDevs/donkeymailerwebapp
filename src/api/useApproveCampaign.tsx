@@ -3,7 +3,6 @@ import { useState, useCallback } from 'react'
 import client from '@/lib/client'
 
 export interface ApproveCampaignPayloadProps {
-  campaign_id: string
   stannp_campaign_id: string
 }
 

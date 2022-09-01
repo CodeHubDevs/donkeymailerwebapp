@@ -42,15 +42,18 @@ const MyCampaigns = () => {
 
   const handleClick = useCallback(
     async (campaign: any) => {
-      if (campaign.stannp_campaign_id) {
-        return await router.push(`/app/approve/${campaign.stannp_campaign_id}`)
+      if (campaign.action_status === 'Select Templates') {
+        setCampaign({
+          id: campaign.stannp_campaign_id,
+          name: campaign.campaign_name,
+          type: campaign.type
+        })
+        return await router.push({
+          pathname: '/app/template',
+          query: { select: true }
+        })
       }
-      setCampaign({
-        id: campaign.id,
-        name: campaign.campaign_name,
-        type: campaign.type
-      })
-      return await router.push('/app/recipient/select')
+      return await router.push(`/app/approve/${campaign.stannp_campaign_id}`)
     },
     [router, setCampaign]
   )

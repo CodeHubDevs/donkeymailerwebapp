@@ -86,16 +86,18 @@ const CreateCampaign = () => {
         user_id: auth.decoded?.user_id
       }
       try {
-        const {
-          data: { id, campaign_name, type }
-        } = await execute(payload)
+        const { data } = await execute(payload)
+        console.log({ data })
         toast.success('Campaign created successfully')
         setCampaign({
-          id,
-          name: campaign_name,
-          type
+          id: data.stannp_campaign_id,
+          name: data.campaign_name,
+          type: data.type
         })
-        await router.push('/app/recipient/select')
+        await router.push({
+          pathname: '/app/template',
+          query: { select: true }
+        })
       } catch (e: any) {
         toast.error(e.response.data.detail)
       }

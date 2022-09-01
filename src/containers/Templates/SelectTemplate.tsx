@@ -25,7 +25,6 @@ const typeOptions = [
 const SelectTemplate = () => {
   const router = useRouter()
   const { data: templatesBoard, isValidating } = useTemplateBoard()
-  // const [data] = useState(templatesBoard)
   const [selectedType, setSelectedType] = useState(typeOptions[0])
 
   const isLoading = useMemo(() => {
@@ -81,6 +80,7 @@ const SelectTemplate = () => {
                       name={item.template_name}
                       type={item.specifications}
                       file={item.file}
+                      stannpId={item.stannp_template_id}
                       image={
                         item.specifications?.includes('Postcard')
                           ? CampaignPostCard
