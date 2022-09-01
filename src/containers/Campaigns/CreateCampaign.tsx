@@ -95,7 +95,10 @@ const CreateCampaign = () => {
           name: campaign_name,
           type
         })
-        await router.push('/app/recipient/select')
+        await router.push({
+          pathname: '/app/template',
+          query: { select: true }
+        })
       } catch (e: any) {
         toast.error(e.response.data.detail)
       }

@@ -57,11 +57,12 @@ const ApproveContent = ({ groupId }: any) => {
 
   const { execute } = useApproveCampaign()
 
+  console.log({ campaigns, stannpCampaign, recipientsGroup })
+
   const handleClick = useCallback(async () => {
     try {
       await execute({
-        campaign_id: campaign?.id,
-        stannp_campaign_id: stannpCampaign?.data.id
+        stannp_campaign_id: stannpCampaign?.data?.id
       })
       toast.success('Campaign approved!')
       setTimeout(() => {
@@ -71,7 +72,7 @@ const ApproveContent = ({ groupId }: any) => {
       console.log(error)
       toast.error('Error approving campaign!')
     }
-  }, [campaign, execute, stannpCampaign])
+  }, [execute, stannpCampaign])
 
   return (
     <>

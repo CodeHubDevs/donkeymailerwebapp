@@ -4,8 +4,6 @@ import client from '@/lib/client'
 
 export interface CreateStannpCampaignPayloadProps {
   campaign_id: string
-  name: string
-  type: string
   template_id: string
   group_id: string
   what_recipients: string
