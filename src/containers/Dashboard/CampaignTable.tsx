@@ -2,63 +2,12 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
 
 // import ArrowFilled from '@/assets/images/arrow-filled-down.png'
+import { useCampaign } from '@/api'
 import StatusPin from '@/components/StatusPin'
 
-import { useCampaign } from '@/api'
-
-const dummyData = [
-  {
-    id: '321432',
-    status: 'Draft',
-    campaign_name: 'Some Campaign Name',
-    type: '6x9 Postcard',
-    template: 'template',
-    recipients: 32,
-    cost: '$24.99'
-  },
-  {
-    id: '321433',
-    status: 'Draft',
-    campaign_name: 'Some Campaign Name',
-    type: '6x9 Postcard',
-    template: 'template',
-    recipients: 32,
-    cost: '$24.99'
-  },
-  {
-    id: '321434',
-    status: 'Draft',
-    campaign_name: 'Some Campaign Name',
-    type: '6x9 Postcard',
-    template: 'template',
-    recipients: 32,
-    cost: '$24.99'
-  },
-  {
-    id: '321435',
-    status: 'Draft',
-    campaign_name: 'Some Campaign Name',
-    type: '6x9 Postcard',
-    template: 'template',
-    recipients: 32,
-    cost: '$24.99'
-  },
-  {
-    id: '321436',
-    status: 'Draft',
-    campaign_name: 'Some Campaign Name',
-    type: '6x9 Postcard',
-    template: 'template',
-    recipients: 32,
-    cost: '$24.99'
-  }
-]
-
 const CampaignTable = () => {
-  const [data, setData] = useState(dummyData)
   const campaigns = useCampaign()
 
   return (
@@ -144,7 +93,7 @@ const CampaignTable = () => {
             </tr>
           </thead>
           <tbody>
-            {campaigns.data?.map((item: any) => (
+            {campaigns.data.items?.map((item: any) => (
               <tr key={item.id} className=' bg-white'>
                 <th
                   scope='row'
