@@ -5,12 +5,14 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-import { useCreateGroup, useRecipients } from '@/api'
+import { useCreateGroup, useCreateStannpCampaign, useRecipients } from '@/api'
+import { useSelectGroup } from '@/api/useSelectGroup'
 import { useUploadRecipients } from '@/api/useUploadRecipients'
 import GoBackToSelectButton from '@/components/GoBackToSelectButton'
 import Spinner from '@/components/Spinner'
 import StepForm from '@/components/StepForm'
 import { useAuth } from '@/context/AuthContext'
+import useProcessStore from '@/stores/useProcessStore'
 
 const UploadRecipient = () => {
   const [canCreate, setCanCreate] = useState(false)
@@ -20,6 +22,8 @@ const UploadRecipient = () => {
 
   const auth = useAuth()
   const router = useRouter()
+
+  const { setRecipientId, campaign, templateId }: any = useProcessStore()
 
   const { register, handleSubmit } = useForm()
   const { execute, isLoading } = useCreateGroup()
@@ -70,6 +74,9 @@ const UploadRecipient = () => {
     []
   )
 
+  const { execute: createStannp } = useCreateStannpCampaign()
+  const { execute: selectGroup } = useSelectGroup()
+
   const handleSubmitUpload = useCallback(async () => {
     try {
       await uploadRecipients({
@@ -77,22 +84,46 @@ const UploadRecipient = () => {
         group_id: newGroup?.stannp_group_id
       })
       toast.success('Recipients uploaded successfully')
-      if (!router.query.new) {
-        return await router.push('/app/recipient/select')
+      console.log({ newGroup })
+      if (!router.query.create) {
+        setRecipientId(newGroup?.stannp_group_id)
+        const { data } = await createStannp({
+          campaign_id: campaign?.id,
+          template_id: templateId,
+          group_id: newGroup?.stannp_group_id,
+          what_recipients: 'all'
+        })
+        console.log(data)
+        await selectGroup({
+          country: 'Not',
+          campaign_id: campaign.dbId,
+          recipients_id: newGroup?.id
+        })
+        return await router.push(`/app/approve/${data?.id}`)
       }
       return await router.push('/app/recipient')
     } catch (error: any) {
       toast.error(error.response.data.error)
     }
-  }, [selectedFile, uploadRecipients, newGroup, router])
+  }, [
+    selectedFile,
+    uploadRecipients,
+    newGroup,
+    router,
+    setRecipientId,
+    createStannp,
+    campaign,
+    templateId,
+    selectGroup
+  ])
 
   return (
     <>
-      {!router.query.new && <StepForm currStep={3} />}
+      {!router.query.create && <StepForm currStep={3} />}
       <div className='mt-10'>
         <div className='flex items-center justify-between'>
           <h3 className='text-xl font-bold'>Upload Recipients</h3>
-          {!router.query.new && <GoBackToSelectButton />}
+          {!router.query.create && <GoBackToSelectButton />}
         </div>
         <div className='mt-4 rounded-xl bg-white p-4 shadow-lg'>
           <form

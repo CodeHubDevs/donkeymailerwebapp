@@ -2,10 +2,12 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
+import toast from 'react-hot-toast'
 
-// import FormSelect from '@/components/FormSelect'
 import { useCampaign } from '@/api'
+// import FormSelect from '@/components/FormSelect'
+import Pagination from '@/components/Pagination'
 import Spinner from '@/components/Spinner'
 import StatusPin from '@/components/StatusPin'
 import useProcessStore from '@/stores/useProcessStore'
@@ -29,10 +31,11 @@ const MyCampaigns = () => {
   // const [selectedOptions, setSelectedOptions] = React.useState(
   //   campaignOptions[0]
   // )
-  const { data: campaigns, isValidating } = useCampaign()
+  const [page, setPage] = useState(1)
+  const { data: campaigns, isValidating } = useCampaign(page)
   const { setCampaign }: any = useProcessStore()
 
-  console.log('campaigns', campaigns)
+  console.log({ campaigns })
 
   const router = useRouter()
 
@@ -42,18 +45,31 @@ const MyCampaigns = () => {
 
   const handleClick = useCallback(
     async (campaign: any) => {
+      setCampaign({
+        id: campaign.stannp_campaign_id,
+        dbId: campaign.id.toString(),
+        name: campaign.campaign_name,
+        type: campaign.type,
+        destination: campaign.postage_destination
+      })
       if (campaign.action_status === 'Select Templates') {
-        setCampaign({
-          id: campaign.stannp_campaign_id,
-          name: campaign.campaign_name,
-          type: campaign.type
-        })
         return await router.push({
           pathname: '/app/template',
-          query: { select: true }
+          query: { new: true }
         })
       }
-      return await router.push(`/app/approve/${campaign.stannp_campaign_id}`)
+      if (campaign.action_status === 'Select Recipients') {
+        return await router.push({
+          pathname: '/app/recipient/select',
+          query: { new: true }
+        })
+      }
+      if (campaign.action_status === 'For Review/Approval') {
+        return await router.push(`/app/approve/${campaign.stannp_campaign_id}`)
+      }
+      if (campaign.action_status === 'For Bookings') {
+        return toast.error('To be implemented')
+      }
     },
     [router, setCampaign]
   )
@@ -61,7 +77,10 @@ const MyCampaigns = () => {
   return (
     <>
       <div className='mt-10 mb-2 flex justify-between gap-2'>
-        <h3 className='text-2xl font-bold text-black '>My Campaigns</h3>
+        <div className='flex w-full items-center justify-between'>
+          <h3 className='text-2xl font-bold text-black '>My Campaigns</h3>
+          <Pagination page={page} setPage={setPage} />
+        </div>
         {/* <div className='flex items-center gap-1'>
           <input
             type='search'
@@ -78,7 +97,7 @@ const MyCampaigns = () => {
           </button>
         </div> */}
       </div>
-      <div className='relative overflow-x-auto rounded-xl bg-white p-4 shadow-md'>
+      <div className='relative overflow-x-auto rounded-xl bg-white p-8 shadow-md'>
         <div className='flex items-center justify-end'>
           {/* <FormSelect
             className='w-64'
@@ -98,13 +117,14 @@ const MyCampaigns = () => {
             </a>
           </Link>
         </div>
-        <div className='mt-4 grid grid-cols-7 border-t border-b py-4 text-center text-sm font-bold text-gray-700'>
+        <div className='mt-4 grid grid-cols-8 border-t border-b py-4 text-center text-sm font-bold text-gray-700'>
           <h4>ID</h4>
           <h4>Status</h4>
           <h4>Campaign Name</h4>
           <h4>Type</h4>
           <h4>Template</h4>
           <h4>Recipient Group</h4>
+          <h4>Destination</h4>
           <h4>Action</h4>
         </div>
         {isLoading ? (
@@ -113,10 +133,10 @@ const MyCampaigns = () => {
           </div>
         ) : (
           <>
-            {campaigns?.map((campaign: any) => (
+            {campaigns.items?.map((campaign: any) => (
               <div
                 key={campaign.id}
-                className='grid grid-cols-7 items-center py-3 text-center text-sm text-gray-700'>
+                className='grid grid-cols-8 items-center py-3 text-center text-sm text-gray-700'>
                 <p>{campaign.id}</p>
                 <div>
                   <StatusPin className='font-normal'>
@@ -125,8 +145,26 @@ const MyCampaigns = () => {
                 </div>
                 <p>{campaign.campaign_name}</p>
                 <p>{campaign.type}</p>
-                <div className='h-8 w-16 justify-self-center bg-primary' />
-                <p>No Group</p>
+                {campaign.templates ? (
+                  <button
+                    className='h-8 w-16 justify-self-center'
+                    onClick={() => {
+                      window.location = campaign.templates.file
+                    }}>
+                    <iframe
+                      className='h-full w-full'
+                      src={campaign.templates.file}
+                    />
+                  </button>
+                ) : (
+                  <div className='h-8 w-16 justify-self-center bg-primary' />
+                )}
+                {campaign.recipients_group ? (
+                  <p>{campaign.recipients_group.group_name}</p>
+                ) : (
+                  <p>No Group</p>
+                )}
+                <p>{campaign.postage_destination.toUpperCase()}</p>
                 <div>
                   <button
                     onClick={async () => await handleClick(campaign)}

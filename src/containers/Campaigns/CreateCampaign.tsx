@@ -12,17 +12,19 @@ import FormInput from '@/components/FormInput'
 import FormSelect from '@/components/FormSelect'
 import StepForm from '@/components/StepForm'
 import { useAuth } from '@/context/AuthContext'
-import { RATES } from '@/data/rates'
+// import { RATES } from '@/data/rates'
 import useProcessStore from '@/stores/useProcessStore'
 
 const schema = yup.object({
   campaign_name: yup.string().required('Campaign name is required')
 })
 
-interface RateItemProps {
-  tier: string
-  rate: string
-}
+// interface RateItemProps {
+//   tier: string
+//   rate: string
+// }
+
+const locationOptions = [{ label: 'UK', value: 'uk' }]
 
 const postageOptions = [
   {
@@ -35,17 +37,18 @@ const postageOptions = [
   }
 ]
 
-const RateItem: React.FC<RateItemProps> = ({ tier, rate }) => {
-  return (
-    <div className='flex items-center justify-end gap-8'>
-      <p>{tier}</p>
-      <p className='font-bold'>&#xA5;{rate}</p>
-    </div>
-  )
-}
+// const RateItem: React.FC<RateItemProps> = ({ tier, rate }) => {
+//   return (
+//     <div className='flex items-center justify-end gap-8'>
+//       <p>{tier}</p>
+//       <p className='font-bold'>&#xA5;{rate}</p>
+//     </div>
+//   )
+// }
 
 const CreateCampaign = () => {
   const [selectedPostage, setSelectedPostage] = useState(postageOptions[0])
+  const [selectedLocation, setSelectedLocation] = useState(locationOptions[0])
   const router = useRouter()
   const { execute } = useCreateCampaign()
   const { setCampaign }: any = useProcessStore()
@@ -59,50 +62,59 @@ const CreateCampaign = () => {
   const auth = useAuth()
 
   useEffect(() => {
-    if (!router.query.destination || !router.query.type) {
+    if (!router.query.type) {
       // eslint-disable-next-line
       router.push('/app/campaign/select')
     }
   }, [router])
 
-  const filteredRates = RATES.filter(
-    ({ destination }) => destination === router.query.destination
-  )
-    .map(({ postageType }) =>
-      postageType?.filter(({ type }) => type === router.query.type)
-    )[0]
-    ?.map(({ rates }) => rates)[0]
+  // const filteredRates = RATES.filter(
+  //   ({ destination }) => destination === router.query.destination
+  // )
+  //   .map(({ postageType }) =>
+  //     postageType?.filter(({ type }) => type === router.query.type)
+  //   )[0]
+  //   ?.map(({ rates }) => rates)[0]
 
   const onSubmit = useCallback(
     async (data: any) => {
       const payload = {
         ...data,
         postage_class: selectedPostage.value,
-        postage_destination: router.query.destination,
+        postage_destination: selectedLocation.value,
         type: router.query.type,
         modified_by: 'admin',
         status: 'Draft',
         action_status: 'Select Templates',
-        user_id: auth.decoded?.user_id
+        user_id: auth.decoded?.user_id,
+        country: selectedLocation.value === 'us' ? 'US' : 'Not'
       }
       try {
         const { data } = await execute(payload)
-        console.log({ data })
         toast.success('Campaign created successfully')
         setCampaign({
           id: data.stannp_campaign_id,
+          dbId: data.id.toString(),
           name: data.campaign_name,
-          type: data.type
+          type: data.type,
+          destination: data.postage_destination
         })
         await router.push({
           pathname: '/app/template',
-          query: { select: true }
+          query: { new: true }
         })
       } catch (e: any) {
         toast.error(e.response.data.detail)
       }
     },
-    [execute, selectedPostage, router, auth.decoded?.user_id, setCampaign]
+    [
+      execute,
+      selectedPostage,
+      router,
+      auth.decoded?.user_id,
+      setCampaign,
+      selectedLocation
+    ]
   )
 
   return (
@@ -150,18 +162,21 @@ const CreateCampaign = () => {
               <h3 className='text-lg font-bold'>Rates</h3>
               <div className='flex items-center justify-between'>
                 <p>Postage Destination</p>
-                <p className='font-bold text-black50'>
-                  {router.query.destination?.toString().toUpperCase()}
-                </p>
+                <FormSelect
+                  className='w-32'
+                  options={locationOptions}
+                  value={selectedLocation}
+                  onChange={setSelectedLocation}
+                />
               </div>
               <div className='flex items-center justify-between'>
                 <p>Postage Type</p>
                 <p className='font-bold text-black50'>{router.query.type}</p>
               </div>
               <div className='flex flex-col gap-2 border-b border-t border-black5 py-4'>
-                {filteredRates?.map(({ tier, rate }) => (
+                {/* {filteredRates?.map(({ tier, rate }) => (
                   <RateItem key={tier} tier={tier} rate={rate} />
-                ))}
+                ))} */}
               </div>
             </div>
           </div>

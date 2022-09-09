@@ -32,7 +32,7 @@ const DashboardCards = () => {
         result='10'
         action='Create New Recipient Group'
         withIcon={true}
-        href={{ pathname: 'recipient/create', query: { new: true } }}
+        href={{ pathname: 'recipient/create', query: { create: true } }}
       />
     </div>
   )

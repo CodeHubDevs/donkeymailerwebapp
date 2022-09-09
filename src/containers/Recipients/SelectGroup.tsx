@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router'
 import React, { useCallback, useMemo } from 'react'
+import toast from 'react-hot-toast'
 
 import { useCreateStannpCampaign, useRecipients } from '@/api'
+import { useSelectGroup } from '@/api/useSelectGroup'
 import GoBackToSelectButton from '@/components/GoBackToSelectButton'
 import Spinner from '@/components/Spinner'
 import StepForm from '@/components/StepForm'
@@ -17,25 +19,31 @@ const SelectGroup = () => {
   }, [isValidating, groups])
 
   const { execute } = useCreateStannpCampaign()
+  const { execute: selectGroup } = useSelectGroup()
   const { campaign, templateId }: any = useProcessStore()
 
-  console.log({ groups })
-
   const handleClick = useCallback(
-    async (id: any) => {
+    async (id: any, dbId: any) => {
       setRecipientId(id)
-      console.log('campaign', campaign)
-      console.log('templateId', templateId)
-      console.log('recipientId', id)
-      const { data } = await execute({
-        campaign_id: campaign?.id,
-        template_id: templateId,
-        group_id: id,
-        what_recipients: 'all'
-      })
-      await router.push(`/app/approve/${data.id}`)
+      try {
+        const { data } = await execute({
+          campaign_id: campaign?.id,
+          template_id: templateId,
+          group_id: id,
+          what_recipients: 'all'
+        })
+        await selectGroup({
+          country: 'Not',
+          campaign_id: campaign.dbId,
+          recipients_id: dbId
+        })
+        await router.push(`/app/approve/${data?.id}`)
+      } catch (error) {
+        console.log(error)
+        toast.error('Something went Wrong')
+      }
     },
-    [router, setRecipientId, execute, campaign, templateId]
+    [router, setRecipientId, execute, campaign, templateId, selectGroup]
   )
 
   return (
@@ -67,7 +75,7 @@ const SelectGroup = () => {
                   <div>
                     <button
                       onClick={async () =>
-                        await handleClick(group?.stannp_group_id)
+                        await handleClick(group?.stannp_group_id, group?.id)
                       }
                       className='cursor-pointer rounded-full bg-secondary py-1 px-2 text-sm text-white'>
                       Select

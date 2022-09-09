@@ -3,29 +3,41 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import { useTemplateBoard } from '@/api/useTemplateBoard'
 import CampaignPostCard from '@/assets/images/campaign-card.png'
 import CampaignImage from '@/assets/images/campaign.png'
 import CampaignEnvelope from '@/assets/images/envelope-card.png'
+import Pagination from '@/components/Pagination'
 import SelectMenu from '@/components/SelectMenu'
 import Spinner from '@/components/Spinner'
 import StepForm from '@/components/StepForm'
+import useProcessStore from '@/stores/useProcessStore'
 
 import TemplateCard from './TemplateCard'
 
 const typeOptions = [
   { value: 'all', label: 'All' },
   { value: 'A5', label: 'A5' },
-  { value: 'A6', label: 'A6' },
-  { value: 'A5-ENV', label: 'A5-ENV' }
+  { value: 'A6', label: 'A6' }
+  // { value: 'A5-ENV', label: 'A5-ENV' }
 ]
 
 const SelectTemplate = () => {
   const router = useRouter()
-  const { data: templatesBoard, isValidating } = useTemplateBoard()
-  const [selectedType, setSelectedType] = useState(typeOptions[0])
+  const [page, setPage] = useState(1)
+  const { data: templatesBoard, isValidating } = useTemplateBoard(page)
+  const { campaign }: any = useProcessStore()
+  const [selectedType, setSelectedType] = useState<any>(typeOptions[0])
+
+  useEffect(() => {
+    if (campaign.type && router.query.new) {
+      setSelectedType(
+        typeOptions.filter((to: any) => to.value === campaign.type)[0]
+      )
+    }
+  }, [campaign, router])
 
   const isLoading = useMemo(() => {
     return isValidating || !templatesBoard
@@ -43,7 +55,10 @@ const SelectTemplate = () => {
     <>
       {router.query.step && <StepForm currStep={2} />}
       <div className='mt-10'>
-        <h3 className='text-2xl font-bold'>My Templates</h3>
+        <div className='flex items-center justify-between'>
+          <h3 className='text-2xl font-bold'>My Templates</h3>
+          <Pagination page={page} setPage={setPage} />
+        </div>
         {isLoading ? (
           <div className='flex h-[30vh] w-full items-center justify-center'>
             <Spinner />
@@ -54,12 +69,17 @@ const SelectTemplate = () => {
               <>
                 <div className='flex items-center justify-between'>
                   <SelectMenu
+                    disabled={campaign.type && router.query.new}
                     isLeft
                     options={typeOptions}
                     value={selectedType}
                     onChange={setSelectedType}
                   />
-                  <Link href='template/create'>
+                  <Link
+                    href={{
+                      pathname: 'template/create',
+                      ...(router.query.new && { query: { new: true } })
+                    }}>
                     <a
                       type='button'
                       className='rounded-lg bg-primary py-2 px-8 text-white '>
@@ -77,6 +97,7 @@ const SelectTemplate = () => {
                   {filteredTemplates.map((item: any) => (
                     <TemplateCard
                       key={item.id}
+                      id={item.id}
                       name={item.template_name}
                       type={item.specifications}
                       file={item.file}

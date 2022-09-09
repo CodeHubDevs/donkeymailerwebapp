@@ -37,13 +37,15 @@ const RecipientOptions = () => {
     <>
       <StepForm currStep={3} />
       <div className='mt-8 grid grid-cols-3 gap-4'>
-        <OptionsCard label='Select From Your Recipient Group' href='group'>
+        <OptionsCard
+          label='Select From Your Recipient Group'
+          href='group?new=true'>
           Select Group
         </OptionsCard>
-        <OptionsCard label='Upload Recipients' href='upload'>
+        <OptionsCard label='Upload Recipients' href='upload?new=true'>
           Upload Group
         </OptionsCard>
-        <OptionsCard label='Create New Recipient Group' href='create'>
+        <OptionsCard label='Create New Recipient Group' href='create?new=true'>
           Create Group
         </OptionsCard>
       </div>

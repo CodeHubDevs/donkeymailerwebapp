@@ -27,7 +27,7 @@ const templateBoard = async (
   return response
 }
 
-export const useAddTemplateBoard = () => {
+export const useAddTemplateBoard: any = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState(null)
 

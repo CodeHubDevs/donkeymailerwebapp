@@ -6,15 +6,28 @@ interface SelectCardProps {
   image: any
   title: string
   query?: any
+  descriptions?: string[]
 }
 
-const SelectCard: React.FC<SelectCardProps> = ({ image, title, query }) => {
+const SelectCard: React.FC<SelectCardProps> = ({
+  image,
+  title,
+  query,
+  descriptions
+}) => {
   return (
     <div className='flex flex-col items-center gap-4 rounded-2xl bg-black5 p-8'>
       <div className='relative h-48 w-80'>
         <Image src={image} alt='Image' layout='fill' objectFit='cover' />
       </div>
       <h5 className='mt-5 text-xl font-bold text-black'>{title}</h5>
+      {descriptions && (
+        <ul className='list-disc'>
+          {descriptions.map((desc, index) => (
+            <li key={index}>{desc}</li>
+          ))}
+        </ul>
+      )}
       <Link href={{ pathname: 'create', query }}>
         <a className='rounded-full bg-primary from-secondary to-primary py-1 px-8'>
           <div className='flex items-center justify-center text-black50'>

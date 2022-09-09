@@ -60,11 +60,11 @@ const CreateRecipient = () => {
 
   return (
     <>
-      {!router.query.new && <StepForm currStep={3} />}
+      {!router.query.create && <StepForm currStep={3} />}
       <div className='mt-10'>
         <div className='flex items-center justify-between'>
           <h3 className='text-2xl font-bold'>Create Recipient Group</h3>
-          {!router.query.new && <GoBackToSelectButton />}
+          {!router.query.create && <GoBackToSelectButton />}
         </div>
         <div className='mt-4 rounded-xl bg-white p-4 shadow-lg'>
           <form

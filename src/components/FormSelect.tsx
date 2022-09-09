@@ -8,12 +8,13 @@ const FormSelect = ({
   value,
   onChange,
   label,
+  disabled,
   className = ''
 }: any) => {
   return (
     <div className={`flex w-full flex-col gap-2 ${className}`}>
       {label && <label className='font-bold text-primary'>{label}</label>}
-      <Listbox value={value} onChange={onChange}>
+      <Listbox value={value} onChange={onChange} disabled={disabled}>
         <div className='relative w-full'>
           <Listbox.Button
             className={
