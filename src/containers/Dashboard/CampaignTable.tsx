@@ -93,7 +93,7 @@ const CampaignTable = () => {
             </tr>
           </thead>
           <tbody>
-            {campaigns.data.items?.map((item: any) => (
+            {campaigns.data?.items?.map((item: any) => (
               <tr key={item.id} className=' bg-white'>
                 <th
                   scope='row'
