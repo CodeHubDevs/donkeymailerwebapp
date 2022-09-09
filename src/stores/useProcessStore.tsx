@@ -3,8 +3,10 @@ import create from 'zustand'
 const useProcessStore = create((set) => ({
   campaign: {
     id: null,
+    dbId: null,
     name: null,
-    type: null
+    type: null,
+    destination: null
   },
   templateId: '',
   recipientId: '',

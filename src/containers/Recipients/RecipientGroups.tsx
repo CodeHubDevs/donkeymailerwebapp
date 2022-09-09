@@ -62,7 +62,10 @@ const RecipientGroups = () => {
           <div className='mb-2 flex items-center justify-end'>
             <div className='flex gap-2'>
               <Link
-                href={{ pathname: 'recipient/upload', query: { new: true } }}>
+                href={{
+                  pathname: 'recipient/upload',
+                  query: { create: true }
+                }}>
                 <a
                   type='button'
                   className='rounded-lg bg-primary from-secondary to-primary py-2 px-8 text-white '>
@@ -77,7 +80,10 @@ const RecipientGroups = () => {
                 </a>
               </Link>
               <Link
-                href={{ pathname: 'recipient/create', query: { new: true } }}>
+                href={{
+                  pathname: 'recipient/create',
+                  query: { create: true }
+                }}>
                 <a
                   type='button'
                   className='rounded-lg bg-primary from-secondary to-primary py-2 px-8 text-white '>
@@ -99,12 +105,12 @@ const RecipientGroups = () => {
                 <th scope='col' className='px-6 py-3'>
                   Group Name
                 </th>
-                {/* <th scope='col' className='px-6 py-3'>
-                  Total Recipients
+                <th scope='col' className='px-6 py-3'>
+                  Verified Addresses
                 </th>
                 <th scope='col' className='px-6 py-3'>
-                  Countries
-                </th> */}
+                  Not Verified Addresses
+                </th>
                 <th scope='col' className='px-6 py-3'>
                   <span className='className-only'></span>
                 </th>
@@ -138,16 +144,16 @@ const RecipientGroups = () => {
                     )} */}
                     {item.group_name}
                   </td>
-                  {/* <td
+                  <td
                     scope='row'
                     className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                    {item.total_recipients}
+                    0
                   </td>
                   <td
                     scope='row'
                     className='whitespace-nowrap px-6 py-4 font-medium text-gray-900'>
-                    {item.countries}
-                  </td> */}
+                    0
+                  </td>
                   <th scope='row' className='whitespace-nowrap px-6 py-4'>
                     <div className='flex items-center gap-8'>
                       <button

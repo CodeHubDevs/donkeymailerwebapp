@@ -29,19 +29,29 @@ const CampaignSelect = () => {
       <div className='mx-16 mt-8 grid grid-cols-2 gap-8'>
         <SelectCard
           image={CampaignPostCard}
-          title={'A5 Postcard'}
-          query={{ destination: selectedLocation.value, type: 'A5' }}
+          title='A5 Postcard (Small Postcard)'
+          descriptions={[
+            '6x9 inches',
+            'Full color double sided',
+            '14pt gloss paper stock'
+          ]}
+          query={{ type: 'A5' }}
         />
         <SelectCard
           image={CampaignPostCard}
-          title={'A6 Postcard'}
-          query={{ destination: selectedLocation.value, type: 'A6' }}
+          title='A6 Postcard (Large Postcard)'
+          descriptions={[
+            '4x6 inches',
+            'Full color double sided',
+            '14pt gloss paper stock'
+          ]}
+          query={{ type: 'A6' }}
         />
-        <SelectCard
+        {/* <SelectCard
           image={CampaignPostCard}
           title={'A5 Envelope Postcard'}
-          query={{ destination: selectedLocation.value, type: 'A5-ENV' }}
-        />
+          query={{ type: 'A5-ENV' }}
+        /> */}
       </div>
     </PrivateLayout>
   )

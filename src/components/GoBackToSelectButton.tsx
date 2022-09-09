@@ -5,7 +5,7 @@ import React from 'react'
 
 const GoBackToSelectButton = () => {
   return (
-    <Link href='select'>
+    <Link href='select?new=true'>
       <a className='flex items-center gap-2 rounded-full bg-gradient-to-r from-secondary to-primary py-1 px-4 font-bold text-white'>
         <FontAwesomeIcon icon={faArrowLeftLong} />
         <span>Return to Options</span>
